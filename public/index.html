@@ -9,6 +9,7 @@
   <!-- SwiperJS CDN -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <link rel="stylesheet" href="styles.css"><!-- added to pick mobile fixes -->
   <style>
     .modal-animate {
       animation: modalPop .4s cubic-bezier(.35,.85,.39,1.1);
@@ -678,6 +679,7 @@
   </div>
 </section>
 <!-- ...existing code... -->
+
 <!-- Thank-you message -->
 <div id="newsletter-thanks"
      class="hidden max-w-7xl mx-auto mt-4 px-4">
@@ -685,9 +687,105 @@
     Thank you! You’ve been added to our newsletter.
   </div>
 </div>
-   
 
-<!-- ...existing code... -->
+
+<!-- DONATE SECTION (RESTORE) -->
+<section id="donate" class="w-full max-w-3xl md:max-w-7xl mx-auto mt-14 px-4 md:px-12">
+  <div class="bg-sky-100 px-4 py-10 md:py-16 rounded-[30px] shadow-md md:grid md:grid-cols-2 md:gap-12 md:items-center">
+    <div class="mb-8 md:mb-0">
+      <div class="swiper donation-swiper rounded-[30px] overflow-hidden shadow-lg">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <img src="donation1.jpg" alt="Supporting Sovereign Praise 2025"
+              class="w-full h-56 sm:h-72 md:h-96 object-cover">
+          </div>
+          <div class="swiper-slide">
+            <img src="donation2.jpg" alt="Community Donations"
+              class="w-full h-56 sm:h-72 md:h-96 object-cover">
+          </div>
+          <div class="swiper-slide">
+            <img src="donation3.jpg" alt="Development of GPCC Phase 2"
+              class="w-full h-56 sm:h-72 md:h-96 object-cover">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center md:text-left">
+      <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-6">
+        Support Our Ministry: Donations, Causes & Project Development
+      </h2>
+      <!-- Why Donate dropdown -->
+      <div class="mb-6">
+        <details class="bg-white rounded-[30px] shadow p-4 cursor-pointer">
+          <summary class="font-semibold text-lg text-blue-800 cursor-pointer">
+            Why should I donate?
+          </summary>
+          <ul class="mt-3 text-gray-700 space-y-2 list-disc pl-6">
+            <li>
+              Facilitation of Sovereign Reign Concert
+              (<a href="events.html#sovereign-praise-concert" class="text-blue-700 underline">Sovereign Praise Concert</a>)
+            </li>
+            <li>
+              Donations to various causes
+              (<a href="gallery.html#donations-gallery" class="text-blue-700 underline">Donations Gallery</a>)
+            </li>
+            <li>Development of Phase 2 GPCC Project</li>
+          </ul>
+        </details>
+      </div>
+      <!-- CTA Button -->
+      <div>
+        <a href="donations.html"
+          class="inline-flex items-center justify-center w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-7 rounded-[30px] shadow-lg transition
+                focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-300"
+          aria-label="Donate now to support Global Peace Christian Centre">
+          Donate Now
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER SIGNUP (RESTORE) -->
+<section id="newsletter" class="w-full max-w-3xl md:max-w-7xl mx-auto mt-14 px-4 md:px-12">
+  <div class="bg-sky-100 px-6 py-12 md:py-20 rounded-[30px] shadow-md md:grid md:grid-cols-2 md:gap-12 md:items-center">
+    <div class="mb-8 md:mb-0">
+      <img src="connect.jpg" alt="Stay connected with GPCC"
+        class="w-full h-64 md:h-96 object-contain rounded-[30px] shadow-lg">
+    </div>
+    <div class="flex flex-col justify-center text-center md:text-left">
+      <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-4">
+        Stay Connected with GPCC
+      </h2>
+      <p class="text-lg text-gray-700 mb-6">
+        Sign up to receive church updates, event reminders, and devotionals directly in your inbox.
+      </p>
+      <form id="newsletter-form" action="https://script.google.com/macros/s/AKfycbw3F16H0XvE9bO8fLQhn0FLjj-1ahE4IizRNIC4OSgQjhG3ZXOxySJ2VVh9Y1xjrF8s/exec" method="POST"
+        class="flex flex-col sm:flex-row gap-3">
+        <label for="newsletter-email" class="sr-only">Your Email</label>
+        <input id="newsletter-email" name="email" type="email" required autocomplete="email"
+          placeholder="Your Email Here"
+          class="flex-1 rounded-lg border border-blue-300 px-4 py-3 bg-white/90 text-gray-800 placeholder-gray-500
+                  focus:outline-none focus:ring-4 focus:ring-blue-200">
+        <button type="submit"
+          class="rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-3
+                 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-300">
+          Sign Up
+        </button>
+      </form>
+      <p id="form-message" class="mt-2 text-center text-sm"></p>
+      <p id="privacy-note" class="mt-3 text-xs text-gray-700">
+        By clicking Sign Up, you agree to our Terms and Conditions.
+      </p>
+    </div>
+  </div>
+</section>
+<div id="newsletter-thanks" class="hidden max-w-7xl mx-auto mt-4 px-4">
+  <div class="bg-green-50 border border-green-200 text-green-900 rounded-lg px-4 py-3">
+    Thank you! You’ve been added to our newsletter.
+  </div>
+</div>
+
 <footer class="w-full bg-[#181c17] relative mt-12">
   <div class="absolute inset-0 w-full h-full">
     <img src="footer-bg.jpg" alt="Peace Temple Interior" class="w-full h-full object-cover opacity-40"/>

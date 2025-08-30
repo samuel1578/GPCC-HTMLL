@@ -637,3 +637,21 @@ footer { flex-shrink: 0; }
 
 /* Optionally, a stricter top crop if needed */
 /* .portrait-top-strong { object-position: center 5% !important; } */
+
+/* iPhone 8/SE fix: keep hamburger above everything and panel scrollable */
+@media (max-width: 767px) {
+  #menu-toggle {
+    position: fixed !important;
+    top: 10px !important;
+    right: 12px !important;
+    z-index: 1001 !important; /* above header and overlays */
+    pointer-events: auto !important;
+  }
+  #mobile-menu {
+    z-index: 1000 !important; /* under the toggle, above content */
+  }
+  #mobile-panel {
+    max-height: calc(100vh - 96px) !important;
+    overflow-y: auto !important;
+  }
+}
