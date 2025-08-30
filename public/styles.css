@@ -529,3 +529,19 @@ footer { flex-shrink: 0; }
     object-fit: cover;
   }
 }
+
+/* Events page mobile adjustments */
+@media (max-width: 767px) {
+  body.events-page .events-hero {
+    padding: 24px 16px; /* consistent section padding */
+    margin-top: 0 !important; /* sit closer to header like contact-us */
+  }
+  body.events-page .events-hero .events-card {
+    padding: 24px 16px; /* inner card padding on small screens */
+  }
+  /* Scale the circular icon smoothly on small devices */
+  body.events-page .events-hero .hero-icon {
+    width: 72px !important;
+    height: 72px !important;
+  }
+}

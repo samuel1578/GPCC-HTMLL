@@ -6,12 +6,13 @@
   <title>Events | Global Peace Christian Centre</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css"><!-- added -->
   <style>
     @keyframes floaty { 0%{transform:translateY(0)} 50%{transform:translateY(-8px)} 100%{transform:translateY(0)} }
     .floaty { animation: floaty 2.4s ease-in-out infinite; }
   </style>
 </head>
-<body class="bg-[#badcf7] font-sans">
+<body class="bg-[#badcf7] font-sans events-page"><!-- added events-page -->
   <!-- Header (same structure/behavior as index.html) -->
   <header class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur border-b border-blue-200">
     <div class="max-w-7xl mx-auto px-4 lg:px-8 py-3 flex items-center justify-between">
@@ -75,9 +76,9 @@
   <div class="h-[72px]"></div>
 
   <!-- Hero: Coming Soon -->
-  <section class="w-full max-w-4xl mx-auto px-4 mt-8 text-center">
-    <div class="bg-white/90 rounded-2xl shadow-lg border border-blue-200 p-8 md:p-12">
-      <div class="mx-auto w-28 h-28 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center floaty">
+  <section class="w-full max-w-4xl mx-auto px-4 mt-8 text-center events-hero"><!-- added events-hero -->
+    <div class="bg-white/90 rounded-2xl shadow-lg border border-blue-200 p-8 md:p-12 events-card"><!-- added events-card -->
+      <div class="mx-auto w-28 h-28 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center floaty hero-icon"><!-- added hero-icon -->
         <svg viewBox="0 0 24 24" class="w-14 h-14 text-blue-700">
           <path fill="currentColor" d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 00-2 2v12a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2m0 14H5V9h14m0-5v3H5V6z"/>
         </svg>
@@ -204,7 +205,6 @@
   </script>
 </body>
 </html>
-      mobileAboutDropdown.classList.toggle('hidden');
     });
 
     // Back button behavior
