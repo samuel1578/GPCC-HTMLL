@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ministries | Global Peace Christian Centre</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    .glass { background: rgba(255,255,255,0.92); backdrop-filter: blur(12px) saturate(180%); box-shadow: 0 6px 36px 0 rgba(55,100,150,0.25); border: 2px solid #dbeafe; }
+    .card { border-radius: 1rem; background: white; border: 1px solid #e0e7ef; box-shadow: 0 6px 28px rgba(0,0,0,0.06); overflow: hidden; display: flex; flex-direction: column; }
+    .card img { width: 100%; height: 180px; object-fit: cover; }
+    @media (min-width: 640px) { .card img { height: 210px; } }
+    @media (min-width: 1024px) { .card img { height: 220px; } }
+    .card-body { padding: 1rem; display: flex; flex-direction: column; gap: .5rem; }
+    .card-title { font-weight: 800; color: #0f2a67; }
+    .card-desc { color: #4b5563; font-size: 0.95rem; line-height: 1.4; min-height: 3.5rem; }
+    .badge { background: #eaf6fb; color: #2563eb; border: 1px solid #cfe7fb; font-size: .75rem; padding: .2rem .55rem; border-radius: .5rem; }
+  </style>
+</head>
+<body class="bg-[#badcf7] font-sans">
+
+  <!-- HEADER / NAVBAR (same pattern as other pages) -->
+  <header class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur border-b border-blue-200">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-3 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2">
+        <img src="logo.png" alt="GPCC Logo" class="h-10 w-10 object-contain rounded-sm border border-blue-900/40 bg-transparent">
+        <!-- Mobile short name, Desktop full name -->
+        <span class="text-xl font-bold text-blue-900 inline lg:hidden">GPCC</span>
+        <span class="hidden lg:inline text-xl font-bold text-blue-900">Global Peace Christian Centre</span>
+      </a>
+      <nav class="hidden lg:flex items-center gap-4 bg-white/70 rounded-full border-2 border-blue-900 px-6 py-2 shadow-lg">
+        <a href="index.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">HOME</a>
+        <div class="relative">
+          <button id="about-us-desktop-btn"
+                  class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold flex items-center gap-2 hover:bg-blue-50 transition focus:outline-none"
+                  aria-haspopup="true" aria-expanded="false">
+            ABOUT US
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6"/>
+            </svg>
+          </button>
+          <ul id="about-us-desktop-dropdown"
+              class="absolute top-full left-0 mt-2 hidden bg-white border border-blue-200 rounded-lg shadow-lg w-72 py-2"
+              role="menu">
+            <li><a href="who-we-are.html" class="block px-4 py-2 hover:bg-blue-50">Who We Are</a></li>
+            <li><a href="pastoral-board.html" class="block px-4 py-2 hover:bg-blue-50">The Pastoral Board</a></li>
+            <li><a href="eldership-deacons.html" class="block px-4 py-2 hover:bg-blue-50">Eldership &amp; Deacons</a></li>
+            <li><a href="community-journey.html" class="block px-4 py-2 hover:bg-blue-50">Our Journey Through the Community</a></li>
+          </ul>
+        </div>
+        <a href="ministries.html" class="px-4 py-2 rounded-full bg-blue-900 text-white font-semibold shadow">MINISTRIES</a>
+        <a href="#" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MEDIA CENTER</a>
+        <a href="#" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">EVENTS</a>
+        <a href="#" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">GALLERY</a>
+        <a href="#" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">CONTACT US</a>
+      </nav>
+      <button id="menu-toggle" class="lg:hidden fixed top-4 right-4 focus:outline-none z-50"
+        aria-label="Open Menu" aria-expanded="false">
+        <span class="flex items-center justify-center w-11 h-11 rounded-full bg-blue-900 hover:bg-blue-700 shadow-lg transition duration-200">
+          <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+        </span>
+      </button>
+    </div>
+    <div id="mobile-menu"
+         class="fixed inset-0 hidden justify-start items-start bg-[#badcf7]/95 z-50 lg:hidden">
+      <div id="mobile-panel" class="absolute right-4 top-20 w-80 px-2 py-4 rounded-2xl bg-white shadow-2xl border border-blue-200 text-center glass">
+        <nav class="space-y-4 mt-3">
+          <a href="index.html" class="block w-full px-5 py-3 rounded-full bg-blue-900 text-white font-semibold">HOME</a>
+          <div>
+            <button id="mobile-about-toggle"
+                    class="w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold flex items-center justify-center gap-2 focus:outline-none">
+              ABOUT US
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6"/>
+              </svg>
+            </button>
+            <ul id="mobile-about-dropdown" class="hidden mt-2 space-y-2">
+              <li><a href="who-we-are.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Who We Are</a></li>
+              <li><a href="pastoral-board.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">The Pastoral Board</a></li>
+              <li><a href="eldership-deacons.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Eldership &amp; Deacons</a></li>
+              <li><a href="community-journey.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Our Journey Through the Community</a></li>
+            </ul>
+          </div>
+          <a href="ministries.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MINISTRIES</a>
+          <a href="#" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MEDIA CENTER</a>
+          <a href="#" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">EVENTS</a>
+          <a href="#" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">GALLERY</a>
+          <a href="#" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">CONTACT US</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- spacer -->
+  <div class="h-[72px]"></div>
+
+  <!-- PAGE HEADER -->
+  <section class="w-full max-w-6xl mx-auto px-4 mt-6">
+    <div class="bg-[#eaf6fb] border border-blue-200 rounded-2xl p-6 sm:p-8 shadow">
+      <h1 class="text-3xl sm:text-4xl font-serif text-blue-900 text-center" style="font-family:'Playfair Display', serif;">
+        Discover Our Ministries in the <span class="font-extrabold">Global Peace Christian Centre</span> Community
+      </h1>
+      <p class="text-center text-gray-700 mt-3 max-w-3xl mx-auto">
+        Connect, grow, and serve through dynamic ministries for every stage of life.
+      </p>
+    </div>
+  </section>
+
+  <!-- MINISTRIES GRID -->
+  <main class="w-full max-w-6xl mx-auto px-4 mt-8 mb-12">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <!-- Men's Ministry -->
+      <article class="card">
+        <img src="../assets/pastoral-board/men-ministry.png" alt="Men's Ministry" loading="lazy">
+        <div class="card-body">
+          <div class="flex items-center justify-between">
+            <h3 class="card-title text-lg">Men's Ministry</h3>
+            <span class="badge">Men</span>
+          </div>
+          <p class="card-desc">Take a moment to view the Men's ministry and the impact they have in the community.</p>
+          <div class="flex justify-end">
+            <a href="#" class="inline-flex items-center gap-2 text-blue-700 font-semibold hover:text-blue-900">View More <i class="fa-solid fa-angle-right"></i></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Women's Ministry -->
+      <article class="card">
+        <img src="../assets/pastoral-board/women-ministry.png" alt="Women's Ministry" loading="lazy">
+        <div class="card-body">
+          <div class="flex items-center justify-between">
+            <h3 class="card-title text-lg">Women's Ministry</h3>
+            <span class="badge">Women</span>
+          </div>
+          <p class="card-desc">GPCC Women of Virtue, the mother stem of our Global Peace organization.</p>
+          <div class="flex justify-end">
+            <a href="#" class="inline-flex items-center gap-2 text-blue-700 font-semibold hover:text-blue-900">View More <i class="fa-solid fa-angle-right"></i></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Youth Ministry -->
+      <article class="card">
+        <img src="../assets/pastoral-board/youth-ministry.png" alt="Youth Ministry" loading="lazy">
+        <div class="card-body">
+          <div class="flex items-center justify-between">
+            <h3 class="card-title text-lg">Youth Ministry</h3>
+            <span class="badge">Youth</span>
+          </div>
+          <p class="card-desc">We prioritize open communication and active participation to strengthen our community.</p>
+          <div class="flex justify-end">
+            <a href="#" class="inline-flex items-center gap-2 text-blue-700 font-semibold hover:text-blue-900">View More <i class="fa-solid fa-angle-right"></i></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Children's Ministry -->
+      <article class="card">
+        <img src="../assets/pastoral-board/children-ministry.png" alt="Children's Ministry" loading="lazy">
+        <div class="card-body">
+          <div class="flex items-center justify-between">
+            <h3 class="card-title text-lg">Children's Ministry</h3>
+            <span class="badge">Children</span>
+          </div>
+          <p class="card-desc">At GPCC, we operate through a collaborative structure that empowers each ministry.</p>
+          <div class="flex justify-end">
+            <a href="#" class="inline-flex items-center gap-2 text-blue-700 font-semibold hover:text-blue-900">View More <i class="fa-solid fa-angle-right"></i></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Angelic Voices Ministry -->
+      <article class="card">
+        <img src="../assets/pastoral-board/choir-ministry.jpg" alt="Angelic Voices Ministry" loading="lazy">
+        <div class="card-body">
+          <div class="flex items-center justify-between">
+            <h3 class="card-title text-lg">Angelic Voices Ministry</h3>
+            <span class="badge">Music</span>
+          </div>
+          <p class="card-desc">When the Angelic Voices minister to you, believe you have met God as if Angels really are in your presence.</p>
+          <div class="flex justify-end">
+            <a href="#" class="inline-flex items-center gap-2 text-blue-700 font-semibold hover:text-blue-900">View More <i class="fa-solid fa-angle-right"></i></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Ushering Ministry -->
+      <article class="card">
+        <img src="../assets/pastoral-board/ushering-ministry.jpg" alt="Ushering Ministry" loading="lazy">
+        <div class="card-body">
+          <div class="flex items-center justify-between">
+            <h3 class="card-title text-lg">Ushering Ministry</h3>
+            <span class="badge">Service</span>
+          </div>
+          <p class="card-desc">Warm welcomes and excellent order—serving Christ by serving His people.</p>
+          <div class="flex justify-end">
+            <a href="#" class="inline-flex items-center gap-2 text-blue-700 font-semibold hover:text-blue-900">View More <i class="fa-solid fa-angle-right"></i></a>
+          </div>
+        </div>
+      </article>
+
+
+      <!-- Evangelism/Outreach -->
+      <article class="card">
+        <img src="../assets/pastoral-board/media-ministry.jpg" alt="Evangelism and Outreach" loading="lazy">
+        <div class="card-body">
+          <div class="flex items-center justify-between">
+            <h3 class="card-title text-lg">Media and IT Team</h3>
+            <span class="badge">Outreach</span>
+          </div>
+          <p class="card-desc">Sharing the Good News and impacting lives through gospel-centered outreach.</p>
+          <div class="flex justify-end">
+            <a href="#" class="inline-flex items-center gap-2 text-blue-700 font-semibold hover:text-blue-900">View More <i class="fa-solid fa-angle-right"></i></a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <!-- FOOTER (simple) -->
+  <footer class="w-full bg-[#181c17] text-white py-8 text-center">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="mb-3">
+        <span class="font-semibold">Address:</span>
+        P. O. Box AN 11587, Accra-North, ABLOR ADJEI OFF THE AGBOGBA-ABOKOBI ROAD
+      </div>
+      <div class="mb-3">
+        <span class="font-semibold">Contact:</span>
+        +233 (208) 180 188 &nbsp; +233 (246) 224 766 &nbsp;
+        <a href="mailto:info@gpcconline.org" class="text-blue-200 underline hover:text-blue-400">info@gpcconline.org</a>
+      </div>
+      <div class="text-xs mt-2">&copy; <span id="copyright-year"></span> GPCC. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    // year
+    (function(){ var y=document.getElementById('copyright-year'); if(y) y.textContent=new Date().getFullYear(); })();
+
+    // Desktop ABOUT US dropdown
+    const aboutBtn = document.getElementById('about-us-desktop-btn');
+    const aboutDropdown = document.getElementById('about-us-desktop-dropdown');
+    let aboutOpen = false;
+    aboutBtn?.addEventListener('click', function(e) {
+      e.stopPropagation();
+      aboutDropdown?.classList.toggle('hidden');
+      aboutOpen = !aboutOpen;
+      document.addEventListener('click', function handler(ev) {
+        if (aboutOpen && !aboutDropdown.contains(ev.target) && ev.target !== aboutBtn) {
+          aboutDropdown.classList.add('hidden');
+          aboutOpen = false;
+          document.removeEventListener('click', handler);
+        }
+      });
+    });
+
+    // Mobile hamburger + close on outside
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobilePanel = document.getElementById('mobile-panel');
+    menuToggle?.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const hidden = mobileMenu.classList.contains('hidden');
+      mobileMenu.classList.toggle('hidden', !hidden ? true : false);
+      if (hidden) mobileMenu.classList.remove('hidden');
+      menuToggle.setAttribute('aria-expanded', hidden ? 'true' : 'false');
+    });
+    mobileMenu?.addEventListener('click', function(e) {
+      if (!mobilePanel.contains(e.target)) {
+        mobileMenu.classList.add('hidden');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Mobile ABOUT US dropdown
+    const mobileAboutToggle = document.getElementById('mobile-about-toggle');
+    const mobileAboutDropdown = document.getElementById('mobile-about-dropdown');
+    mobileAboutToggle?.addEventListener('click', function(e) {
+      e.stopPropagation();
+      mobileAboutDropdown?.classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>

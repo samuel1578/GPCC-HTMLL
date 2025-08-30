@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Pastoral Board | Global Peace Christian Centre</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <!-- SwiperJS CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <style>
+    .board-header-wrap {
+      position: relative;
+      margin-top: 2.5rem;
+      margin-bottom: 0.5rem;
+      text-align: center;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .board-header-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, #badcf7cc 0%, #eaf6fbcc 100%);
+      border-radius: 1.5rem;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .board-header {
+      position: relative;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #181c17;
+      z-index: 2;
+      padding: 1.2rem 0;
+      border-radius: 1.5rem;
+    }
+    .board-sub {
+      text-align: center;
+      color: #2563eb;
+      font-size: 1.2rem;
+      margin-bottom: 2.5rem;
+      font-weight: 500;
+      position: relative;
+      padding-bottom: 0.8rem;
+    }
+    .board-sub:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, #2563eb, #ef4444);
+      border-radius: 2px;
+    }
+    .swiper-pagination-bullet { background: #2563eb; opacity: 0.5; }
+    .swiper-pagination-bullet-active { background: #ef4444; opacity: 1; }
+    .swiper-back-btn {
+      background: #2563eb;
+      color: #fff;
+      font-weight: 600;
+      padding: 0.5rem 1.2rem;
+      border-radius: 0.7rem;
+      border: none;
+      cursor: pointer;
+      margin: 0.7rem auto 0 auto;
+      display: block;
+      transition: background 0.2s;
+    }
+    .swiper-back-btn:hover { background: #ef4444; }
+
+    /* Simple Card Design */
+    .card {
+      border-radius: 1rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      border: 1px solid #e0e7ef;
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+      transition: box-shadow 0.2s ease;
+    }
+    .card:hover {
+      box-shadow: 0 6px 30px rgba(0,0,0,0.15);
+    }
+    .card img {
+      width: 100%;
+      transition: opacity 0.2s ease;
+    }
+    .card-content {
+      padding: 1rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #2563eb;
+      margin-bottom: 0.5rem;
+    }
+    .card-role {
+      font-family: 'Playfair Display', serif;
+      font-weight: bold;
+      font-size: 1rem;
+      color: #222b3a;
+      margin-bottom: 0.5rem;
+    }
+    .card-desc {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 0.7rem;
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .view-profile-btn {
+      background: #ef4444;
+      color: #fff;
+      font-weight: 600;
+      padding: 0.6rem 1.2rem;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+      box-shadow: 0 2px 8px rgba(239,68,68,0.3);
+    }
+    .view-profile-btn:hover { background: #b91c1c; }
+
+    /* Thin Red Line Separator on Desktop */
+    .desktop-separator {
+      border: none;
+      height: 2px;
+      background: #ef4444;
+      margin: 2rem auto;
+      width: 50%;
+      display: none;
+    }
+    @media (min-width: 1024px) {
+      .desktop-separator {
+        display: block;
+      }
+    }
+
+    /* Improved mobile and tablet styling */
+    .mobile-tablet-container {
+      position: relative;
+      padding-bottom: 0;
+      margin-top: 1rem;
+    }
+    
+    /* Better mobile fullscreen experience */
+    @media (max-width: 640px) {
+      .board-header-wrap {
+        margin-top: 1rem;
+      }
+      .board-sub {
+        margin-bottom: 0.5rem;
+      }
+      .mobile-swiper-container {
+        height: auto; /* Changed from fixed height to auto */
+        display: flex;
+        flex-direction: column;
+      }
+      .pastoral-swiper {
+        flex: 1;
+        height: auto; /* Changed from 100% to auto */
+      }
+      .swiper-slide {
+        height: auto; /* Changed from 100% to auto */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .card {
+        height: auto; /* Changed from 100% to auto */
+        max-width: 95%;
+        display: flex;
+        flex-direction: column;
+      }
+      .card img {
+        height: 220px !important; /* Fixed height for images */
+        object-fit: cover;
+        object-position: center top;
+      }
+    }
+    
+    /* Navigation buttons for mobile */
+    .swiper-nav-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    
+    .swiper-nav-btn {
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      color: #fff;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border-radius: 0.7rem;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+      min-width: 100px;
+    }
+    
+    .swiper-nav-btn:hover, .swiper-nav-btn:active {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+      transform: translateY(-2px);
+    }
+    
+    .swiper-nav-btn:disabled {
+      background: #cbd5e1;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* Remove autoplay progress circle */
+    .autoplay-progress {
+      display: none;
+    }
+
+    /* Enhanced subheading style */
+    .board-sub {
+      text-align: center;
+      color: #2563eb;
+      font-size: 1.2rem;
+      margin-bottom: 2.5rem;
+      font-weight: 500;
+      position: relative;
+      padding-bottom: 0.8rem;
+    }
+    
+    .board-sub:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, #2563eb, #ef4444);
+      border-radius: 2px;
+    }
+
+    /* Redesigned navigation buttons - side by side without arrows */
+    .nav-buttons-container {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1.5rem 0;
+      width: 100%;
+    }
+    
+    .nav-button {
+      background: #2563eb;
+      color: white;
+      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+      min-width: 120px;
+      text-align: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+    }
+    
+    .nav-button:hover {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px rgba(37, 99, 235, 0.25);
+    }
+    
+    .nav-button:disabled {
+      background: #cbd5e1;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* Desktop card layout improvements */
+    .desktop-founders-row {
+      display: flex;
+      gap: 2.5rem;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+    
+    .desktop-mid-row {
+      display: flex;
+      gap: 2.5rem;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+    
+    .desktop-bottom-row {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    /* REMOVE conflicting rule that showed desktop nav on small screens.
+       Final, explicit mobile behavior: hide desktop nav, show hamburger */
+    @media (max-width: 1023px) {
+      .desktop-nav { display: none !important; }
+      #menu-toggle { display: block !important; position: fixed; top: 1rem; right: 1rem; z-index: 60; }
+    }
+
+    /* Ensure header layout stays a single row */
+    header .max-w-7xl { display: flex; align-items: center; justify-content: space-between; }
+
+    /* MOBILE: let page scroll and show full, uncropped images */
+    @media (max-width: 640px) {
+      /* Remove any height locks so content can extend and page can scroll */
+      .pastoral-swiper {
+        height: auto !important;
+        padding-bottom: 0.5rem; /* keep pagination clear */
+      }
+      .swiper-slide {
+        height: auto !important;
+      }
+      .mobile-card {
+        height: auto !important;
+        max-height: none !important;
+      }
+      /* Show full image; do not crop */
+      .mobile-card > img {
+        height: auto !important;
+        max-height: none !important;
+        object-fit: contain !important;
+        object-position: center !important;
+        background: #eaf6fb; /* subtle backdrop to avoid white gaps */
+      }
+      /* Buttons spaced below the card */
+      .nav-buttons-container {
+        margin: 0.75rem auto 1.75rem !important;
+        gap: 1rem !important;
+      }
+    }
+
+    /* DESKTOP: enforce strict 2 / 2 / 3 layout using grid (lg and up) */
+    @media (min-width: 1024px) {
+      .desktop-founders-row,
+      .desktop-mid-row,
+      .desktop-bottom-row {
+        display: grid !important;
+        justify-content: center;
+      }
+      .desktop-founders-row {
+        grid-template-columns: repeat(2, minmax(300px, 340px));
+        gap: 2.5rem;
+      }
+      .desktop-mid-row {
+        grid-template-columns: repeat(2, minmax(280px, 320px));
+        gap: 2.5rem;
+      }
+      .desktop-bottom-row {
+        grid-template-columns: repeat(3, minmax(260px, 300px));
+        gap: 2rem;
+      }
+    }
+  </style>
+</head>
+<body class="bg-[#badcf7] font-sans">
+  <!-- RESTORE ORIGINAL HEADER STRUCTURE -->
+  <header class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur border-b border-blue-200">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-3 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2">
+        <img src="logo.png" alt="GPCC Logo" class="h-10 w-10 object-contain rounded-sm border border-blue-900/40 bg-transparent">
+        <!-- Mobile short name, Desktop full name -->
+        <span class="text-xl font-bold text-blue-900 inline lg:hidden">GPCC</span>
+        <span class="hidden lg:inline text-xl font-bold text-blue-900">Global Peace Christian Centre</span>
+      </a>
+      <!-- Desktop nav (only visible on large screens) -->
+      <nav class="hidden lg:flex items-center gap-4 bg-white/70 rounded-full border-2 border-blue-900 px-6 py-2 shadow-lg desktop-nav">
+        <a href="index.html" class="px-4 py-2 rounded-full bg-blue-900 text-white font-semibold shadow">HOME</a>
+        <div class="relative">
+          <button id="about-us-desktop-btn"
+                  class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold flex items-center gap-2 hover:bg-blue-50 transition focus:outline-none"
+                  aria-haspopup="true" aria-expanded="false">
+            ABOUT US
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6"/>
+            </svg>
+          </button>
+          <ul id="about-us-desktop-dropdown"
+              class="absolute top-full left-0 mt-2 hidden bg-white border border-blue-200 rounded-lg shadow-lg w-72 py-2"
+              role="menu">
+            <li><a href="who-we-are.html" class="block px-4 py-2 hover:bg-blue-50">Who We Are</a></li>
+            <li><a href="pastoral-board.html" class="block px-4 py-2 hover:bg-blue-50">The Pastoral Board</a></li>
+            <li><a href="eldership-deacons.html" class="block px-4 py-2 hover:bg-blue-50">Eldership &amp; Deacons</a></li>
+            <li><a href="community-journey.html" class="block px-4 py-2 hover:bg-blue-50">Our Journey Through the Community</a></li>
+          </ul>
+        </div>
+        <!-- Other desktop menu items -->
+        <a href="ministries.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MINISTRIES</a>
+        <a href="#" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MEDIA CENTER</a>
+        <a href="#" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">EVENTS</a>
+        <a href="#" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">GALLERY</a>
+        <a href="#" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">CONTACT US</a>
+      </nav>
+      
+      <!-- FIXED: Restore original hamburger button -->
+      <button id="menu-toggle" class="lg:hidden fixed top-4 right-4 focus:outline-none z-50"
+        aria-label="Open Menu" aria-expanded="false">
+        <span class="flex items-center justify-center w-11 h-11 rounded-full bg-blue-900 hover:bg-blue-700 shadow-lg transition duration-200">
+          <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+        </span>
+      </button>
+    </div>
+    
+    <!-- Mobile menu - restored to original -->
+    <div id="mobile-menu"
+         class="fixed inset-0 hidden justify-start items-start bg-[#badcf7]/95 z-50 lg:hidden">
+      <div id="mobile-panel" class="absolute right-4 top-20 w-80 px-2 py-4 rounded-2xl bg-white shadow-2xl border border-blue-200 text-center glass modal-animate">
+        <nav class="space-y-4 mt-3">
+          <a href="index.html" class="block w-full px-5 py-3 rounded-full bg-blue-900 text-white font-semibold">HOME</a>
+          <div>
+            <button id="mobile-about-toggle"
+                    class="w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold flex items-center justify-center gap-2 focus:outline-none">
+              ABOUT US
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6"/>
+              </svg>
+            </button>
+            <ul id="mobile-about-dropdown" class="hidden mt-2 space-y-2">
+              <li><a href="who-we-are.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Who We Are</a></li>
+              <li><a href="pastoral-board.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">The Pastoral Board</a></li>
+              <li><a href="eldership-deacons.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Eldership &amp; Deacons</a></li>
+              <li><a href="community-journey.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Our Journey Through the Community</a></li>
+            </ul>
+          </div>
+          <!-- Other mobile menu items -->
+          <a href="ministries.html" class="block px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MINISTRIES</a>
+          <a href="#" class="block px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MEDIA CENTER</a>
+          <a href="#" class="block px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">EVENTS</a>
+          <a href="#" class="block px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">GALLERY</a>
+          <a href="#" class="block px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">CONTACT US</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+  
+  <!-- Spacer to account for fixed header -->
+  <div class="h-[72px]"></div>
+
+  <!-- MAIN CONTENT - improved structure while keeping card fixes -->
+  <main class="max-w-7xl mx-auto px-4 py-8">
+    <div class="board-header-wrap">
+      <div class="board-header-overlay"></div>
+      <div class="board-header">The Pastoral Board</div>
+    </div>
+    <div class="board-sub">Meet the dedicated leaders of our church community.</div>
+
+    <!-- Desktop Hierarchy - unchanged -->
+    <div class="hidden lg:block desktop-view">
+      <!-- Top Row: Founders -->
+      <div class="desktop-founders-row">
+        <!-- President & Founder -->
+        <div class="card founder-card">
+          <img src="president.jpg" alt="President & Founder" class="pastor-img object-cover bg-[#badcf7] border-b-2 border-blue-100">
+          <div class="card-content">
+            <div class="card-title">President & Founder</div>
+            <div class="pastor-name">Very Rev Henry Ampomah-Boateng</div>
+            <div class="card-desc">Visionary leader and founder of GPCC.</div>
+            <button class="view-profile-btn" onclick="window.location.href='profile-president.html'">View Profile</button>
+          </div>
+        </div>
+        
+        <!-- Vice President -->
+        <div class="card founder-card">
+          <img src="vice-president.jpg" alt="Vice President" class="pastor-img object-cover bg-[#badcf7] border-b-2 border-blue-100">
+          <div class="card-content">
+            <div class="card-title">Vice President</div>
+            <div class="pastor-name">Lady Perpetual Ampomah-Boateng</div>
+            <div class="card-desc">Guiding our youth to grow in faith and community engagement.</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Thin Red Line Separator -->
+      <hr class="desktop-separator">
+      
+      <!-- Middle Row: 2 Pastors -->
+      <div class="desktop-mid-row">
+        <!-- First Associate Pastor -->
+        <div class="card pastor-card">
+          <img src="pastor-benjamin.jpg" alt="Associate Pastor" class="pastor-img object-cover bg-[#badcf7] border-b-2 border-blue-100">
+          <div class="card-content">
+            <div class="card-title">Associate Pastor</div>
+            <div class="pastor-name">Pastor Benjamin Gogoe</div>
+            <div class="card-desc">Leading our congregation in heartfelt worship and praise every Sunday.</div>
+          </div>
+        </div>
+        
+        <!-- Second Associate Pastor -->
+        <div class="card pastor-card">
+          <img src="pastor-ruby.png" alt="Associate Pastor" class="pastor-img object-cover bg-[#badcf7] border-b-2 border-blue-100">
+          <div class="card-content">
+            <div class="card-title">Associate Pastor</div>
+            <div class="pastor-name">Rev Dr. Mrs Ruby Aikins-Larbi</div>
+            <div class="card-desc">Fostering a culture of prayer and support within our church family.</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Bottom Row: 3 Pastors -->
+      <div class="desktop-bottom-row">
+        <!-- Third Associate Pastor -->
+        <div class="card bottom-pastor-card">
+          <img src="pastor-paulina.png" alt="Associate Pastor" class="pastor-img object-cover bg-[#badcf7] border-b-2 border-blue-100">
+          <div class="card-content">
+            <div class="card-title">Associate Pastor</div>
+            <div class="pastor-name">Rev Mrs. Paulina Simpson</div>
+            <div class="card-desc">Explore exciting opportunities to serve and grow in our vibrant community.</div>
+          </div>
+        </div>
+        
+        <!-- Fourth Associate Pastor -->
+        <div class="card bottom-pastor-card">
+          <img src="pastor-wiafe.png" alt="Associate Pastor" class="pastor-img object-cover bg-[#badcf7] border-b-2 border-blue-100">
+          <div class="card-content">
+            <div class="card-title">Associate Pastor</div>
+            <div class="pastor-name">Pastor Samuel Konadu Wiafe</div>
+            <div class="card-desc">Become part of our mission-driven team and make a difference.</div>
+          </div>
+        </div>
+        
+        <!-- Fifth Associate Pastor -->
+        <div class="card bottom-pastor-card">
+          <img src="pastor-maxwell.png" alt="Associate Pastor" class="pastor-img object-cover bg-[#badcf7] border-b-2 border-blue-100">
+          <div class="card-content">
+            <div class="card-title">Associate Pastor</div>
+            <div class="pastor-name">Rec Maxwell Mensah Brayie</div>
+            <div class="card-desc">Connecting our church with the community through service and outreach initiatives.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- IMPROVED Mobile View with card fixes -->
+    <div class="block lg:hidden mobile-tablet-container">
+      <!-- Small Mobile View with better card layout -->
+      <div class="sm:hidden">
+        <div class="swiper pastoral-swiper">
+          <div class="swiper-wrapper">
+            <!-- President & Founder -->
+            <div class="swiper-slide mobile-card-container">
+              <div class="card mobile-card">
+                <img src="president.jpg" alt="President & Founder" class="object-cover w-full bg-[#badcf7] border-b-2 border-blue-100">
+                <div class="card-content">
+                  <div>
+                    <div class="card-title">President & Founder</div>
+                    <div class="pastor-name">Very Rev Henry Ampomah-Boateng</div>
+                    <div class="card-desc">Visionary leader and founder of GPCC.</div>
+                  </div>
+                  <button class="view-profile-btn mt-2" onclick="window.location.href='profile-president.html'">View Profile</button>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Vice President -->
+            <div class="swiper-slide mobile-card-container">
+              <div class="card mobile-card">
+                <img src="vice-president.jpg" alt="Vice President" class="object-cover w-full bg-[#badcf7] border-b-2 border-blue-100">
+                <div class="card-content">
+                  <div class="card-title">Vice President</div>
+                  <div class="pastor-name">Lady Perpetual Ampomah-Boateng</div>
+                  <div class="card-desc">Guiding our youth to grow in faith and community engagement.</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Associate Pastors -->
+            <div class="swiper-slide mobile-card-container">
+              <div class="card mobile-card">
+                <img src="pastor-benjamin.jpg" alt="Associate Pastor" class="object-cover w-full bg-[#badcf7] border-b-2 border-blue-100">
+                <div class="card-content">
+                  <div class="card-title">Associate Pastor</div>
+                  <div class="pastor-name">Pastor Benjamin Gogoe</div>
+                  <div class="card-desc">Leading our congregation in heartfelt worship and praise every Sunday.</div>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide mobile-card-container">
+              <div class="card mobile-card">
+                <img src="pastor-ruby.png" alt="Associate Pastor" class="object-cover w-full bg-[#badcf7] border-b-2 border-blue-100">
+                <div class="card-content">
+                  <div class="card-title">Associate Pastor</div>
+                  <div class="pastor-name">Rev Dr. Mrs Ruby Aikins-Larbi</div>
+                  <div class="card-desc">Fostering a culture of prayer and support within our church family.</div>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide mobile-card-container">
+              <div class="card mobile-card">
+                <img src="pastor-paulina.png" alt="Associate Pastor" class="object-cover w-full bg-[#badcf7] border-b-2 border-blue-100">
+                <div class="card-content">
+                  <div class="card-title">Associate Pastor</div>
+                  <div class="pastor-name">Rev Mrs. Paulina Simpson</div>
+                  <div class="card-desc">Explore exciting opportunities to serve and grow in our vibrant community.</div>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide mobile-card-container">
+              <div class="card mobile-card">
+                <img src="pastor-wiafe.png" alt="Associate Pastor" class="object-cover w-full bg-[#badcf7] border-b-2 border-blue-100">
+                <div class="card-content">
+                  <div class="card-title">Associate Pastor</div>
+                  <div class="pastor-name">Pastor Samuel Konadu Wiafe</div>
+                  <div class="card-desc">Become part of our mission-driven team and make a difference.</div>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide mobile-card-container">
+              <div class="card mobile-card">
+                <img src="pastor-maxwell.png" alt="Associate Pastor" class="object-cover w-full bg-[#badcf7] border-b-2 border-blue-100">
+                <div class="card-content">
+                  <div class="card-title">Associate Pastor</div>
+                  <div class="pastor-name">Rec Maxwell Mensah Brayie</div>
+                  <div class="card-desc">Connecting our church with the community through service and outreach initiatives.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="swiper-pagination"></div>
+        </div>
+        
+        <!-- Better positioned navigation buttons -->
+        <div class="nav-buttons-container">
+          <button class="nav-button" id="swiper-prev-btn" disabled>Previous</button>
+          <button class="nav-button" id="swiper-next-btn">Next</button>
+        </div>
+      </div>
+      
+      <!-- Tablet View -->
+      <div class="hidden sm:block lg:hidden">
+        <div id="tablet-grid-container" class="tablet-grid">
+          <!-- First page of cards (2x2) -->
+          <div class="card tablet-card" data-page="1">
+            <img src="president.jpg" alt="President & Founder" class="object-cover w-full h-[350px] bg-[#badcf7] border-b-2 border-blue-100">
+            <div class="card-content">
+              <div class="card-title">President & Founder</div>
+              <div class="pastor-name">Very Rev Henry Ampomah-Boateng</div>
+              <div class="card-desc">Visionary leader and founder of GPCC.</div>
+              <button class="view-profile-btn" onclick="window.location.href='profile-president.html'">View Profile</button>
+            </div>
+          </div>
+          <div class="card tablet-card" data-page="1">
+            <img src="vice-president.jpg" alt="Vice President" class="object-cover w-full h-[350px] bg-[#badcf7] border-b-2 border-blue-100">
+            <div class="card-content">
+              <div class="card-title">Vice President</div>
+              <div class="pastor-name">Lady Perpetual Ampomah-Boateng</div>
+              <div class="card-desc">Guiding our youth to grow in faith and community engagement.</div>
+            </div>
+          </div>
+          <div class="card tablet-card" data-page="1">
+            <img src="pastor-benjamin.jpg" alt="Associate Pastor" class="object-cover w-full h-[350px] bg-[#badcf7] border-b-2 border-blue-100">
+            <div class="card-content">
+              <div class="card-title">Associate Pastor</div>
+              <div class="pastor-name">Pastor Benjamin Gogoe</div>
+              <div class="card-desc">Leading our congregation in heartfelt worship and praise every Sunday.</div>
+            </div>
+          </div>
+          <div class="card tablet-card" data-page="1">
+            <img src="pastor-ruby.png" alt="Associate Pastor" class="object-cover w-full h-[350px] bg-[#badcf7] border-b-2 border-blue-100">
+            <div class="card-content">
+              <div class="card-title">Associate Pastor</div>
+              <div class="pastor-name">Rev Dr. Mrs Ruby Aikins-Larbi</div>
+              <div class="card-desc">Fostering a culture of prayer and support within our church family.</div>
+            </div>
+          </div>
+          
+          <!-- Second page of cards - initially hidden -->
+          <div class="card tablet-card hidden" data-page="2">
+            <img src="pastor-paulina.png" alt="Associate Pastor" class="object-cover w-full h-[350px] bg-[#badcf7] border-b-2 border-blue-100">
+            <div class="card-content">
+              <div class="card-title">Associate Pastor</div>
+              <div class="pastor-name">Rev Mrs. Paulina Simpson</div>
+              <div class="card-desc">Explore exciting opportunities to serve and grow in our vibrant community.</div>
+              <button class="view-profile-btn" onclick="window.location.href='profile-pastor-paulina.html'">View Profile</button>
+            </div>
+          </div>
+          <div class="card tablet-card hidden" data-page="2">
+            <img src="pastor-wiafe.png" alt="Associate Pastor" class="object-cover w-full h-[350px] bg-[#badcf7] border-b-2 border-blue-100">
+            <div class="card-content">
+              <div class="card-title">Associate Pastor</div>
+              <div class="pastor-name">Pastor Samuel Konadu Wiafe</div>
+              <div class="card-desc">Become part of our mission-driven team and make a difference.</div>
+              <button class="view-profile-btn" onclick="window.location.href='profile-pastor-wiafe.html'">View Profile</button>
+            </div>
+          </div>
+          <div class="card tablet-card hidden" data-page="2">
+            <img src="pastor-maxwell.png" alt="Associate Pastor" class="object-cover w-full h-[350px] bg-[#badcf7] border-b-2 border-blue-100">
+            <div class="card-content">
+              <div class="card-title">Associate Pastor</div>
+              <div class="pastor-name">Rec Maxwell Mensah Brayie</div>
+              <div class="card-desc">Connecting our church with the community through service and outreach initiatives.</div>
+              <button class="view-profile-btn" onclick="window.location.href='profile-pastor-maxwell.html'">View Profile</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Tablet pagination -->
+        <div class="tablet-pagination">
+          <span class="tablet-pagination-bullet active" data-page="1"></span>
+          <span class="tablet-pagination-bullet" data-page="2"></span>
+        </div>
+        
+        <!-- Tablet navigation buttons -->
+        <div class="flex justify-center mt-4 gap-6">
+          <button id="tablet-prev" class="tablet-nav-button" disabled>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <button id="tablet-next" class="tablet-nav-button">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer - now with static positioning -->
+  <footer class="w-full bg-[#181c17] text-white py-8 text-center">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="mb-3">
+        <span class="font-semibold">Address:</span>
+        P. O. Box AN 11587, Accra-North, ABLOR ADJEI OFF THE AGBOGBA-ABOKOBI ROAD
+      </div>
+      <div class="mb-3">
+        <span class="font-semibold">Contact:</span>
+        +233 (208) 180 188 &nbsp; +233 (246) 224 766 &nbsp;
+        <a href="mailto:info@gpcconline.org" class="text-blue-200 underline hover:text-blue-400">info@gpcconline.org</a>
+      </div>
+      <div class="text-xs mt-2">&copy; <span id="copyright-year"></span> GPCC. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('copyright-year').textContent = new Date().getFullYear();
+    
+    // Make buttons and updater available before Swiper init (prevents ReferenceError)
+    const prevBtn = document.getElementById('swiper-prev-btn');
+    const nextBtn = document.getElementById('swiper-next-btn');
+
+    function updateNavButtons() {
+      if (!window.pastoralSwiper || !prevBtn || !nextBtn) return;
+      prevBtn.disabled = window.pastoralSwiper.isBeginning;
+      nextBtn.disabled = window.pastoralSwiper.isEnd;
+    }
+
+    // Initialize Swiper safely
+    window.pastoralSwiper = new Swiper('.pastoral-swiper', {
+      loop: false,
+      slidesPerView: 1,
+      spaceBetween: 20,
+      centeredSlides: true,
+      pagination: { el: '.swiper-pagination', clickable: true },
+      speed: 400,
+      allowTouchMove: true,
+      effect: "slide",
+      autoHeight: true,
+      autoplay: false,
+      on: {
+        init: function() { updateNavButtons && updateNavButtons(); },
+        slideChange: function() { updateNavButtons && updateNavButtons(); }
+      }
+    });
+    
+    // Navigation button functionality (works after Swiper is ready)
+    if (prevBtn && nextBtn) {
+      prevBtn.addEventListener('click', function() {
+        window.pastoralSwiper.slidePrev();
+        updateNavButtons();
+      });
+      nextBtn.addEventListener('click', function() {
+        window.pastoralSwiper.slideNext();
+        updateNavButtons();
+      });
+      // Initial state (in case init hasn’t fired yet)
+      updateNavButtons();
+    }
+
+    // Hamburger menu toggle (open/close) + outside click to close
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobilePanel = document.getElementById('mobile-panel');
+
+    menuToggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const isHidden = mobileMenu.classList.contains('hidden');
+      mobileMenu.classList.toggle('hidden', !isHidden ? true : false);
+      if (isHidden) mobileMenu.classList.remove('hidden');
+      menuToggle.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+    });
+
+    mobileMenu.addEventListener('click', function(e) {
+      if (!mobilePanel.contains(e.target)) {
+        mobileMenu.classList.add('hidden');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Mobile ABOUT US dropdown toggle
+    const mobileAboutToggle = document.getElementById('mobile-about-toggle');
+    const mobileAboutDropdown = document.getElementById('mobile-about-dropdown');
+    
+    mobileAboutToggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      mobileAboutDropdown.classList.toggle('hidden');
+    });
+    
+    // Desktop ABOUT US dropdown toggle
+    const aboutBtn = document.getElementById('about-us-desktop-btn');
+    const aboutDropdown = document.getElementById('about-us-desktop-dropdown');
+    let aboutOpen = false;
+    
+    aboutBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      aboutDropdown.classList.toggle('hidden');
+      aboutOpen = !aboutOpen;
+      
+      document.addEventListener('click', function handler(ev) {
+        if (aboutOpen && !aboutDropdown.contains(ev.target) && ev.target !== aboutBtn) {
+          aboutDropdown.classList.add('hidden');
+          aboutOpen = false;
+          document.removeEventListener('click', handler);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Global Peace Christian Centre</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <!-- SwiperJS CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <style>
+    .modal-animate {
+      animation: modalPop .4s cubic-bezier(.35,.85,.39,1.1);
+    }
+    @keyframes modalPop {
+      0% { opacity: 0; transform: scale(0.9);}
+      100% { opacity: 1; transform: scale(1);}
+    }
+    .glass {
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px) saturate(180%);
+      box-shadow: 0 6px 36px 0 rgba(55,100,150,0.25);
+      border: 2px solid #dbeafe;
+    }
+    .modal-list li {
+      margin-bottom: 0.75rem;
+      padding: 0.85rem 1.1rem;
+      background: linear-gradient(110deg, #eaf6fb 70%, #badcf7 100%);
+      border-radius: 0.9rem;
+      box-shadow: 0 2px 12px 0 rgba(80,104,120,0.07);
+      font-size: 1.08rem;
+      color: #222b3a;
+      border: 1px solid #e0e7ef;
+    }
+    .modal-list li:last-child {margin-bottom:0;}
+    .modal-shadow {
+      box-shadow: 0 10px 48px 0 rgba(37, 60, 125, 0.18);
+    }
+    /* Responsive hover only for pointer devices */
+    @media (hover: hover) and (pointer: fine) {
+      .mini-card:hover {
+        transform: scale(1.06);
+        box-shadow: 0 8px 32px 0 rgba(37, 60, 125, 0.18);
+        z-index: 2;
+      }
+      .mini-card:hover svg {
+        transform: scale(1.13) translateY(-4px);
+        filter: drop-shadow(0 2px 8px #badcf7);
+      }
+    }
+
+    /* Motto Card Styles */
+    .glassy-motto {
+      background: rgba(255,255,255,0.85);
+      border-radius: 1.2rem;
+      box-shadow: 0 6px 36px 0 rgba(55,100,150,0.13);
+      border-left: 8px solid;
+      display: flex;
+      align-items: center;
+      min-width: 260px;
+      max-width: 420px;
+      margin: 0 auto;
+      animation: fadeInMotto 0.7s cubic-bezier(.35,.85,.39,1.1);
+      position: relative;
+      overflow: hidden;
+    }
+    .motto-accent {
+      width: 8px;
+      height: 100%;
+      border-radius: 1rem 0 0 1rem;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    @keyframes fadeInMotto {
+      0% { opacity: 0; transform: translateY(20px);}
+      100% { opacity: 1; transform: translateY(0);}
+    }
+
+    /* Swiper Pagination Custom */
+    .motto-pagination.swiper-pagination-bullets {
+      bottom: -18px !important;
+      text-align: center;
+    }
+    .motto-pagination .swiper-pagination-bullet {
+      background: #2563eb;
+      opacity: 0.5;
+      width: 12px;
+      height: 12px;
+      margin: 0 4px !important;
+      transition: background 0.3s, opacity 0.3s;
+    }
+    .motto-pagination .swiper-pagination-bullet-active {
+      background: #ef4444;
+      opacity: 1;
+      box-shadow: 0 0 0 2px #badcf7;
+    }
+    /* Show the thank-you when the anchor is targeted */
+    #newsletter-thanks:target { display: block; }
+  </style>
+</head>
+<body class="bg-[#badcf7] font-sans">
+
+  <!-- HEADER / NAVBAR (no hamburger on desktop) -->
+  <header class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur border-b border-blue-200">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-3 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2">
+        <img src="logo.png" alt="GPCC Logo" class="h-10 w-10 object-contain rounded-sm border border-blue-900/40 bg-transparent">
+        <!-- Mobile short name, Desktop full name -->
+        <span class="text-xl font-bold text-blue-900 inline lg:hidden">GPCC</span>
+        <span class="hidden lg:inline text-xl font-bold text-blue-900">Global Peace Christian Centre</span>
+      </a>
+      <nav class="hidden lg:flex items-center gap-4 bg-white/70 rounded-full border-2 border-blue-900 px-6 py-2 shadow-lg">
+        <a href="index.html" class="px-4 py-2 rounded-full bg-blue-900 text-white font-semibold shadow">HOME</a>
+        <div class="relative">
+          <button id="about-us-desktop-btn"
+                  class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold flex items-center gap-2 hover:bg-blue-50 transition focus:outline-none"
+                  aria-haspopup="true" aria-expanded="false">
+            ABOUT US
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6"/>
+            </svg>
+          </button>
+          <ul id="about-us-desktop-dropdown"
+    class="absolute top-full left-0 mt-2 hidden bg-white border border-blue-200 rounded-lg shadow-lg w-72 py-2"
+    role="menu">
+  <li><a href="who-we-are.html" class="block px-4 py-2 hover:bg-blue-50">Who We Are</a></li>
+  <li><a href="pastoral-board.html" class="block px-4 py-2 hover:bg-blue-50">The Pastoral Board</a></li>
+  <li><a href="eldership-deacons.html" class="block px-4 py-2 hover:bg-blue-50">Eldership &amp; Deacons</a></li>
+  <li><a href="community-journey.html" class="block px-4 py-2 hover:bg-blue-50">Our Journey Through the Community</a></li>
+</ul>
+        </div>
+        <a href="ministries.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MINISTRIES</a>
+        <a href="#" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MEDIA CENTER</a>
+        <a href="#" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">EVENTS</a>
+        <a href="#" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">GALLERY</a>
+        <a href="#" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">CONTACT US</a>
+      </nav>
+      <!-- Hamburger (mobile only) -->
+      <button id="menu-toggle" class="lg:hidden fixed top-4 right-4 focus:outline-none z-50"
+        aria-label="Open Menu" aria-expanded="false">
+        <span class="flex items-center justify-center w-11 h-11 rounded-full bg-blue-900 hover:bg-blue-700 shadow-lg transition duration-200">
+          <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+        </span>
+      </button>
+    </div>
+    <div id="mobile-menu"
+         class="fixed inset-0 hidden justify-start items-start bg-[#badcf7]/95 z-50 lg:hidden">
+      <div id="mobile-panel" class="absolute right-4 top-20 w-80 px-2 py-4 rounded-2xl bg-white shadow-2xl border border-blue-200 text-center glass modal-animate">
+        <nav class="space-y-4 mt-3">
+          <a href="index.html" class="block w-full px-5 py-3 rounded-full bg-blue-900 text-white font-semibold">HOME</a>
+          <div>
+            <button id="mobile-about-toggle"
+                    class="w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold flex items-center justify-center gap-2 focus:outline-none">
+              ABOUT US
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6"/>
+              </svg>
+            </button>
+            <ul id="mobile-about-dropdown" class="hidden mt-2 space-y-2">
+  <li><a href="who-we-are.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Who We Are</a></li>
+  <li><a href="pastoral-board.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">The Pastoral Board</a></li>
+  <li><a href="eldership-deacons.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Eldership &amp; Deacons</a></li>
+  <li><a href="community-journey.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Our Journey Through the Community</a></li>
+</ul>
+          </div>
+          <a href="ministries.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MINISTRIES</a>
+          <a href="#" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MEDIA CENTER</a>
+          <a href="#" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">EVENTS</a>
+          <a href="#" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">GALLERY</a>
+          <a href="#" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">CONTACT US</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="h-[72px]"></div>
+
+  <!-- HERO SWIPER (4 images) -->
+  <section class="w-full max-w-5xl mx-auto mt-8 px-4 text-center">
+    <div class="bg-[#a2c6e0] rounded-2xl shadow-xl border border-blue-300 p-6 sm:p-8 md:p-10 flex flex-col gap-4 sm:gap-5 md:gap-6">
+      <h2 class="text-xl sm:text-2xl font-serif italic text-blue-900 drop-shadow-md tracking-wide"
+          style="font-family:'Playfair Display', serif;">
+         Welcome to the 
+      </h2>
+      <div class="max-w-xl sm:max-w-2xl md:max-w-3xl mx-auto">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-blue-900 leading-tight drop-shadow-lg">
+          Global Peace Christian Centre
+        </h1>
+        <p class="mt-3 sm:mt-4 text-base sm:text-lg md:text-xl font-medium text-gray-800 leading-relaxed">
+          Global Peace Christian Centre is a non-denominational, multicultural, egalitarian church of Jesus Christ.
+          We are dedicated to helping people find, grow, and follow Jesus Christ.
+        </p>
+      </div>
+      <div class="mt-6">
+        <div class="swiper hero-swiper rounded-2xl overflow-hidden">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <img src="hero1.jpg" alt="Hero 1" class="w-full h-64 sm:h-80 md:h-[420px] lg:h-[520px] object-cover"/>
+            </div>
+            <div class="swiper-slide">
+              <img src="hero2.jpg" alt="Hero 2" class="w-full h-64 sm:h-80 md:h-[420px] lg:h-[520px] object-cover"/>
+            </div>
+            <div class="swiper-slide">
+              <img src="hero3.jpg" alt="Hero 3" class="w-full h-64 sm:h-80 md:h-[420px] lg:h-[520px] object-cover"/>
+            </div>
+            <div class="swiper-slide">
+              <img src="hero4.jpg" alt="Hero 4" class="w-full h-64 sm:h-80 md:h-[420px] lg:h-[520px] object-cover"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    </div>
+  </section>
+
+  <!-- FELLOWSHIP SECTION -->
+  <section class="w-full max-w-7xl mx-auto mt-10 px-4">
+    <div class="bg-[#a2c6e0] rounded-2xl shadow-lg border border-blue-300 p-6 md:p-8">
+      <div class="text-center max-w-3xl mx-auto">
+        <h2 class="text-3xl font-serif text-blue-900">
+          Fellowship with us at <span class="italic">"PEACE TEMPLE"</span>
+        </h2>
+        <p class="text-gray-800 mt-3">
+          Experience worship in our state-of-the-art auditorium, featuring acoustics, lighting, and seating for 2,000+, designed to create an atmosphere where hearts meet the presence of God.
+        </p>
+      </div>
+      <div class="mt-6 flex justify-center">
+        <img src="map.png" alt="Map to Peace Temple"
+             class="w-full max-w-xl h-56 sm:h-72 md:h-80 lg:h-[420px] object-cover rounded-xl border border-blue-200 shadow-md">
+      </div>
+      <div class="mt-6 flex flex-wrap gap-3 justify-center">
+  <button id="schedule-btn"
+          class="bg-white text-blue-900 font-semibold px-6 py-2 rounded-md shadow border border-blue-300 hover:bg-blue-50 transition">
+    View Schedule
+  </button>
+  <a href="https://www.google.com/maps/place/Global+Peace+Christian+Centre+(GPCC)/@5.7171585,-0.2102711,17z/data=!4m6!3m5!1s0xfdf9dedc886fb2f:0x4a651067c9806910!8m2!3d5.7171532!4d-0.2076962!16s%2Fg%2F11b6_9jv20?entry=ttu&g_ep=EgoyMDI1MDgxOS4wIKXMDSoASAFQAw%3D%3D"
+     target="_blank"
+     class="bg-white text-blue-900 font-semibold px-6 py-2 rounded-md shadow border border-blue-300 hover:bg-blue-50 transition">
+    View in Maps
+  </a>
+</div>
+
+    </div>
+  </section>
+
+  <!-- WARM WELCOME SECTION -->
+  <section class="w-full max-w-5xl mx-auto mt-8 px-4">
+    <div class="bg-white/90 rounded-2xl shadow-lg border border-blue-200 p-6 md:p-8 flex flex-col md:flex-row gap-8 items-center justify-center">
+      <div class="flex-shrink-0">
+        <img src="headpastor.jpg" alt="Head Pastor" class="w-44 h-56 object-cover rounded-xl border-2 border-blue-200 shadow-lg"/>
+        <p class="text-xs text-gray-700 italic mt-2 text-center">Very Reverend Head &amp; President</p>
+      </div>
+      <div class="max-w-2xl flex flex-col items-center justify-center text-center">
+        <h3 class="text-2xl font-extrabold text-blue-900 mb-3">A Warm Welcome From Our Head Pastor</h3>
+        <p class="text-gray-800 font-medium">
+          At Global Peace Christian Centre, it's our joy to have you, and to serve as home, family and partners. Be open to faith, love, and encounters on this spiritual journey.
+        </p>
+        <button id="message-btn"
+                class="mt-4 px-5 py-2 bg-red-600 text-white font-bold rounded-lg shadow hover:bg-red-700 transition block mx-auto">
+          View Message
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEW SECTION (example, after warm message) -->
+<!-- ...existing code... -->
+
+<!-- MINI DIRECTORY SECTION (Improved) -->
+<section class="w-full max-w-5xl mx-auto mt-12 px-4">
+  <div class="bg-[#eaf6fb] rounded-2xl shadow-lg border border-blue-200 p-8 flex flex-col gap-8">
+    <h2 class="text-3xl font-serif text-blue-900 text-center mb-6">Your Journey Begins Here at GPCC</h2>
+    <div class="flex flex-col md:flex-row gap-6 justify-center items-stretch">
+      <!-- Ministries -->
+      <a href="ministries.html" class="mini-card group flex-1 bg-white rounded-xl border-2 border-blue-300 shadow-md p-6 flex flex-col items-center transition-all duration-200 hover:scale-105 hover:shadow-2xl">
+        <svg class="w-10 h-10 text-blue-900 mb-3 transition-transform duration-200 group-hover:-translate-y-1 group-hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-2.21 0-4 1.79-4 4v4h8v-4c0-2.21-1.79-4-4-4z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 20h12"/>
+        </svg>
+        <h3 class="text-xl font-bold text-blue-900 mb-2">Our Ministries</h3>
+        <p class="text-gray-700 text-center">Find out more on the church's inner working and member ministries (MEN, WOMEN, YOUTH, CHILDREN).</p>
+      </a>
+      <!-- History -->
+      <a href="history.html" class="mini-card group flex-1 bg-white rounded-xl border-2 border-blue-300 shadow-md p-6 flex flex-col items-center transition-all duration-200 hover:scale-105 hover:shadow-2xl">
+        <svg class="w-10 h-10 text-blue-900 mb-3 transition-transform duration-200 group-hover:-translate-y-1 group-hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6l4 2"/>
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+        </svg>
+        <h3 class="text-xl font-bold text-blue-900 mb-2">Our History</h3>
+        <p class="text-gray-700 text-center">Learn about the foundations of the church, where we began, where we are now and where we hope to be in the near future.</p>
+      </a>
+      <!-- Pastoral/Elders Board -->
+      <a href="pastoral-board.html" class="mini-card group flex-1 bg-white rounded-xl border-2 border-blue-300 shadow-md p-6 flex flex-col items-center transition-all duration-200 hover:scale-105 hover:shadow-2xl">
+        <svg class="w-10 h-10 text-blue-900 mb-3 transition-transform duration-200 group-hover:-translate-y-1 group-hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 00-3-3.87"/>
+          <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2" fill="none"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 11a7 7 0 00-7 7v2h14v-2a7 7 0 00-7-7z"/>
+        </svg>
+        <h3 class="text-xl font-bold text-blue-900 mb-2">Meet Our Pastoral / Elders Board</h3>
+        <p class="text-gray-700 text-center">Find out more on God's chosen leaders for our esteemed church.</p>
+      </a>
+    </div>
+    <!-- Motto Swiper -->
+    <div class="mt-8">
+      <div class="swiper motto-swiper rounded-xl overflow-hidden bg-transparent">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide flex justify-center items-center h-28">
+            <div class="motto-card glassy-motto border-blue-700">
+              <div class="motto-accent bg-blue-700"></div>
+              <span class="text-2xl md:text-3xl font-bold text-blue-900 px-6 py-2">Blessed Beyond Measure!!!</span>
+            </div>
+          </div>
+          <div class="swiper-slide flex justify-center items-center h-28">
+            <div class="motto-card glassy-motto border-red-600">
+              <div class="motto-accent bg-red-600"></div>
+              <span class="text-2xl md:text-3xl font-bold text-red-700 px-6 py-2">Moving Beyond the Skies!!!</span>
+            </div>
+          </div>
+          <div class="swiper-slide flex justify-center items-center h-28">
+            <div class="motto-card glassy-motto border-blue-700">
+              <div class="motto-accent bg-blue-700"></div>
+              <span class="text-2xl md:text-3xl font-bold text-blue-900 px-6 py-2">Doing the Impossible!!!</span>
+            </div>
+          </div>
+          <div class="swiper-slide flex justify-center items-center h-28">
+            <div class="motto-card glassy-motto border-red-600">
+              <div class="motto-accent bg-red-600"></div>
+              <span class="text-2xl md:text-3xl font-bold text-red-700 px-6 py-2">Akɔ wɔ ejoo efoi!!!</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-pagination motto-pagination"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ...existing code... -->
+
+<!-- TESTIMONIES PREVIEW SECTION -->
+<section class="w-full max-w-5xl mx-auto mt-12 px-4">
+  <div class="bg-[#eaf6fb] rounded-2xl shadow-lg border border-blue-200 p-8 flex flex-col gap-8">
+    <h2 class="text-3xl font-serif text-blue-900 mb-4">Our Testimonies</h2>
+    <div class="bg-white/80 rounded-xl p-6 shadow flex flex-col md:flex-row gap-6 items-center">
+      <div class="flex-1 flex flex-col items-center">
+        <img src="miracle-survival.png" alt="A Miracle of Survival" class="w-full max-w-xs rounded-lg shadow-lg mb-3 object-cover"/>
+        <h3 class="text-lg font-bold text-blue-900 mb-1">'A Miracle of Survival'</h3>
+        <p class="text-gray-700 text-sm mb-2">Take a minute to share in the testimony of Mr Alexander Gogoe.</p>
+        <a href="testimonies.html#miracle-survival" class="px-5 py-2 bg-blue-700 text-white rounded-full font-semibold shadow hover:bg-blue-900 transition">READ</a>
+      </div>
+      <div class="flex-1 flex flex-col items-center">
+        <img src="jesus-walks.png" alt="Jesus Walks Into My Room" class="w-full max-w-xs rounded-lg shadow-lg mb-3 object-cover"/>
+        <h3 class="text-lg font-bold text-blue-900 mb-1">Jesus Walks Into My Room</h3>
+        <p class="text-gray-700 text-sm mb-2">The book 'JESUS WALKS INTO MY ROOM' has manifested numerous testimonies from its readers, a few of which we have curated for you.</p>
+        <a href="testimonies.html#jesus-walks-room" class="px-5 py-2 bg-blue-700 text-white rounded-full font-semibold shadow hover:bg-blue-900 transition">READ</a>
+      </div>
+    </div>
+    <div class="flex justify-end mt-4">
+      <a href="testimonies.html" class="px-5 py-2 bg-blue-100 text-blue-900 rounded-full font-semibold shadow hover:bg-blue-200 transition">View all</a>
+    </div>
+  </div>
+</section>
+<!-- Congregation Gallery Preview Section -->
+<section class="w-full max-w-5xl mx-auto mt-12 px-4">
+  <div class="bg-[#eaf6fb] rounded-2xl shadow-lg border border-blue-200 p-8 flex flex-col gap-6">
+    <h2 class="text-3xl font-serif text-blue-900 text-center mb-2">Congregation Gallery</h2>
+    <p class="text-center text-gray-700 mb-6">Browse through our curated photo gallery</p>
+    <!-- Desktop Grid -->
+    <div class="hidden md:grid grid-cols-3 gap-4">
+      <div class="relative group">
+        <img src="gallery1.jpg" alt="Congregation listening during service" class="w-full h-48 object-cover rounded-lg shadow-md"/>
+        <span class="absolute bottom-2 left-2 bg-blue-900/80 text-white text-xs px-3 py-1 rounded opacity-0 group-hover:opacity-100 transition">Congregation listening during service</span>
+      </div>
+      <div class="relative group">
+        <img src="gallery2.jpg" alt="Joyful worship moment" class="w-full h-48 object-cover rounded-lg shadow-md"/>
+        <span class="absolute bottom-2 left-2 bg-blue-900/80 text-white text-xs px-3 py-1 rounded opacity-0 group-hover:opacity-100 transition">Joyful worship moment</span>
+      </div>
+      <div class="relative group">
+        <img src="gallery3.jpg" alt="Praise and prayer" class="w-full h-48 object-cover rounded-lg shadow-md"/>
+        <span class="absolute bottom-2 left-2 bg-blue-900/80 text-white text-xs px-3 py-1 rounded opacity-0 group-hover:opacity-100 transition">Praise and prayer</span>
+      </div>
+      <div class="relative group">
+        <img src="gallery4.jpg" alt="Choir leading worship" class="w-full h-48 object-cover rounded-lg shadow-md"/>
+        <span class="absolute bottom-2 left-2 bg-blue-900/80 text-white text-xs px-3 py-1 rounded opacity-0 group-hover:opacity-100 transition">Choir leading worship</span>
+      </div>
+      <div class="relative group">
+        <img src="gallery5.jpg" alt="Scripture reading and teaching" class="w-full h-48 object-cover rounded-lg shadow-md"/>
+        <span class="absolute bottom-2 left-2 bg-blue-900/80 text-white text-xs px-3 py-1 rounded opacity-0 group-hover:opacity-100 transition">Scripture reading and teaching</span>
+      </div>
+      <div class="relative group">
+        <img src="gallery6.jpg" alt="Congregation in praise" class="w-full h-48 object-cover rounded-lg shadow-md"/>
+        <span class="absolute bottom-2 left-2 bg-blue-900/80 text-white text-xs px-3 py-1 rounded opacity-0 group-hover:opacity-100 transition">Congregation in praise</span>
+      </div>
+    </div>
+    <!-- Mobile Swiper -->
+    <div class="md:hidden">
+      <div class="swiper gallery-swiper rounded-xl overflow-hidden">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide flex flex-col items-center">
+            <img src="gallery1.jpg" alt="Congregation listening during service" class="w-full h-56 object-cover rounded-lg shadow-md"/>
+            <span class="mt-2 text-xs text-blue-900 bg-blue-100 px-3 py-1 rounded">Congregation listening during service</span>
+          </div>
+          <div class="swiper-slide flex flex-col items-center">
+            <img src="gallery2.jpg" alt="Joyful worship moment" class="w-full h-56 object-cover rounded-lg shadow-md"/>
+            <span class="mt-2 text-xs text-blue-900 bg-blue-100 px-3 py-1 rounded">Joyful worship moment</span>
+          </div>
+          <div class="swiper-slide flex flex-col items-center">
+            <img src="gallery3.jpg" alt="Praise and prayer" class="w-full h-56 object-cover rounded-lg shadow-md"/>
+            <span class="mt-2 text-xs text-blue-900 bg-blue-100 px-3 py-1 rounded">Praise and prayer</span>
+          </div>
+          <div class="swiper-slide flex flex-col items-center">
+            <img src="gallery4.jpg" alt="Choir leading worship" class="w-full h-56 object-cover rounded-lg shadow-md"/>
+            <span class="mt-2 text-xs text-blue-900 bg-blue-100 px-3 py-1 rounded">Choir leading worship</span>
+          </div>
+          <div class="swiper-slide flex flex-col items-center">
+            <img src="gallery5.jpg" alt="Scripture reading and teaching" class="w-full h-56 object-cover rounded-lg shadow-md"/>
+            <span class="mt-2 text-xs text-blue-900 bg-blue-100 px-3 py-1 rounded">Scripture reading and teaching</span>
+          </div>
+          <div class="swiper-slide flex flex-col items-center">
+            <img src="gallery6.jpg" alt="Congregation in praise" class="w-full h-56 object-cover rounded-lg shadow-md"/>
+            <span class="mt-2 text-xs text-blue-900 bg-blue-100 px-3 py-1 rounded">Congregation in praise</span>
+          </div>
+        </div>
+        <div class="swiper-pagination gallery-pagination"></div>
+      </div>
+    </div>
+    <div class="flex justify-end mt-4">
+      <a href="gallery.html" class="px-5 py-2 bg-blue-700 text-white rounded-full font-semibold shadow hover:bg-blue-900 transition">View Full Gallery</a>
+    </div>
+  </div>
+</section>
+<!-- ...existing code... -->
+
+  <!-- SERVICE SCHEDULE POPUP (centered, bigger, glossy, animated, elegant list) -->
+<div id="schedule-popup" class="fixed inset-0 hidden justify-center items-center bg-black/50 z-[70] p-4">
+  <div id="schedule-dialog"
+       class="w-full max-w-3xl bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl ring-1 ring-blue-100 modal-animate
+              /* changed: make scrollable within viewport */
+              max-h-[90vh] overflow-y-auto">
+    <!-- Header -->
+    <div class="/* changed: make sticky so close button stays visible */ sticky top-0 z-10 w-full px-8 py-6 bg-[#f6fafd] border-b border-blue-100">
+      <h2 class="text-2xl md:text-3xl font-bold text-blue-900 text-center">Fellowship Service Times</h2>
+      <button class="close-schedule absolute top-6 right-8 text-3xl leading-none text-blue-900" aria-label="Close schedule popup">&times;</button>
+    </div>
+
+    <!-- Elegant list: line-by-line -->
+    <div class="w-full px-8 py-8">
+      <div class="space-y-4 max-w-2xl mx-auto">
+
+        <!-- Wednesday -->
+        <div class="rounded-xl p-5 ring-1 ring-blue-100 bg-gradient-to-br from-white to-blue-50 shadow-sm">
+          <p class="text-blue-900 font-bold text-lg">Wednesday Bible Teaching Service</p>
+          <p class="text-slate-700">6:30pm – 8:30pm</p>
+          <p class="text-red-600 font-semibold flex items-center mt-1">
+            <svg class="w-5 h-5 mr-2 text-red-500" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 3l-8 4v2h2v8H4v2h16v-2h-2V9h2V7l-8-4zm0 4.5c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zM12 16c-1.1 0-2 .9-2 2h4c0-1.1-.9-2-2-2zm6-5V9H6v2h12z"/>
+            </svg>
+            Peace Temple
+          </p>
+        </div>
+
+        <!-- Friday -->
+        <div class="rounded-xl p-5 ring-1 ring-blue-100 bg-gradient-to-br from-white to-blue-50 shadow-sm">
+          <p class="text-blue-900 font-bold text-lg">Friday Prayer Meeting</p>
+          <p class="text-slate-700">6:30pm – 8:30pm</p>
+          <p class="text-red-600 font-semibold flex items-center mt-1">
+            <svg class="w-5 h-5 mr-2 text-red-500" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 3l-8 4v2h2v8H4v2h16v-2h-2V9h2V7l-8-4zm0 4.5c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zM12 16c-1.1 0-2 .9-2 2h4c0-1.1-.9-2-2-2zm6-5V9H6v2h12z"/>
+            </svg>
+            Peace Temple
+          </p>
+        </div>
+
+        <!-- Saturday -->
+        <div class="rounded-xl p-5 ring-1 ring-blue-100 bg-gradient-to-br from-white to-blue-50 shadow-sm">
+          <p class="text-blue-900 font-bold text-lg">Saturday Healing & Deliverance</p>
+          <p class="text-slate-700">8:30am – 11:30am</p>
+          <p class="text-red-600 font-semibold flex items-center mt-1">
+            <svg class="w-5 h-5 mr-2 text-red-500" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 3l-8 4v2h2v8H4v2h16v-2h-2V9h2V7l-8-4zm0 4.5c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zM12 16c-1.1 0-2 .9-2 2h4c0-1.1-.9-2-2-2zm6-5V9H6v2h12z"/>
+            </svg>
+            Peace Temple
+          </p>
+          <p class="text-green-700 font-semibold mt-2 flex items-center">
+            <svg class="w-4 h-4 mr-2 text-green-600" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M5 21c6.5 0 14-5 14-14 0-.34-.01-.67-.04-1C17.9 7.62 14.1 9 10 9 7.3 9 4.8 8.35 3 7.3c.1 7.25 4.96 12.9 11 13.64V21H5z"/>
+            </svg>
+            Achimota Forest Grounds
+          </p>
+        </div>
+
+        <!-- Sunday -->
+        <div class="rounded-xl p-5 ring-1 ring-blue-100 bg-gradient-to-br from-white to-blue-50 shadow-sm">
+          <p class="text-blue-900 font-bold text-lg">Sunday Church Service</p>
+          <p class="text-slate-700">8:30am – 11:30am</p>
+          <p class="text-red-600 font-semibold flex items-center mt-1">
+            <svg class="w-5 h-5 mr-2 text-red-500" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 3l-8 4v2h2v8H4v2h16v-2h-2V9h2V7l-8-4zm0 4.5c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zM12 16c-1.1 0-2 .9-2 2h4c0-1.1-.9-2-2-2zm6-5V9H6v2h12z"/>
+            </svg>
+            Peace Temple
+          </p>
+          <p class="text-slate-700 mt-2">Children's Church (Ages 3-12): 10:00am – 11:00am</p>
+        </div>
+      </div>
+    </div>
+    
+
+
+
+  <div class="flex flex-col md:flex-row items-center gap-4">
+  <a href="https://www.google.com/maps/place/Global+Peace+Christian+Centre+(GPCC)/@5.7171585,-0.2102711,17z/data=!4m6!3m5!1s0xfdf9dedc886fb2f:0x4a651067c9806910!8m2!3d5.7171532!4d-0.2076962!16s%2Fg%2F11b6_9jv20?entry=ttu&g_ep=EgoyMDI1MDgxOS4wIKXMDSoASAFQAw%3D%3D"
+     target="_blank" rel="noopener"
+     class="bg-green-700 hover:bg-green-800 text-white font-semibold py-3 px-7 rounded-full transition">
+    Locate Us on Google Maps
+  </a>
+</div>
+
+
+
+    <!-- Footer -->
+    <footer class="w-full px-8 py-4 bg-[#000000] border-t border-blue-100 text-center">
+      <p class="text-slate-600 text-sm">
+        &copy; <span id="copyright-year"></span>
+        <span class="font-semibold">Global Peace Christian Centre</span>
+      </p>
+    </footer>
+  </div>
+</div>
+
+<!-- Put this script once per page (can be outside the modal) -->
+<script>
+  (function () {
+    var el = document.getElementById('copyright-year');
+    if (el) el.textContent = new Date().getFullYear();
+  })();
+</script>
+
+  <!-- MESSAGE POPUP (FIXED VERSION) -->
+  <div id="message-popup" class="fixed inset-0 hidden justify-center items-center bg-black/40 z-[61] p-4">
+  <div id="message-dialog" class="w-full max-w-4xl h-[80vh] glass modal-animate modal-shadow rounded-2xl border overflow-hidden relative flex flex-col">
+    
+    <!-- Background image (centered and covers entire modal) -->
+    <div class="absolute inset-0">
+      <img src="headpastore.jpg" alt="Pastor Message Photo"
+           class="w-full h-full object-cover object-center"/>
+      <!-- Overlay for contrast -->
+      <div class="absolute inset-0 bg-black/30"></div>
+    </div>
+
+    <!-- Content over the image -->
+    <div class="relative flex flex-col justify-center items-center text-center px-8 py-8 space-y-6 w-full text-white h-full">
+      <div class="relative w-full">
+        <h2 class="text-3xl md:text-4xl font-bold drop-shadow-lg">
+          From Our Pastor's Heart
+        </h2>
+        <button class="close-message text-3xl leading-none absolute -top-2 right-0 text-white">&times;</button>
+      </div>
+      <p class="text-white/90 max-w-3xl leading-relaxed">
+        Beloved, welcome to Global Peace Christian Centre. May the peace of Christ steady your heart,
+        the joy of the Spirit renew your strength, and the love of the Father anchor your hope.
+        You are seen, valued, and called. Step forward with courage—God goes before you!
+      </p>
+      <ul class="list-disc pl-5 text-white/90 max-w-3xl text-left">
+        <li>Jesus meets you right where you are—and walks with you onward.</li>
+        <li>Grace is not a finish line; it’s the path we travel daily.</li>
+        <li>Community is God’s design for growth; you don’t have to do life alone.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- DONATE SECTION -->
+<section id="donate" class="w-full max-w-3xl md:max-w-7xl mx-auto mt-14 px-4 md:px-12">
+  <div class="bg-sky-100 px-4 py-10 md:py-16 rounded-[30px] shadow-md md:grid md:grid-cols-2 md:gap-12 md:items-center">
+
+    <!-- Left: Donation Hero Slider (Mobile: full width on top, Desktop: left column) -->
+    <div class="mb-8 md:mb-0">
+      <div class="swiper donation-swiper rounded-[30px] overflow-hidden shadow-lg">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <img src="donation1.jpg" alt="Supporting Sovereign Praise 2025"
+                 class="w-full h-56 sm:h-72 md:h-96 object-cover">
+          </div>
+          <div class="swiper-slide">
+            <img src="donation2.jpg" alt="Community Donations"
+                 class="w-full h-56 sm:h-72 md:h-96 object-cover">
+          </div>
+          <div class="swiper-slide">
+            <img src="donation3.jpg" alt="Development of GPCC Phase 2"
+                 class="w-full h-56 sm:h-72 md:h-96 object-cover">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Content -->
+    <div class="text-center md:text-left">
+      <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-6">
+        Support Our Ministry: Donations, Causes & Project Development
+      </h2>
+
+      <!-- Why Donate dropdown -->
+      <div class="mb-6">
+        <details class="bg-white rounded-[30px] shadow p-4 cursor-pointer">
+          <summary class="font-semibold text-lg text-blue-800 cursor-pointer">
+            Why should I donate?
+          </summary>
+          <ul class="mt-3 text-gray-700 space-y-2 list-disc pl-6">
+            <li>
+              Facilitation of Sovereign Reign Concert
+              (<a href="events.html#sovereign-praise-concert" class="text-blue-700 underline">Sovereign Praise Concert</a>)
+            </li>
+            <li>
+              Donations to various causes
+              (<a href="gallery.html#donations-gallery" class="text-blue-700 underline">Donations Gallery</a>)
+            </li>
+            <li>Development of Phase 2 GPCC Project</li>
+          </ul>
+        </details>
+      </div>
+
+      <!-- CTA Button -->
+      <div>
+        <a href="donations.html"
+           class="inline-flex items-center justify-center w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-7 rounded-[30px] shadow-lg transition
+                  focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-300"
+           aria-label="Donate now to support Global Peace Christian Centre">
+          Donate Now
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER SIGNUP -->
+<section id="newsletter" class="w-full max-w-3xl md:max-w-7xl mx-auto mt-14 px-4 md:px-12">
+  <div class="bg-sky-100 px-6 py-12 md:py-20 rounded-[30px] shadow-md md:grid md:grid-cols-2 md:gap-12 md:items-center">
+
+    <!-- Left: Image (Mobile: top, Desktop: left side) -->
+    <div class="mb-8 md:mb-0">
+      <img src="connect.jpg" alt="Stay connected with GPCC"
+           class="w-full h-64 md:h-96 object-contain rounded-[30px] shadow-lg">
+    </div>
+
+    <!-- Right: Content -->
+    <div class="flex flex-col justify-center text-center md:text-left">
+      <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-4">
+        Stay Connected with GPCC
+      </h2>
+      <p class="text-lg text-gray-700 mb-6">
+        Sign up to receive church updates, event reminders, and devotionals directly in your inbox.
+      </p>
+
+      
+
+          <!-- FIXED FORM ACTION AND FEEDBACK MESSAGE -->
+          <form id="newsletter-form" action="https://script.google.com/macros/s/AKfycbw3F16H0XvE9bO8fLQhn0FLjj-1ahE4IizRNIC4OSgQjhG3ZXOxySJ2VVh9Y1xjrF8s/exec" method="POST"
+                class="flex flex-col sm:flex-row gap-3">
+            <label for="newsletter-email" class="sr-only">Your Email</label>
+            <input id="newsletter-email" name="email" type="email" required autocomplete="email"
+                   placeholder="Your Email Here"
+                   class="flex-1 rounded-lg border border-blue-300 px-4 py-3 bg-white/90 text-gray-800 placeholder-gray-500
+                          focus:outline-none focus:ring-4 focus:ring-blue-200">
+            <button type="submit"
+                    class="rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-3
+                           focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-300">
+              Sign Up
+            </button>
+          </form>
+          <p id="form-message" class="mt-2 text-center text-sm"></p>
+          <p id="privacy-note" class="mt-3 text-xs text-gray-700">
+            By clicking Sign Up, you agree to our Terms and Conditions.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ...existing code... -->
+<!-- Thank-you message -->
+<div id="newsletter-thanks"
+     class="hidden max-w-7xl mx-auto mt-4 px-4">
+  <div class="bg-green-50 border border-green-200 text-green-900 rounded-lg px-4 py-3">
+    Thank you! You’ve been added to our newsletter.
+  </div>
+</div>
+   
+
+<!-- ...existing code... -->
+<footer class="w-full bg-[#181c17] relative mt-12">
+  <div class="absolute inset-0 w-full h-full">
+    <img src="footer-bg.jpg" alt="Peace Temple Interior" class="w-full h-full object-cover opacity-40"/>
+    <div class="absolute inset-0 bg-black/40"></div>
+  </div>
+  <div class="relative z-10 max-w-7xl mx-auto px-4 py-8 flex flex-col md:flex-row md:justify-between md:items-start text-white">
+    <!-- Left: Address & Contact -->
+    <div class="mb-6 md:mb-0">
+      <div class="mb-3">
+        <span class="font-semibold">Address:</span><br>
+        P. O. Box AN 11587, Accra-North<br>
+        ABLOR ADJEI OFF THE AGBOGBA-ABOKOBI ROAD
+      </div>
+      <div class="mb-3">
+        <span class="font-semibold">Contact:</span><br>
+        <span class="block">+233 (208) 180 188 &nbsp; +233 (246) 224 766</span>
+        <a href="mailto:info@gpcconline.org" class="text-blue-200 underline hover:text-blue-400">info@gpcconline.org</a>
+      </div>
+      <div class="text-xs mt-2">&copy; 2025 GPCC. All rights reserved.</div>
+    </div>
+    <!-- Right: Social & Links -->
+    <div class="flex flex-col items-end">
+      <div class="mb-3 text-gray-200 font-medium">Social Links</div>
+      <div class="flex gap-4 mb-4">
+        <a href="#" aria-label="Facebook" class="hover:text-blue-400"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="Instagram" class="hover:text-pink-400"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="X" class="hover:text-blue-400"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="LinkedIn" class="hover:text-blue-400"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" aria-label="YouTube" class="hover:text-red-400"><i class="fab fa-youtube"></i></a>
+      </div>
+      <div class="flex gap-4 text-sm">
+        <a href="#" class="hover:underline">Privacy Policy</a>
+        <a href="#" class="hover:underline">Terms of Service</a>
+        <a href="#" class="hover:underline">Cookies Settings</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- ...existing code... -->
+<!-- Add Font Awesome for icons in <head> if not present -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <script>
+    // Desktop ABOUT US toggle (click only, not hover)
+    const aboutBtn = document.getElementById('about-us-desktop-btn');
+    const aboutDropdown = document.getElementById('about-us-desktop-dropdown');
+    let aboutOpen = false;
+    aboutBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      aboutDropdown.classList.toggle('hidden');
+      aboutOpen = !aboutOpen;
+      document.addEventListener('click', function handler(ev) {
+        if (aboutOpen && !aboutDropdown.contains(ev.target) && ev.target !== aboutBtn) {
+          aboutDropdown.classList.add('hidden');
+          aboutOpen = false;
+          document.removeEventListener('click', handler);
+        }
+      });
+    });
+// Gallery Swiper for mobile
+  new Swiper('.gallery-swiper', {
+    loop: true,
+    autoplay: {
+      delay: 1800,
+      disableOnInteraction: false,
+    },
+    pagination: {
+      el: '.gallery-pagination',
+      clickable: true,
+    },
+    slidesPerView: 1,
+    spaceBetween: 16,
+    effect: 'slide',
+    speed: 600,
+  });
+  // Donation images slider (1.5s per slide)
+new Swiper('.donation-swiper', {
+  loop: true,
+  autoplay: {
+    delay: 1500,
+    disableOnInteraction: false,
+  },
+  slidesPerView: 1,
+  spaceBetween: 0,
+  effect: 'slide',
+  speed: 600,
+});
+
+    // Mobile menu open/close + close on outside or close button
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobilePanel = document.getElementById('mobile-panel');
+    menuToggle.addEventListener('click', function(e){
+      e.stopPropagation();
+      mobileMenu.classList.remove('hidden');
+      menuToggle.setAttribute('aria-expanded', 'true');
+    });
+    mobileMenu.addEventListener('click', function(e){
+      if (!mobilePanel.contains(e.target)) {
+        mobileMenu.classList.add('hidden');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Mobile ABOUT US toggle
+    const mobileAboutToggle = document.getElementById('mobile-about-toggle');
+    const mobileAboutDropdown = document.getElementById('mobile-about-dropdown');
+    mobileAboutToggle.addEventListener('click', function(e){
+      e.stopPropagation();
+      mobileAboutDropdown.classList.toggle('hidden');
+    });
+
+    // Schedule Popup
+    const scheduleBtn = document.getElementById('schedule-btn');
+    const schedulePopup = document.getElementById('schedule-popup');
+    const scheduleDialog = document.getElementById('schedule-dialog');
+    const scheduleClosers = schedulePopup.querySelectorAll('.close-schedule');
+
+    scheduleBtn?.addEventListener('click', function(){
+      schedulePopup.classList.remove('hidden');
+    });
+
+    // Ensure the X button closes the popup
+    scheduleClosers.forEach(btn => btn.addEventListener('click', function(){
+      schedulePopup.classList.add('hidden');
+    }));
+
+    // Click outside dialog closes popup
+    schedulePopup.addEventListener('click', function(e){
+      if (!scheduleDialog.contains(e.target)) schedulePopup.classList.add('hidden');
+    });
+
+    // Message Popup (FIXED)
+    const messageBtn = document.getElementById('message-btn');
+    const messagePopup = document.getElementById('message-popup');
+    const messageDialog = document.getElementById('message-dialog');
+    const messageClosers = messagePopup.querySelectorAll('.close-message');
+    
+    messageBtn?.addEventListener('click', function(){
+      messagePopup.classList.remove('hidden');
+    });
+    
+    messageClosers.forEach(btn => btn.addEventListener('click', function(){
+      messagePopup.classList.add('hidden');
+    }));
+    
+    messagePopup.addEventListener('click', function(e){
+      if (!messageDialog.contains(e.target)) messagePopup.classList.add('hidden');
+    });
+
+    // SwiperJS HERO
+    new Swiper('.hero-swiper', {
+      loop: true,
+      autoplay: {
+        delay: 1200,
+        disableOnInteraction: false,
+      },
+      effect: 'fade',
+      fadeEffect: {
+        crossFade: true
+      },
+      speed: 700,
+      allowTouchMove: true
+    });
+
+    // Motto SwiperJS
+    new Swiper('.motto-swiper', {
+      loop: true,
+      autoplay: {
+        delay: 1000,
+        disableOnInteraction: false,
+      },
+      effect: 'fade',
+      fadeEffect: {
+        crossFade: true
+      },
+      speed: 600,
+      allowTouchMove: true,
+      pagination: {
+        el: '.motto-pagination',
+        clickable: true,
+      }
+    });
+
+    // Handle form submission for Google Apps Script
+  const newsletterForm = document.getElementById('newsletter-form');
+  const formMessage = document.getElementById('form-message');
+  const thanksMessage = document.getElementById('newsletter-thanks');
+
+  if (newsletterForm) {
+    newsletterForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      formMessage.textContent = ""; // Clear previous message
+
+      const formData = new FormData(newsletterForm);
+
+      try {
+        const response = await fetch(newsletterForm.action, {
+          method: "POST",
+          body: formData,
+        });
+
+        if (response.ok) {
+          formMessage.textContent = "";
+          if (thanksMessage) {
+            thanksMessage.style.display = 'block';
+            setTimeout(() => {
+              thanksMessage.style.display = 'none';
+            }, 5000);
+          }
+          newsletterForm.reset();
+        } else {
+          formMessage.textContent = "❌ There was an error submitting your email. Please try again.";
+          formMessage.className = "mt-2 text-center text-red-600 text-sm";
+        }
+      } catch (error) {
+        formMessage.textContent = "❌ There was an error submitting your email. Please check your connection.";
+        formMessage.className = "mt-2 text-center text-red-600 text-sm";
+      }
+    });
+  }
+</script>
+  <script>
+  const form = document.getElementById("newsletter-form");
+  const message = document.getElementById("form-message");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbw3F16H0XvE9bO8fLQhn0FLjj-1ahE4IizRNIC4OSgQjhG3ZXOxySJ2VVh9Y1xjrF8s/exec", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        message.textContent = "✅ Thank you for subscribing!";
+        message.className = "mt-2 text-center text-green-600 text-sm";
+        form.reset();
+      } else {
+        throw new Error("Network error");
+      }
+    } catch (error) {
+      message.textContent = "❌ Something went wrong. Please try again.";
+      message.className = "mt-2 text-center text-red-600 text-sm";
+    }
+  });
+</script>
+
+  
+</body>
+</html>
