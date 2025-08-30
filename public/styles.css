@@ -545,3 +545,95 @@ footer { flex-shrink: 0; }
     height: 72px !important;
   }
 }
+
+/* Bio page: hero and timeline styling */
+.bio-hero-card {
+  background: rgba(255,255,255,0.92);
+  border: 1px solid #e0e7ef;
+  border-radius: 1.25rem;
+  box-shadow: 0 10px 36px rgba(37, 60, 125, 0.16);
+}
+
+/* Desktop hero grid (md+) */
+@media (min-width: 768px) {
+  .bio-hero-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+  .bio-hero-grid img {
+    width: 100%;
+    height: clamp(220px, 24vw, 340px); /* changed: closer to mobile scale */
+    object-fit: cover;
+    object-position: center 12%;       /* changed: keep faces in view */
+    border-radius: 0.75rem;
+    border: 1px solid #e5effa;
+  }
+}
+
+/* Mobile hero swiper (smaller, contained) */
+@media (max-width: 767px) {
+  .bio-hero-mobile img {
+    width: 100%;
+    height: 14rem;
+    object-fit: cover;
+    border-radius: 0.75rem;
+    border: 1px solid #e5effa;
+  }
+}
+
+/* Timeline: clean, distinct look */
+.bio-timeline {
+  position: relative;
+  padding-left: 1.75rem;
+}
+.bio-timeline::before {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0; left: 0.5rem;
+  width: 3px; border-radius: 2px;
+  background: #dbeafe;
+}
+.bio-item {
+  position: relative;
+  margin-bottom: 1rem;
+  background: #ffffff;
+  border: 1px solid #e5effa;
+  border-radius: 0.9rem;
+  padding: 0.9rem 1rem;
+  box-shadow: 0 4px 18px rgba(37, 60, 125, 0.08);
+}
+.bio-item .dot {
+  position: absolute;
+  left: -1.07rem; top: 0.9rem;
+  width: 14px; height: 14px; border-radius: 9999px;
+  background: #fff; border: 3px solid #2563eb;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.bio-year {
+  font-family: 'Playfair Display', serif;
+  color: #0f2a67;
+  font-weight: 700;
+}
+.bio-verse {
+  background: #f8fafc;
+  border: 1px solid #e5effa;
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  color: #0f2a67;
+  font-size: 0.95rem;
+}
+
+/* Page tag for any extra mobile spacing alignment */
+@media (max-width: 767px) {
+  body.bio-page section { margin-top: 0.75rem; }
+}
+
+/* Ensure faces stay visible by cropping from top-center */
+.portrait-top {
+  object-fit: cover !important;
+  object-position: center 12% !important; /* slight top bias to keep face in view */
+}
+
+/* Optionally, a stricter top crop if needed */
+/* .portrait-top-strong { object-position: center 5% !important; } */
