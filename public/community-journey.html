@@ -6,25 +6,48 @@
   <title>Our Journey | Global Peace Christian Centre</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <link rel="stylesheet" href="styles.css"><!-- added -->
   <style>
+    /* small helpers + your original custom styles */
+    :root {
+      --header-h: 72px;
+    }
+    /* CHANGED: remove extra body padding (we keep the spacer div after header like index) */
+    body { -webkit-font-smoothing: antialiased; }
+    header { height: var(--header-h); }
+
     .chip { background:#eaf6fb; border:1px solid #cfe7fb; color:#1e3a8a; }
     .chip.active { background:#1e3a8a; color:#fff; border-color:#1e3a8a; }
     .pill { background:#2563eb; color:#fff; font-weight:700; padding:.25rem .6rem; border-radius:.5rem; font-size:.8rem; display:inline-block; }
     .year { font-family:'Playfair Display', serif; color:#0f2a67; }
     .entry { background:linear-gradient(135deg,#ffffff 0%,#f8fafc 100%); border:1px solid #e0e7ef; border-radius:1rem; box-shadow:0 6px 28px rgba(0,0,0,.06); overflow:hidden; }
-    .entry img { width:100%; height:240px; object-fit:cover; }
-    @media (min-width:640px){ .entry img{ height:280px; } }
-    @media (min-width:1024px){ .entry img{ height:300px; } }
+    /* changed: mobile contain, desktop larger full image container */
+    .entry img { width:100%; height:auto; object-fit:contain; }
+    @media (min-width:1024px){ .entry img { height: clamp(360px, 45vh, 560px); object-fit:cover; } }
     .progress-rail { position:absolute; top:0; bottom:0; left:10px; width:3px; background:#dbeafe; border-radius:2px; }
     .progress-fill { position:absolute; top:0; left:10px; width:3px; background:#ef4444; border-radius:2px; height:0; }
     .dot { position:absolute; left:4px; width:15px; height:15px; border-radius:50%; background:#fff; border:3px solid #2563eb; box-shadow:0 2px 8px rgba(0,0,0,.1); }
     .dot.active { border-color:#ef4444; transform:scale(1.1); }
     html { scroll-behavior:smooth; }
+
+    /* MINI carousel styling (small slides) */
+    .mini-carousel .swiper-slide { display:flex; align-items:center; justify-content:center; }
+    .mini-carousel img { height: 110px; width: auto; object-fit: cover; border-radius:8px; display:block; }
+    /* desktop thumbnails */
+    .thumb-small { height:96px; width:100%; object-fit:cover; border-radius:8px; display:block; }
+
+    /* mobile menu improvements */
+    #mobile-menu { z-index:60; }
+    #mobile-panel { max-height: calc(100vh - 120px); overflow:auto; -webkit-overflow-scrolling:touch; }
+
+    /* accessibility focus outlines */
+    button:focus, a:focus { outline: 3px solid rgba(37,99,235,0.18); outline-offset:2px; }
   </style>
 </head>
-<body class="bg-[#badcf7] font-sans">
-  <!-- Header (consistent with other pages) -->
-  <header class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur border-b border-blue-200">
+<body class="bg-[#badcf7] font-sans"><!-- added class -->
+  <!-- Header (fixed) -->
+  <header class="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur border-b border-blue-200">
     <div class="max-w-7xl mx-auto px-4 lg:px-8 py-3 flex items-center justify-between">
       <a href="index.html" class="flex items-center gap-2">
         <img src="logo.png" alt="GPCC Logo" class="h-10 w-10 object-contain rounded-sm border border-blue-900/40 bg-transparent">
@@ -53,10 +76,12 @@
         </div>
         <a href="ministries.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MINISTRIES</a>
         <a href="#" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MEDIA CENTER</a>
-        <a href="#" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">EVENTS</a>
+        <a href="events.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">EVENTS</a>
         <a href="#" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">GALLERY</a>
-        <a href="#" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">CONTACT US</a>
+        <a href="contact-us.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">CONTACT US</a>
       </nav>
+
+      <!-- mobile hamburger (fixed) -->
       <button id="menu-toggle" class="lg:hidden fixed top-4 right-4 focus:outline-none z-50"
         aria-label="Open Menu" aria-expanded="false">
         <span class="flex items-center justify-center w-11 h-11 rounded-full bg-blue-900 hover:bg-blue-700 shadow-lg transition duration-200">
@@ -67,8 +92,9 @@
         </span>
       </button>
     </div>
-    <div id="mobile-menu"
-         class="fixed inset-0 hidden justify-start items-start bg-[#badcf7]/95 z-50 lg:hidden">
+
+    <!-- Mobile full overlay (hidden until open) -->
+    <div id="mobile-menu" class="fixed inset-0 hidden justify-start items-start bg-[#badcf7]/95 z-50">
       <div id="mobile-panel" class="absolute right-4 top-20 w-80 px-2 py-4 rounded-2xl bg-white shadow-2xl border border-blue-200 text-center">
         <nav class="space-y-4 mt-3">
           <a href="index.html" class="block w-full px-5 py-3 rounded-full bg-blue-900 text-white font-semibold">HOME</a>
@@ -89,154 +115,255 @@
           </div>
           <a href="ministries.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MINISTRIES</a>
           <a href="#" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MEDIA CENTER</a>
-          <a href="#" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">EVENTS</a>
+          <a href="events.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">EVENTS</a>
           <a href="#" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">GALLERY</a>
-          <a href="#" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">CONTACT US</a>
+          <a href="contact-us.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">CONTACT US</a>
         </nav>
       </div>
     </div>
   </header>
 
-  <!-- spacer -->
+  <!-- spacer (keep single spacer like index) -->
   <div class="h-[72px]"></div>
 
-  <!-- Page header -->
-  <section class="w-full max-w-7xl mx-auto px-4 mt-6">
-    <div class="grid lg:grid-cols-3 gap-6">
-      <div class="lg:col-span-1 bg-white/80 border border-blue-200 rounded-2xl p-6 shadow">
-        <h1 class="text-3xl font-serif text-blue-900" style="font-family:'Playfair Display', serif;">Our Journey Through Faith and Community</h1>
-        <p class="text-gray-700 mt-3">Global Peace Christian Centre has a rich history of service and community engagement. Scroll to relive our milestones and achievements.</p>
-        <a href="#" class="inline-block mt-4 px-4 py-2 rounded-xl border border-blue-300 bg-blue-50 text-blue-900 hover:bg-blue-100">View all Photos in the Media Center</a>
+  <!-- Page content -->
+  <div class="community-content">
+    <!-- CHANGED: reduce top margin so content sits closer to header -->
+    <section class="w-full max-w-7xl mx-auto px-4 mt-0 community-content">
+      <div class="grid lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-1 bg-white/80 border border-blue-200 rounded-2xl p-6 shadow">
+          <h1 class="text-3xl font-serif text-blue-900" style="font-family:'Playfair Display', serif;">Our Journey Through Faith and Community</h1>
+          <p class="text-gray-700 mt-3">Global Peace Christian Centre has a rich history of service and community engagement. Scroll to relive our milestones and achievements.</p>
+          <a href="#" class="inline-block mt-4 px-4 py-2 rounded-xl border border-blue-300 bg-blue-50 text-blue-900 hover:bg-blue-100">View all Photos in the Media Center</a>
 
-        <!-- Year chips -->
-        <div class="mt-6 flex gap-2 flex-wrap">
-          <a href="#y1994" class="chip px-3 py-1 rounded-full text-sm font-semibold">1994</a>
-          <a href="#y2013" class="chip px-3 py-1 rounded-full text-sm font-semibold">2013</a>
-          <a href="#y2016" class="chip px-3 py-1 rounded-full text-sm font-semibold">2016</a>
-          <a href="#y2020" class="chip px-3 py-1 rounded-full text-sm font-semibold">2020</a>
+          <!-- Year chips -->
+          <div class="mt-6 flex gap-2 flex-wrap">
+            <a href="#y1994" class="chip px-3 py-1 rounded-full text-sm font-semibold">1994</a>
+            <a href="#y2013" class="chip px-3 py-1 rounded-full text-sm font-semibold">2013</a>
+            <a href="#y2016" class="chip px-3 py-1 rounded-full text-sm font-semibold">2016</a>
+            <a href="#y2020" class="chip px-3 py-1 rounded-full text-sm font-semibold">2020</a>
+          </div>
         </div>
+
+        <!-- Timeline column -->
+        <div class="lg:col-span-2 relative bg-[#eaf6fb] border border-blue-200 rounded-2xl p-4 sm:p-6 shadow" id="timeline">
+          <div class="progress-rail"></div>
+          <div class="progress-fill" id="progressFill"></div>
+
+          <!-- 1994 (NO images inside dropdown as requested) -->
+          <div class="relative pl-10 sm:pl-12 timeline-entry" id="y1994">
+            <span class="dot" style="top:10px"></span>
+            <div class="mt-2">
+              <div class="flex items-center gap-3">
+                <h2 class="year text-3xl sm:text-4xl">1994</h2>
+                <span class="pill">Ministry began</span>
+              </div>
+              <div class="entry mt-3">
+                <div class="p-4 sm:p-5">
+                  <p class="text-gray-800">
+                    From a university calling to action: the message that began in the halls of KNUST matured into weekly preaching and prayer.
+                    Small living-room fellowships formed the nucleus of a growing family of faith.
+                  </p>
+
+                  <!-- expanded notes (text-only, no images) -->
+                  <details class="mt-3">
+                    <summary class="cursor-pointer text-blue-700 font-semibold">Read more about 1994</summary>
+                    <div class="mt-3 text-left">
+                      <p class="text-gray-700">Home fellowships, prayer nights, and teaching gatherings that set our rhythm.</p>
+                    </div>
+                  </details>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2013 (changed to full-width image container like other years) -->
+          <div class="relative mt-10 pl-10 sm:pl-12" id="y2013">
+            <span class="dot" style="top:10px"></span>
+            <div class="mt-2">
+              <div class="flex items-baseline gap-3">
+                <h2 class="year text-3xl sm:text-4xl">September 2013</h2>
+              </div>
+              <div class="entry mt-3">
+                <img src="../assets/pastoral-board/journey-2013.jpg" alt="Moving into Peace Temple" onerror="this.style.display='none'">
+                <div class="p-4 sm:p-5">
+                  <p class="text-gray-800">
+                    We moved into the PEACE TEMPLE—our first church building. Ministry seats expanded, teams multiplied, and the sanctuary
+                    became a home for worship, training, and community service.
+                  </p>
+                  <details class="mt-3 group">
+                    <summary class="cursor-pointer text-blue-700 font-semibold">View moments from 2013</summary>
+                    <div class="mt-3 space-y-3">
+                      <p class="text-gray-700">
+                        A season of transition: setting up departments, training volunteers, and welcoming neighbors into the new space.
+                      </p>
+                      <div class="rounded-xl bg-white border border-blue-100 p-3">
+                        <h3 class="text-blue-900 font-semibold mb-2">Photo Highlights</h3>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 journey-photos">
+                          <!-- add lightboxable to each -->
+                          <img src="./assets/pastoral-board/journey-2013-1.png" alt="Sanctuary setup" class="w-full h-28 object-cover rounded-lg border border-blue-100 lightboxable" loading="lazy" onerror="this.style.display='none'">
+                          <img src="./assets/pastoral-board/journey-2013-a.jpg" alt="First service moments" class="w-full h-28 object-cover rounded-lg border border-blue-100 lightboxable" loading="lazy" onerror="this.style.display='none'">
+                          <img src="../assets/pastoral-board/journey-2013-3.jpg" alt="Worship team" class="w-full h-28 object-cover rounded-lg border border-blue-100 lightboxable" loading="lazy" onerror="this.style.display='none'">
+                          <img src="../assets/pastoral-board/journey-2013-4.jpg" alt="Community gathering" class="w-full h-28 object-cover rounded-lg border border-blue-100 lightboxable" loading="lazy" onerror="this.style.display='none'">
+                          <img src="../assets/pastoral-board/journey-2013-5.jpg" alt="Prayer and dedication" class="w-full h-28 object-cover rounded-lg border border-blue-100 lightboxable" loading="lazy" onerror="this.style.display='none'">
+                          <img src="../assets/pastoral-board/journey-2013-6.jpg" alt="Fellowship after service" class="w-full h-28 object-cover rounded-lg border border-blue-100 lightboxable" loading="lazy" onerror="this.style.display='none'">
+                          <img src="../assets/pastoral-board/journey-2013-a.jpg" alt="Temple exterior and setup" class="w-full h-28 object-cover rounded-lg border border-blue-100 lightboxable" loading="lazy" onerror="this.style.display='none'">
+                        </div>
+                      </div>
+                    </div>
+                  </details>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2016 (add header image, fix paths, desktop wide grid like 2013) -->
+          <div class="relative mt-10 pl-10 sm:pl-12" id="y2016">
+            <span class="dot" style="top:10px"></span>
+            <div class="mt-2">
+              <div class="flex items-baseline gap-3">
+                <h2 class="year text-3xl sm:text-4xl">October 2016</h2>
+                <span class="pill">Commissioning of PEACE TEMPLE</span>
+              </div>
+              <div class="entry mt-3">
+                <!-- added header image like 2013 -->
+                <img src="./assets/pastoral-board/journey-2016.jpg" alt="Commissioning service" onerror="this.style.display='none'">
+                <div class="p-4 sm:p-5">
+                  <p class="text-gray-800">
+                    A defining milestone: formal commissioning of the PEACE TEMPLE. From that altar, new outreaches, trainings, and
+                    care ministries launched—deepening our city-wide impact.
+                  </p>
+
+                  <details class="mt-3">
+                    <summary class="cursor-pointer text-blue-700 font-semibold">View moments from 2016</summary>
+                    <div class="mt-3 space-y-3">
+                      <p class="text-gray-700">
+                        Celebrating God's faithfulness: a collection of moments from the commissioning service and community outreach.
+                      </p>
+                      <!-- Desktop/tablet: wide left-to-right grid -->
+                      <div class="hidden sm:grid grid-cols-2 md:grid-cols-4 gap-2 journey-photos">
+                        <img src="./assets/pastoral-board/journey-2016-1.jpg" alt="Ribbon cutting" class="w-full h-36 object-cover rounded-lg border border-blue-100 lightboxable" loading="lazy" onerror="this.style.display='none'">
+                        <img src="./assets/pastoral-board/journey-2016-2.jpg" alt="Dedication service" class="w-full h-36 object-cover rounded-lg border border-blue-100 lightboxable" loading="lazy" onerror="this.style.display='none'">
+                        <img src="./assets/pastoral-board/journey-2016-3.jpg" alt="Worship celebration" class="w-full h-36 object-cover rounded-lg border border-blue-100 lightboxable" loading="lazy" onerror="this.style.display='none'">
+                        <img src="./assets/pastoral-board/journey-2016-4.jpg" alt="Leaders and guests" class="w-full h-36 object-cover rounded-lg border border-blue-100 lightboxable" loading="lazy" onerror="this.style.display='none'">
+                      </div>
+                      <!-- Mobile: same two-column grid style as 2013 -->
+                      <div class="sm:hidden grid grid-cols-2 gap-2 journey-photos">
+                        <img src="./assets/pastoral-board/journey-2016-1.jpg" alt="Ribbon cutting" class="w-full h-28 object-cover rounded-lg border border-blue-100 lightboxable" loading="lazy" onerror="this.style.display='none'">
+                        <img src="./assets/pastoral-board/journey-2016-2.jpg" alt="Dedication service" class="w-full h-28 object-cover rounded-lg border border-blue-100 lightboxable" loading="lazy" onerror="this.style.display='none'">
+                        <img src="./assets/pastoral-board/journey-2016-3.jpg" alt="Worship celebration" class="w-full h-28 object-cover rounded-lg border border-blue-100 lightboxable" loading="lazy" onerror="this.style.display='none'">
+                        <img src="./assets/pastoral-board/journey-2016-4.jpg" alt="Leaders and guests" class="w-full h-28 object-cover rounded-lg border border-blue-100 lightboxable" loading="lazy" onerror="this.style.display='none'">
+                      </div>
+                    </div>
+                  </details>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2020 (add header image, fix paths, desktop wide grid like 2013) -->
+          <div class="relative mt-10 pl-10 sm:pl-12" id="y2020">
+            <span class="dot" style="top:10px"></span>
+            <div class="mt-2">
+              <div class="flex items-baseline gap-3">
+                <h2 class="year text-3xl sm:text-4xl">2020</h2>
+                <span class="pill">Adapting through Crisis</span>
+              </div>
+              <div class="entry mt-3">
+                <!-- added header image like 2013 -->
+                <img src="./assets/pastoral-board/journey-2020.jpg" alt="Virtual services and outreach" onerror="this.style.display='none'">
+                <div class="p-4 sm:p-5">
+                  <p class="text-gray-800">
+                    In response to the global pandemic, we transitioned to virtual services, reaching wider audiences and innovating
+                    new forms of community care and engagement.
+                  </p>
+
+                  <details class="mt-3">
+                    <summary class="cursor-pointer text-blue-700 font-semibold">View moments from 2020</summary>
+                    <div class="mt-3 space-y-3">
+                      <!-- Desktop/tablet: wide left-to-right grid -->
+                      <div class="hidden sm:grid grid-cols-2 md:grid-cols-4 gap-2 journey-photos">
+                        <img src="./assets/pastoral-board/journey-2020-1.jpg" alt="Streaming setup" class="w-full h-36 object-cover rounded-lg border border-blue-100 lightboxable" loading="lazy" onerror="this.style.display='none'">
+                        <img src="./assets/pastoral-board/journey-2020-2.jpg" alt="Online prayer room" class="w-full h-36 object-cover rounded-lg border border-blue-100 lightboxable" loading="lazy" onerror="this.style.display='none'">
+                      </div>
+                      <!-- Mobile: same two-column grid style as 2013 -->
+                      <div class="sm:hidden grid grid-cols-2 gap-2 journey-photos">
+                        <img src="./assets/pastoral-board/journey-2020-1.jpg" alt="Streaming setup" class="w-full h-28 object-cover rounded-lg border border-blue-100 lightboxable" loading="lazy" onerror="this.style.display='none'">
+                        <img src="./assets/pastoral-board/journey-2020-2.jpg" alt="Online prayer room" class="w-full h-28 object-cover rounded-lg border border-blue-100 lightboxable" loading="lazy" onerror="this.style.display='none'">
+                      </div>
+                    </div>
+                  </details>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div> <!-- /timeline -->
       </div>
+    </section>
+  </div>
 
-      <!-- Timeline column -->
-      <div class="lg:col-span-2 relative bg-[#eaf6fb] border border-blue-200 rounded-2xl p-4 sm:p-6 shadow" id="timeline">
-        <!-- progress rail/fill -->
-        <div class="progress-rail"></div>
-        <div class="progress-fill" id="progressFill"></div>
+  <!-- Lightbox container -->
+  <div id="cj-lightbox" aria-hidden="true">
+    <button class="close-btn" aria-label="Close">&times;</button>
+    <img id="cj-lightbox-img" src="" alt="">
+  </div>
 
-        <!-- 1994 -->
-        <div class="relative pl-10 sm:pl-12" id="y1994">
-          <span class="dot" style="top:10px"></span>
-          <div class="mt-2">
-            <div class="flex items-center gap-3">
-              <h2 class="year text-3xl sm:text-4xl">1994</h2>
-              <span class="pill">Ministry began</span>
-            </div>
-            <div class="entry mt-3">
-              <img src="../assets/pastoral-board/journey-1994.jpg" alt="Early fellowship beginnings" onerror="this.style.display='none'">
-              <div class="p-4 sm:p-5">
-                <p class="text-gray-800">The Reverend Henry Ampomah-Boateng began preaching in 1994, and fellowship steadily grew. With prayer and dedication, a small group blossomed into a vibrant community.</p>
-                <details class="mt-3">
-                  <summary class="cursor-pointer text-blue-700 font-semibold">Read more</summary>
-                  <p class="mt-2 text-gray-700">Midweek teachings and Friday evenings became anchors. By God’s grace, our gatherings deepened in worship, discipleship, and outreach.</p>
-                </details>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 2013 -->
-        <div class="relative mt-10 pl-10 sm:pl-12" id="y2013">
-          <span class="dot" style="top:10px"></span>
-          <div class="mt-2">
-            <div class="flex items-baseline gap-3">
-              <h2 class="year text-3xl sm:text-4xl">September 2013</h2>
-            </div>
-            <div class="entry mt-3">
-              <img src="../assets/pastoral-board/journey-2013.jpg" alt="Moving into Peace Temple" onerror="this.style.display='none'">
-              <div class="p-4 sm:p-5">
-                <p class="text-gray-800">Congregation moved into the PEACE TEMPLE. God being so good, the seat ministry of our Reverend grew as our church activities expanded.</p>
-                <details class="mt-3">
-                  <summary class="cursor-pointer text-blue-700 font-semibold">Read more</summary>
-                  <p class="mt-2 text-gray-700">The PEACE TEMPLE became our home—hosting worship, training, and community programs that nurtured faith and fellowship.</p>
-                </details>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 2016 -->
-        <div class="relative mt-10 pl-10 sm:pl-12" id="y2016">
-          <span class="dot" style="top:10px"></span>
-          <div class="mt-2">
-            <div class="flex items-baseline gap-3">
-              <h2 class="year text-3xl sm:text-4xl">October 2016</h2>
-              <span class="pill">Commissioning of PEACE TEMPLE</span>
-            </div>
-            <div class="entry mt-3">
-              <img src="../assets/pastoral-board/journey-2016.jpg" alt="Commissioning service" onerror="this.style.display='none'">
-              <div class="p-4 sm:p-5">
-                <p class="text-gray-800">A memorable milestone—dedication of the PEACE TEMPLE as a beacon of hope and transformation for our city and beyond.</p>
-                <details class="mt-3">
-                  <summary class="cursor-pointer text-blue-700 font-semibold">Read more</summary>
-                  <p class="mt-2 text-gray-700">From evangelism to ministry training, our mission gained momentum as we served God and our neighbors with renewed passion.</p>
-                </details>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 2020 -->
-        <div class="relative mt-10 pl-10 sm:pl-12" id="y2020">
-          <span class="dot" style="top:10px"></span>
-          <div class="mt-2">
-            <div class="flex items-baseline gap-3">
-              <h2 class="year text-3xl sm:text-4xl">2020</h2>
-              <span class="pill">Virtual Services Launch</span>
-            </div>
-            <div class="entry mt-3">
-              <img src="../assets/pastoral-board/journey-2020.jpg" alt="Virtual services and outreach" onerror="this.style.display='none'">
-              <div class="p-4 sm:p-5">
-                <p class="text-gray-800">In response to global challenges, we embraced digital ministry—live services, online prayer, and care networks—to reach and serve more people.</p>
-                <details class="mt-3">
-                  <summary class="cursor-pointer text-blue-700 font-semibold">Read more</summary>
-                  <p class="mt-2 text-gray-700">Streaming, virtual small groups, and daily devotions helped our church remain connected and growing in Christ.</p>
-                </details>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div> <!-- /timeline -->
+  <!-- Footer (exact replica of index.html) -->
+  <footer class="w-full bg-[#181c17] relative mt-12">
+    <div class="absolute inset-0 w-full h-full">
+      <div class="absolute inset-0 bg-black/40"></div>
     </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="w-full bg-[#181c17] text-white py-8 text-center mt-10">
-    <div class="max-w-7xl mx-auto px-4">
-      <div class="mb-3">
-        <span class="font-semibold">Address:</span>
-        P. O. Box AN 11587, Accra-North, ABLOR ADJEI OFF THE AGBOGBA-ABOKOBI ROAD
+    <div class="relative z-10 max-w-7xl mx-auto px-4 py-8 flex flex-col md:flex-row md:justify-between md:items-start text-white">
+      <!-- Left: Address & Contact -->
+      <div class="mb-6 md:mb-0">
+        <div class="mb-3">
+          <span class="font-semibold">Address:</span><br>
+          P. O. Box AN 11587, Accra-North<br>
+          ABLOR ADJEI OFF THE AGBOGBA-ABOKOBI ROAD
+        </div>
+        <div class="mb-3">
+          <span class="font-semibold">Contact:</span><br>
+          <span class="block">+233 (208) 180 188 &nbsp; +233 (246) 224 766</span>
+          <a href="mailto:info@gpcconline.org" class="text-blue-200 underline hover:text-blue-400">info@gpcconline.org</a>
+        </div>
+        <div class="text-xs mt-2">&copy; 2025 GPCC. All rights reserved.</div>
       </div>
-      <div class="mb-3">
-        <span class="font-semibold">Contact:</span>
-        +233 (208) 180 188 &nbsp; +233 (246) 224 766 &nbsp;
-        <a href="mailto:info@gpcconline.org" class="text-blue-200 underline hover:text-blue-400">info@gpcconline.org</a>
+      <!-- Right: Social & Links -->
+      <div class="flex flex-col items-end">
+        <div class="mb-3 text-gray-200 font-medium">Social Links</div>
+        <div class="flex gap-4 mb-4">
+          <a href="#" aria-label="Facebook" class="hover:text-blue-400"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Instagram" class="hover:text-pink-400"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="X" class="hover:text-blue-400"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="LinkedIn" class="hover:text-blue-400"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="YouTube" class="hover:text-red-400"><i class="fab fa-youtube"></i></a>
+        </div>
+        <div class="flex gap-4 text-sm">
+          <a href="#" class="hover:underline">Privacy Policy</a>
+          <a href="#" class="hover:underline">Terms of Service</a>
+          <a href="#" class="hover:underline">Cookies Settings</a>
+        </div>
       </div>
-      <div class="text-xs mt-2">&copy; <span id="copyright-year"></span> GPCC. All rights reserved.</div>
     </div>
   </footer>
+  <!-- Add Font Awesome for icons in <head> if not present (replicated placement from index.html) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
+  <!-- Swiper -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
-    // Footer year
-    (function(){ var y=document.getElementById('copyright-year'); if(y) y.textContent=new Date().getFullYear(); })();
+    // Replace header behavior to match index.html
 
-    // Desktop ABOUT US dropdown
+    // Desktop ABOUT US toggle (click only, not hover)
     const aboutBtn = document.getElementById('about-us-desktop-btn');
     const aboutDropdown = document.getElementById('about-us-desktop-dropdown');
     let aboutOpen = false;
-    aboutBtn?.addEventListener('click', function(e) {
+    aboutBtn.addEventListener('click', function(e) {
       e.stopPropagation();
-      aboutDropdown?.classList.toggle('hidden');
+      aboutDropdown.classList.toggle('hidden');
       aboutOpen = !aboutOpen;
       document.addEventListener('click', function handler(ev) {
         if (aboutOpen && !aboutDropdown.contains(ev.target) && ev.target !== aboutBtn) {
@@ -247,57 +374,199 @@
       });
     });
 
-    // Mobile hamburger + close on outside
+    // Mobile menu open/close + close on outside or close button (same as index)
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
     const mobilePanel = document.getElementById('mobile-panel');
-    menuToggle?.addEventListener('click', function(e) {
+
+    menuToggle.addEventListener('click', function(e){
       e.stopPropagation();
-      const hidden = mobileMenu.classList.contains('hidden');
-      mobileMenu.classList.toggle('hidden', !hidden ? true : false);
-      if (hidden) mobileMenu.classList.remove('hidden');
-      menuToggle.setAttribute('aria-expanded', hidden ? 'true' : 'false');
+      mobileMenu.classList.remove('hidden');
+      menuToggle.setAttribute('aria-expanded', 'true');
     });
-    mobileMenu?.addEventListener('click', function(e) {
+    mobileMenu.addEventListener('click', function(e){
       if (!mobilePanel.contains(e.target)) {
         mobileMenu.classList.add('hidden');
         menuToggle.setAttribute('aria-expanded', 'false');
       }
     });
 
-    // Timeline interactivity: progress + active chips + dots
-    const timeline = document.getElementById('timeline');
-    const fill = document.getElementById('progressFill');
-    const sections = ['y1994','y2013','y2016','y2020'].map(id => document.getElementById(id));
-    const chips = Array.from(document.querySelectorAll('.chip'));
-    const dots = Array.from(timeline.querySelectorAll('.dot'));
+    // Mobile ABOUT US toggle (same as index)
+    const mobileAboutToggle = document.getElementById('mobile-about-toggle');
+    const mobileAboutDropdown = document.getElementById('mobile-about-dropdown');
+    mobileAboutToggle.addEventListener('click', function(e){
+      e.stopPropagation();
+      mobileAboutDropdown.classList.toggle('hidden');
+    });
 
-    function updateProgress() {
-      const rect = timeline.getBoundingClientRect();
-      const total = rect.height;
-      const visible = Math.min(Math.max(window.innerHeight - Math.max(0, rect.top), 0), total);
-      const pct = Math.max(0, Math.min(1, (visible + Math.min(0, rect.top)) / total));
-      fill.style.height = (pct * 100) + '%';
-    }
-    updateProgress();
-    window.addEventListener('scroll', updateProgress, { passive: true });
-    window.addEventListener('resize', updateProgress);
+    /***********************************************************************
+     * Lazy-inject galleries for each details.grouped-photos when opened.
+     * Images are created only once (data-loaded flag).
+     *
+     * Requirements:
+     *  - For a year's details element include:
+     *      class="grouped-photos"
+     *      data-year="2013"
+     *      data-images="assets/...jpg,assets/...png"   <-- COMMA separated
+     *
+     *  - 1994 intentionally has no images (leave out data-images or empty)
+     ***********************************************************************/
+    document.querySelectorAll('details.grouped-photos').forEach((d) => {
+      d.addEventListener('toggle', async () => {
+        if (!d.open) return; // only build when opened
+        if (d.dataset.loaded === 'true') return;
 
-    // Highlight current section
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          const id = e.target.id;
-          // chips
-          chips.forEach(c => c.classList.toggle('active', c.getAttribute('href') === '#' + id));
-          // dots
-          sections.forEach((s, i) => {
-            if (s.id === id) dots[i]?.classList.add('active'); else dots[i]?.classList.remove('active');
-          });
+        const imagesCsv = (d.dataset.images || '').trim();
+        if (!imagesCsv) {
+          // nothing to build for this year (e.g., 1994)
+          d.dataset.loaded = 'true';
+          return;
+        }
+        const images = imagesCsv.split(',').map(s => s.trim()).filter(Boolean);
+        if (images.length === 0) { d.dataset.loaded = 'true'; return; }
+
+        // container for injected contents
+        const container = document.createElement('div');
+        container.className = 'mt-3 space-y-3 text-left';
+
+        // caption paragraph
+        const p = document.createElement('p');
+        p.className = 'text-gray-700';
+        p.textContent = 'Photo highlights';
+        container.appendChild(p);
+
+        /***** MOBILE MINI CAROUSEL (visible only on small screens) *****/
+        const swiperWrap = document.createElement('div');
+        swiperWrap.className = 'sm:hidden mini-carousel swiper';
+        // build swiper structure
+        const swiperInner = document.createElement('div');
+        swiperInner.className = 'swiper-wrapper';
+        images.forEach((src, i) => {
+          const slide = document.createElement('div');
+          slide.className = 'swiper-slide flex items-center justify-center';
+          const img = document.createElement('img');
+          img.setAttribute('alt', `${d.dataset.year || 'Gallery'} - ${i+1}`);
+          img.setAttribute('loading', 'lazy');
+          // set actual src now (only when opened)
+          img.src = src;
+          slide.appendChild(img);
+          swiperInner.appendChild(slide);
+        });
+        swiperWrap.appendChild(swiperInner);
+        const pag = document.createElement('div'); pag.className = 'swiper-pagination';
+        swiperWrap.appendChild(pag);
+        container.appendChild(swiperWrap);
+
+        /***** DESKTOP GRID (hidden on mobile) *****/
+        const grid = document.createElement('div');
+        grid.className = 'hidden sm:grid grid-cols-2 md:grid-cols-2 gap-2 journey-photos';
+        images.forEach((src, i) => {
+          const img = document.createElement('img');
+          img.className = 'thumb-small';
+          img.setAttribute('alt', `${d.dataset.year || 'Gallery'} - ${i+1}`);
+          img.setAttribute('loading', 'lazy');
+          img.src = src;
+          grid.appendChild(img);
+        });
+        container.appendChild(grid);
+
+        // append container to the details element
+        d.appendChild(container);
+        d.dataset.loaded = 'true';
+
+        // initialize swiper only on mobile small screens (width < 640)
+        if (window.innerWidth < 640) {
+          try {
+            new Swiper(swiperWrap, {
+              slidesPerView: 1.15,
+              spaceBetween: 10,
+              loop: true,
+              autoplay: { delay: 2200, disableOnInteraction: false },
+              pagination: { el: pag, clickable: true },
+              speed: 400
+            });
+          } catch (err) {
+            console.warn('Swiper init failed:', err);
+          }
         }
       });
-    }, { rootMargin: '-40% 0px -40% 0px', threshold: 0.1 });
-    sections.forEach(s => io.observe(s));
+    });
+
+    /***********************************************************************
+     * Accessibility: close any open details when navigating away
+     ***********************************************************************/
+    document.querySelectorAll('details').forEach(d => {
+      d.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') d.open = false;
+      });
+    });
+
+    /***********************************************************************
+     * Optional UX: highlight chips as anchor targets are scrolled into view
+     ***********************************************************************/
+    const chips = Array.from(document.querySelectorAll('.chip'));
+    const entries = Array.from(document.querySelectorAll('.timeline-entry'));
+    function updateActiveChip() {
+      const offset = window.scrollY + (window.innerHeight * 0.15);
+      let activeIndex = -1;
+      entries.forEach((entry, i) => {
+        const rect = entry.getBoundingClientRect();
+        const top = rect.top + window.scrollY;
+        if (top <= offset) activeIndex = i;
+      });
+      chips.forEach((c, i) => c.classList.toggle('active', i === activeIndex));
+    }
+    window.addEventListener('scroll', updateActiveChip, { passive: true });
+    updateActiveChip();
+
+    // Lightbox wiring for all journey photos (2013, 2016, 2020)
+    (function(){
+      const lb = document.getElementById('cj-lightbox');
+      const lbImg = document.getElementById('cj-lightbox-img');
+      const closeBtn = lb.querySelector('.close-btn');
+
+      function openLightbox(src, alt) {
+        lbImg.src = src; lbImg.alt = alt || '';
+        lb.classList.add('open');
+      }
+      function closeLightbox() {
+        lb.classList.remove('open');
+        lbImg.src = ''; lbImg.alt = '';
+      }
+      document.addEventListener('click', function(e){
+        const img = e.target.closest('.journey-photos img.lightboxable');
+        if (!img) return;
+        openLightbox(img.getAttribute('src'), img.getAttribute('alt'));
+      });
+      closeBtn.addEventListener('click', closeLightbox);
+      lb.addEventListener('click', function(e){
+        if (e.target === lb) closeLightbox();
+      });
+      document.addEventListener('keydown', function(e){
+        if (e.key === 'Escape') closeLightbox();
+      });
+    })();
+
+    // ADDED: global mobile menu closers
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobilePanel = document.getElementById('mobile-panel');
+
+    function closeMobileNav() {
+      mobileMenu.classList.add('hidden');
+      menuToggle?.setAttribute('aria-expanded', 'false');
+    }
+    document.addEventListener('click', function(e){
+      if (mobileMenu.classList.contains('hidden')) return;
+      const t = e.target;
+      if (!mobilePanel.contains(t) && t !== menuToggle && !menuToggle.contains(t)) closeMobileNav();
+    });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape') closeMobileNav();
+    });
+    const mq = window.matchMedia('(min-width: 1024px)');
+    mq.addEventListener('change', (e) => { if (e.matches) closeMobileNav(); });
   </script>
 </body>
+</html>
 </html>

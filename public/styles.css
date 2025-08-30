@@ -347,3 +347,185 @@ button:hover, .btn:hover {
     width: 100%;
   }
 }
+
+/* Community Journey page common fixes */
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body.community-page {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.community-content {
+  flex: 1 0 auto;
+  width: 100%;
+}
+
+/* Timeline entry image behavior */
+.timeline-entry img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Mobile carousel images inside dropdown */
+.section-swiper img {
+  width: 100%;
+  height: 14rem;
+  object-fit: cover;
+  border-radius: 0.75rem;
+  border: 1px solid #e5effa;
+}
+
+/* Desktop grids inside dropdowns */
+.details-gallery {
+  background: #fff;
+  border: 1px solid #e5effa;
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+}
+.details-gallery h3 {
+  color: #0f2a67;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.details-gallery .journey-photos img {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid #e5effa;
+  object-fit: cover;
+}
+
+/* 2016/2020 desktop thumbs */
+@media (min-width: 640px) {
+  .journey-photos img.thumb-28 { height: 7rem; }
+  .journey-photos img.thumb-36 { height: 9rem; }
+}
+
+/* Ensure 100% width, no horizontal scroll */
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Page flex layout so footer ends page */
+body.community-page {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+.community-content {
+  flex: 1 0 auto;
+  width: 100%;
+}
+
+/* Timeline entry images: mobile contain, desktop larger full image container */
+.timeline-entry .entry img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+@media (min-width: 1024px) {
+  .timeline-entry .entry img {
+    height: clamp(360px, 45vh, 560px);
+    object-fit: cover;
+  }
+}
+
+/* Mobile carousel images scale with screen width */
+.section-swiper img {
+  width: 100%;
+  height: clamp(12rem, 55vw, 22rem);
+  object-fit: cover;
+  border-radius: 0.75rem;
+  border: 1px solid #e5effa;
+}
+
+/* Desktop/tablet details gallery container */
+.details-gallery {
+  background: #fff;
+  border: 1px solid #e5effa;
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+}
+.details-gallery h3 {
+  color: #0f2a67;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.details-gallery .journey-photos img {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid #e5effa;
+  object-fit: cover;
+}
+
+/* Thumb heights on sm+ */
+@media (min-width: 640px) {
+  .journey-photos img.thumb-28 { height: 7rem; }
+  .journey-photos img.thumb-36 { height: 9rem; }
+}
+
+/* Footer never overlaps content */
+footer { flex-shrink: 0; }
+
+/* Mobile panel: force stacked list for ABOUT US dropdown */
+#mobile-panel nav ul { display: block !important; }
+#mobile-about-dropdown { display: block !important; }
+#mobile-about-dropdown li { display: block; margin: 0 0 .5rem 0; }
+#mobile-about-dropdown a { display: block; width: 100%; }
+
+/* Lightbox (community journey) */
+#cj-lightbox {
+  position: fixed; inset: 0; z-index: 90;
+  background: rgba(0,0,0,.85);
+  display: none; align-items: center; justify-content: center;
+  padding: 1rem;
+}
+#cj-lightbox.open { display: flex; }
+#cj-lightbox img {
+  max-width: 92vw; max-height: 86vh;
+  border-radius: 10px; box-shadow: 0 12px 36px rgba(0,0,0,.45);
+}
+#cj-lightbox .close-btn {
+  position: absolute; top: 10px; right: 16px;
+  font-size: 34px; background: transparent; border: 0; color: #fff; cursor: pointer;
+  line-height: 1;
+}
+
+/* Make thumbnails show zoom cursor */
+.lightboxable { cursor: zoom-in; }
+
+/* FIX: Desktop/Mobile About Us dropdowns should be vertical and respect 'hidden' */
+#about-us-desktop-dropdown.hidden,
+#mobile-about-dropdown.hidden { display: none !important; }
+
+#about-us-desktop-dropdown:not(.hidden),
+#mobile-about-dropdown:not(.hidden) { display: block !important; }
+
+#about-us-desktop-dropdown li,
+#mobile-about-dropdown li { display: block; }
+
+#about-us-desktop-dropdown a,
+#mobile-about-dropdown a { display: block; width: 100%; }
+
+/* Optional: keep other mobile panel ULs stacked without breaking hidden toggle */
+#mobile-panel nav ul { display: block; }
+
+/* Larger, full-width desktop galleries for journey sections */
+@media (min-width: 1024px) {
+  .journey-photos {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+  .journey-photos img {
+    height: clamp(180px, 24vh, 320px) !important;
+    object-fit: cover;
+  }
+}

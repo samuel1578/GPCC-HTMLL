@@ -10,6 +10,7 @@
   <!-- SwiperJS CDN -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <link rel="stylesheet" href="styles.css"><!-- added -->
   <style>
     .board-header-wrap {
       position: relative;
@@ -384,7 +385,7 @@
     }
   </style>
 </head>
-<body class="bg-[#badcf7] font-sans">
+<body class="bg-[#badcf7] font-sans community-page"><!-- added class -->
   <!-- RESTORE ORIGINAL HEADER STRUCTURE -->
   <header class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur border-b border-blue-200">
     <div class="max-w-7xl mx-auto px-4 lg:px-8 py-3 flex items-center justify-between">
@@ -418,9 +419,9 @@
         <!-- Other desktop menu items -->
         <a href="ministries.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MINISTRIES</a>
         <a href="#" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MEDIA CENTER</a>
-        <a href="#" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">EVENTS</a>
+        <a href="events.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">EVENTS</a>
         <a href="#" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">GALLERY</a>
-        <a href="#" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">CONTACT US</a>
+        <a href="contact-us.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">CONTACT US</a>
       </nav>
       
       <!-- FIXED: Restore original hamburger button -->
@@ -459,9 +460,9 @@
           <!-- Other mobile menu items -->
           <a href="ministries.html" class="block px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MINISTRIES</a>
           <a href="#" class="block px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MEDIA CENTER</a>
-          <a href="#" class="block px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">EVENTS</a>
+          <a href="events.html" class="block px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">EVENTS</a>
           <a href="#" class="block px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">GALLERY</a>
-          <a href="#" class="block px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">CONTACT US</a>
+          <a href="contact-us.html" class="block px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">CONTACT US</a>
         </nav>
       </div>
     </div>
@@ -471,7 +472,7 @@
   <div class="h-[72px]"></div>
 
   <!-- MAIN CONTENT - improved structure while keeping card fixes -->
-  <main class="max-w-7xl mx-auto px-4 py-8">
+  <main class="max-w-7xl mx-auto px-4 py-8 community-content"><!-- added class -->
     <div class="board-header-wrap">
       <div class="board-header-overlay"></div>
       <div class="board-header">The Pastoral Board</div>
@@ -831,6 +832,22 @@
         menuToggle.setAttribute('aria-expanded', 'false');
       }
     });
+
+    // ADDED: global closers (outside document click, Esc, and desktop breakpoint)
+    function closeMobileNav() {
+      mobileMenu.classList.add('hidden');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }
+    document.addEventListener('click', function(e){
+      if (mobileMenu.classList.contains('hidden')) return;
+      const t = e.target;
+      if (!mobilePanel.contains(t) && t !== menuToggle && !menuToggle.contains(t)) closeMobileNav();
+    });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape') closeMobileNav();
+    });
+    const mq = window.matchMedia('(min-width: 1024px)');
+    mq.addEventListener('change', (e) => { if (e.matches) closeMobileNav(); });
 
     // Mobile ABOUT US dropdown toggle
     const mobileAboutToggle = document.getElementById('mobile-about-toggle');

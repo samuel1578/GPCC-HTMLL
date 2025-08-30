@@ -132,10 +132,9 @@
 </ul>
         </div>
         <a href="ministries.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MINISTRIES</a>
-        <a href="#" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MEDIA CENTER</a>
-        <a href="#" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">EVENTS</a>
+        <a href="events.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">EVENTS</a>
         <a href="#" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">GALLERY</a>
-        <a href="#" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">CONTACT US</a>
+        <a href="contact-us.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">CONTACT US</a>
       </nav>
       <!-- Hamburger (mobile only) -->
       <button id="menu-toggle" class="lg:hidden fixed top-4 right-4 focus:outline-none z-50"
@@ -169,10 +168,9 @@
 </ul>
           </div>
           <a href="ministries.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MINISTRIES</a>
-          <a href="#" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MEDIA CENTER</a>
-          <a href="#" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">EVENTS</a>
+          <a href="events.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">EVENTS</a>
           <a href="#" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">GALLERY</a>
-          <a href="#" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">CONTACT US</a>
+          <a href="contact-us.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">CONTACT US</a>
         </nav>
       </div>
     </div>
@@ -262,7 +260,7 @@
         </p>
         <button id="message-btn"
                 class="mt-4 px-5 py-2 bg-red-600 text-white font-bold rounded-lg shadow hover:bg-red-700 transition block mx-auto">
-          View Message
+          View Biography
         </button>
       </div>
     </div>
@@ -540,36 +538,35 @@
   })();
 </script>
 
-  <!-- MESSAGE POPUP (FIXED VERSION) -->
-  <div id="message-popup" class="fixed inset-0 hidden justify-center items-center bg-black/40 z-[61] p-4">
-  <div id="message-dialog" class="w-full max-w-4xl h-[80vh] glass modal-animate modal-shadow rounded-2xl border overflow-hidden relative flex flex-col">
-    
-    <!-- Background image (centered and covers entire modal) -->
-    <div class="absolute inset-0">
-      <img src="headpastore.jpg" alt="Pastor Message Photo"
-           class="w-full h-full object-cover object-center"/>
-      <!-- Overlay for contrast -->
-      <div class="absolute inset-0 bg-black/30"></div>
+<!-- MESSAGE POPUP (RESTRUCTURED CARD) -->
+<div id="message-popup" class="fixed inset-0 hidden justify-center items-center bg-black/40 z-[61] p-4">
+  <div id="message-dialog"
+       class="w-full max-w-3xl max-h-[90vh] overflow-y-auto glass modal-animate modal-shadow rounded-2xl border border-blue-200 relative">
+    <!-- Sticky header with close -->
+    <div class="sticky top-0 bg-white/90 backdrop-blur px-6 py-4 border-b border-blue-100 flex items-start justify-between">
+      <div>
+        <h2 class="text-2xl md:text-3xl font-bold text-blue-900">✝ Apostle Henry Ampomah-Boateng</h2>
+        <p class="text-sm md:text-base text-blue-900/80"><em>Founder & Chairman – Global Peace Christian Centre (GPCC)</em></p>
+      </div>
+      <button class="close-message text-3xl leading-none text-blue-900 ml-4" aria-label="Close message popup">&times;</button>
     </div>
 
-    <!-- Content over the image -->
-    <div class="relative flex flex-col justify-center items-center text-center px-8 py-8 space-y-6 w-full text-white h-full">
-      <div class="relative w-full">
-        <h2 class="text-3xl md:text-4xl font-bold drop-shadow-lg">
-          From Our Pastor's Heart
-        </h2>
-        <button class="close-message text-3xl leading-none absolute -top-2 right-0 text-white">&times;</button>
-      </div>
-      <p class="text-white/90 max-w-3xl leading-relaxed">
-        Beloved, welcome to Global Peace Christian Centre. May the peace of Christ steady your heart,
-        the joy of the Spirit renew your strength, and the love of the Father anchor your hope.
-        You are seen, valued, and called. Step forward with courage—God goes before you!
-      </p>
-      <ul class="list-disc pl-5 text-white/90 max-w-3xl text-left">
-        <li>Jesus meets you right where you are—and walks with you onward.</li>
-        <li>Grace is not a finish line; it’s the path we travel daily.</li>
-        <li>Community is God’s design for growth; you don’t have to do life alone.</li>
+    <!-- Content -->
+    <div class="px-6 py-5">
+      <ul class="space-y-3 text-gray-800">
+        <li>🎓 <span class="font-semibold">Education:</span> BSc (Hons) Building Technology, KNUST (1986–1990)</li>
+        <li>📅 <span class="font-semibold">Call to Ministry:</span> September 1990 (resident of 37 University Hall, Katanga – KNUST)</li>
+        <li>📖 <span class="font-semibold">Publications:</span> <em>“Jesus Walks Into My Room”</em> (details the apostles calling)</li>
+        <li>🙏 <span class="font-semibold">Fellowship Start:</span> June 1996 (PEACE-DOM IN CHRIST PRAYER MINISTRY/FREEDOM IN CHRIST CHURCH.)</li>
+        <li>🌍 <span class="font-semibold">Future Vision:</span> Global Ministry Launch of the Global Peace Christian Ministry worldwide, September 2032</li>
       </ul>
+
+      <div class="mt-6 flex justify-end">
+        <a href="profile-henry.html"
+           class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-blue-900 text-white font-semibold shadow hover:bg-blue-700">
+          Read Full Profile <span aria-hidden="true">→</span>
+        </a>
+      </div>
     </div>
   </div>
 </div>
@@ -794,6 +791,25 @@ new Swiper('.donation-swiper', {
         menuToggle.setAttribute('aria-expanded', 'false');
       }
     });
+
+    // ADDED: close mobile menu when clicking anywhere outside panel/toggle, Esc, or when switching to desktop
+  function closeMobileNav() {
+    if (!mobileMenu) return;
+    mobileMenu.classList.add('hidden');
+    menuToggle?.setAttribute('aria-expanded', 'false');
+  }
+  document.addEventListener('click', function(e) {
+    if (!mobileMenu || mobileMenu.classList.contains('hidden')) return;
+    const target = e.target;
+    if (!mobilePanel.contains(target) && target !== menuToggle && !menuToggle.contains(target)) {
+      closeMobileNav();
+    }
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') closeMobileNav();
+  });
+  const mq = window.matchMedia('(min-width: 1024px)');
+  mq.addEventListener('change', (e) => { if (e.matches) closeMobileNav(); });
 
     // Mobile ABOUT US toggle
     const mobileAboutToggle = document.getElementById('mobile-about-toggle');
