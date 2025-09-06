@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Gallery | Global Peace Christian Centre</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Fjalla+One&family=Oleo+Script:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <style>
+    body{background:#badcf7;font-family:'Fjalla One',sans-serif;-webkit-font-smoothing:antialiased;}
+    .pattern:before{
+      content:"";position:fixed;inset:0;z-index:-1;
+      background:
+        linear-gradient(135deg,rgba(255,255,255,.18) 0%,rgba(255,255,255,0) 60%),
+        repeating-linear-gradient(60deg,rgba(255,255,255,.22) 0 14px,rgba(255,255,255,0) 14px 28px);
+      opacity:.55;pointer-events:none;
+    }
+    .font-fjalla{font-family:'Fjalla One',sans-serif;letter-spacing:.5px;}
+    .header-brand-img{height:48px;width:48px;object-fit:contain;}
+    @media (min-width:1024px){.header-brand-img{height:50px;width:50px;}}
+    .header-brand-text{font-size:calc(1.125rem + 2px);line-height:1.1;}
+    @media (min-width:640px){.header-brand-text{font-size:calc(1.25rem + 2px);}}
+    .glass{background:rgba(255,255,255,.82);backdrop-filter:blur(14px) saturate(180%);border:2px solid #dbeafe;box-shadow:0 8px 36px -10px rgba(37,60,125,.25);}
+    .hero-shell{border-radius:1.75rem;overflow:hidden;position:relative;}
+    .hero-shell:before{content:"";position:absolute;inset:0;pointer-events:none;
+      background:radial-gradient(circle at 15% 20%,rgba(255,255,255,.55),rgba(255,255,255,0) 60%),
+                 radial-gradient(circle at 85% 80%,rgba(255,255,255,.35),rgba(255,255,255,0) 70%);
+      mix-blend-mode:overlay;}
+    .gallery-tabs button{transition:.25s;}
+    .gallery-tabs button[aria-current="page"]{background:#ef4444;color:#fff;box-shadow:0 4px 16px -4px rgba(239,68,68,.55);}
+    .gallery-tabs button:not([aria-current="page"]){background:#fff;color:#1e3a8a;border:1px solid #1e3a8a;}
+    .gallery-tabs button:not([aria-current="page"]):hover{background:#1e3a8a;color:#fff;}
+    .section-banner{
+      background:#4d7adf;
+      background:linear-gradient(135deg,#4d7adf 0%,#6c9bf1 55%,#8fb5fa 100%);
+      color:#fff;
+      border-radius:1.5rem;
+      box-shadow:0 10px 34px -12px rgba(30,64,175,.45);
+      position:relative;
+      overflow:hidden;
+    }
+    .section-banner:after{
+      content:"";position:absolute;inset:0;
+      background:
+        radial-gradient(circle at 25% 25%,rgba(255,255,255,.55),rgba(255,255,255,0) 60%),
+        radial-gradient(circle at 80% 70%,rgba(255,255,255,.35),rgba(255,255,255,0) 70%);
+      mix-blend-mode:overlay;pointer-events:none;
+    }
+    .gallery-set h2{font-family:'Playfair Display',serif;font-weight:700;letter-spacing:.5px;}
+    .cap{font-family:'Oleo Script',cursive;}
+    .img-card{position:relative;overflow:hidden;border-radius:.85rem;background:#fff;border:1px solid #dbeafe;box-shadow:0 4px 18px -6px rgba(30,64,175,.28);transition:transform .45s,box-shadow .45s;}
+    .img-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .65s;}
+    .img-card:hover img{transform:scale(1.08);}
+    .img-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px -14px rgba(30,64,175,.5);}
+    .badge-top{
+      background:#fff;
+      color:#1e3a8a;
+      font-weight:700;
+      padding:.35rem .9rem;
+      border-radius:1rem;
+      font-size:.75rem;
+      letter-spacing:.5px;
+      box-shadow:0 4px 12px -4px rgba(0,0,0,.25);
+      display:inline-block;
+    }
+    /* Mobile Swipers spacing */
+    .swiper{--swiper-theme-color:#1d4ed8;}
+    .swiper-pagination-bullet{background:#1d4ed8;opacity:.4;}
+    .swiper-pagination-bullet-active{background:#ef4444;opacity:1;box-shadow:0 0 0 2px #badcf7;}
+    /* Light horizontal scroll fallback (if JS disabled) */
+    .mobile-scroll-row{display:flex;gap:.75rem;overflow-x:auto;padding-bottom:.25rem;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;}
+    .mobile-scroll-row > div{min-width:72%;scroll-snap-align:start;}
+    @media (min-width:768px){
+      .mobile-only{display:none!important;}
+    }
+    @media (max-width:767px){
+      .desktop-only{display:none!important;}
+    }
+    /* ADDED: sections + lightbox */
+    .gallery-section{margin-top:3.5rem}
+    .section-banner-box{
+      background:linear-gradient(135deg,#4d7adf 0%,#6c9bf1 55%,#8fb5fa 100%);
+      color:#fff;border-radius:1.5rem;box-shadow:0 10px 34px -12px rgba(30,64,175,.45);
+      position:relative;overflow:hidden;padding:2.1rem 1.5rem;text-align:center
+    }
+    .section-banner-box:after{
+      content:"";position:absolute;inset:0;
+      background:
+        radial-gradient(circle at 25% 25%,rgba(255,255,255,.55),rgba(255,255,255,0) 60%),
+        radial-gradient(circle at 80% 70%,rgba(255,255,255,.35),rgba(255,255,255,0) 70%);
+      mix-blend-mode:overlay;pointer-events:none;
+    }
+    .gallery-grid{display:grid;gap:1rem;margin-top:2.25rem}
+    @media (min-width:768px){.anniv-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
+                              .sp-grid{grid-template-columns:repeat(6,minmax(0,1fr))}}
+    .g-card{position:relative;overflow:hidden;border-radius:.9rem;background:#fff;
+      border:1px solid #dbeafe;aspect-ratio:4/3;box-shadow:0 4px 18px -6px rgba(30,64,175,.28);
+      cursor:pointer;transition:transform .45s,box-shadow .45s}
+    .g-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .65s}
+    .g-card:hover img{transform:scale(1.08)}
+    .g-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px -14px rgba(30,64,175,.5)}
+    /* Mobile swipers */
+    .mobile-swiper{margin-top:1.75rem}
+    .mobile-swiper .swiper-slide{aspect-ratio:4/3;overflow:hidden;border-radius:.9rem;
+      border:1px solid #dbeafe;background:#fff;box-shadow:0 4px 18px -6px rgba(30,64,175,.28)}
+    .mobile-swiper img{width:100%;height:100%;object-fit:cover;display:block}
+    .mobile-swiper .swiper-pagination-bullet{background:#1d4ed8;opacity:.4}
+    .mobile-swiper .swiper-pagination-bullet-active{background:#ef4444;opacity:1;box-shadow:0 0 0 2px #badcf7}
+    @media (min-width:768px){.mobile-only{display:none}}
+    @media (max-width:767px){.desktop-only{display:none}}
+    /* Lightbox */
+    #gallery-lightbox{position:fixed;inset:0;z-index:120;display:none;align-items:center;justify-content:center;
+      background:rgba(5,25,55,.86);backdrop-filter:blur(10px);padding:1.25rem}
+    #gallery-lightbox.open{display:flex}
+    .lb-shell{position:relative;width:100%;max-width:1100px}
+    .lb-close{position:absolute;top:-14px;right:-14px;width:54px;height:54px;border-radius:18px;
+      background:rgba(255,255,255,.9);border:2px solid #1d4ed8;color:#1d4ed8;font-size:1.55rem;
+      display:flex;align-items:center;justify-content:center;font-weight:700;cursor:pointer;
+      box-shadow:0 8px 28px -10px rgba(30,64,175,.55);transition:background .25s}
+    .lb-close:hover{background:#fff}
+    .lb-swiper{border-radius:1.4rem;overflow:hidden;background:#000;box-shadow:0 18px 50px -14px rgba(0,0,0,.6),0 4px 16px rgba(0,0,0,.25)}
+    .lb-swiper .swiper-slide{display:flex;align-items:center;justify-content:center;background:#000;aspect-ratio:4/3}
+    .lb-swiper img{width:100%;height:100%;object-fit:cover;max-height:78vh}
+    .lb-swiper .swiper-button-prev,.lb-swiper .swiper-button-next{color:#fff;width:54px;height:54px;background:rgba(255,255,255,.18);backdrop-filter:blur(4px);border:1px solid #fff;border-radius:50%}
+    .lb-swiper .swiper-button-prev:hover,.lb-swiper .swiper-button-next:hover{background:rgba(255,255,255,.3)}
+    .lb-swiper .swiper-pagination-bullet{background:#fff;opacity:.45}
+    .lb-swiper .swiper-pagination-bullet-active{background:#ef4444;opacity:1;box-shadow:0 0 0 2px #1d4ed8}
+    .lb-caption{margin-top:.85rem;text-align:center;font-family:'Playfair Display',serif;font-weight:600;color:#fff;font-size:.95rem;letter-spacing:.35px}
+
+    /* UPDATED: remove white gaps, enforce fill and consistent backgrounds */
+    .g-card,
+    .mobile-swiper .swiper-slide {
+      background:#badcf7; /* was #fff */
+    }
+    .g-card img,
+    .mobile-swiper .swiper-slide img {
+      width:100%;
+      height:100%;
+      object-fit:cover;          /* fill box */
+      object-position:center;    /* center focus */
+      display:block;
+      background:#badcf7;        /* for transparent PNG regions */
+    }
+    /* If any very short image still leaves gap, stretch subtly */
+    .mobile-swiper .swiper-slide img {
+      image-rendering:auto;
+    }
+
+    /* Pagination bullets below container (no overlay) */
+    .mobile-swiper {
+      padding-bottom:0;              /* remove default space */
+      margin-bottom:1.05rem;         /* space for bullets after container */
+      position:relative;
+    }
+    .mobile-swiper .swiper-pagination {
+      position:static !important;    /* take out of absolute layering */
+      margin-top:.65rem;
+      display:flex;
+      justify-content:center;
+      gap:.45rem;
+    }
+    .mobile-swiper .swiper-pagination-bullet {
+      background:#1d4ed8;
+      opacity:.45;
+      width:10px;
+      height:10px;
+      transition:transform .25s, opacity .25s;
+    }
+    .mobile-swiper .swiper-pagination-bullet-active {
+      background:#ef4444;
+      opacity:1;
+      transform:scale(1.18);
+      box-shadow:0 0 0 3px #badcf7;
+    }
+
+    /* Desktop cards: also remove internal white if PNG has alpha */
+    .g-card {
+      background:#badcf7;
+    }
+
+    /* Lightbox slides keep pure black for contrast (unchanged) */
+
+    /* NEW: ash hero background (not white) */
+    .hero-ash{
+      /* Softer ash-blue blend matching body bg (#badcf7) */
+      background:linear-gradient(135deg,#d9e6ed 0%,#c9d8e1 52%,#bccdd7 100%);
+      border:2px solid #cfd8df;
+    }
+  </style>
+</head>
+<body class="pattern">
+
+  <!-- HEADER imported from index.html -->
+  <header class="fixed top-0 left-0 w-full z-[80] bg-white/80 backdrop-blur border-b border-blue-200">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-1 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2">
+        <img src="logo.png" alt="GPCC Logo" class="header-brand-img rounded-sm border border-blue-900/40 bg-transparent">
+        <span class="font-fjalla text-blue-900 header-brand-text inline lg:hidden">Global Peace Christian Centre</span>
+        <span class="hidden lg:inline font-fjalla text-blue-900 header-brand-text">Global Peace Christian Centre</span>
+      </a>
+      <nav id="desktop-nav"
+           class="hidden lg:flex relative items-center gap-4 bg-white/70 rounded-full border-2 border-blue-900 px-6 py-2 shadow-lg">
+        <a href="index.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">HOME</a>
+        <div class="relative">
+          <button id="about-us-desktop-btn"
+                  class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold flex items-center gap-2 hover:bg-blue-50 transition focus:outline-none"
+                  aria-haspopup="true" aria-expanded="false">
+            ABOUT US
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6"/>
+            </svg>
+          </button>
+          <ul id="about-us-desktop-dropdown"
+              class="absolute top-full left-0 mt-2 hidden bg-white border border-blue-200 rounded-lg shadow-lg w-72 py-2"
+              role="menu">
+            <li><a href="who-we-are.html" class="block px-4 py-2 hover:bg-blue-50">Who We Are</a></li>
+            <li><a href="pastoral-board.html" class="block px-4 py-2 hover:bg-blue-50">The Leadership</a></li>
+            <li><a href="community-journey.html" class="block px-4 py-2 hover:bg-blue-50">Our Journey Through the Community</a></li>
+            <li><a href="testimonies.html" class="block px-4 py-2 hover:bg-blue-50">Testimonies</a></li>
+          </ul>
+        </div>
+        <a href="ministries.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MINISTRIES</a>
+        <a href="events.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">EVENTS</a>
+        <a href="gallery.html" class="px-4 py-2 rounded-full bg-blue-900 text-white font-semibold shadow">GALLERY</a>
+        <a href="contact-us.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">CONTACT US</a>
+      </nav>
+      <button id="menu-toggle"
+              class="lg:hidden fixed top-2 right-4 focus:outline-none z-50"
+              aria-label="Open Menu" aria-expanded="false">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-900 hover:bg-blue-700 shadow-xl ring-2 ring-blue-200 transition duration-200">
+          <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+        </span>
+      </button>
+    </div>
+    <div id="mobile-menu"
+         class="fixed inset-x-0 top-[60px] bottom-0 hidden justify-start items-start bg-[#badcf7]/95 z-[60] lg:hidden">
+      <div id="mobile-panel"
+           class="absolute right-4 top-4 w-80 px-2 py-4 rounded-2xl bg-white shadow-2xl border border-blue-200 text-center glass">
+        <nav class="space-y-4 mt-3">
+          <a href="index.html" class="block w-full px-5 py-3 rounded-full bg-blue-900 text-white font-semibold">HOME</a>
+          <div>
+            <button id="mobile-about-toggle"
+                    class="w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold flex items-center justify-center gap-2">
+              ABOUT US
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6"/>
+              </svg>
+            </button>
+            <ul id="mobile-about-dropdown" class="hidden mt-2 space-y-2">
+              <li><a href="who-we-are.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Who We Are</a></li>
+              <li><a href="pastoral-board.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">The Leadership</a></li>
+              <li><a href="community-journey.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Our Journey Through the Community</a></li>
+              <li><a href="testimonies.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Testimonies</a></li>
+            </ul>
+          </div>
+          <a href="ministries.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MINISTRIES</a>
+          <a href="events.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">EVENTS</a>
+          <a href="gallery.html" class="block w-full px-5 py-3 rounded-full bg-blue-900 text-white font-semibold">GALLERY</a>
+          <a href="contact-us.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">CONTACT US</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="h-[60px]"></div>
+
+  <!-- HERO (centered heading, black paragraph text) -->
+  <section class="max-w-7xl mx-auto px-4 mt-6 md:mt-10">
+    <div class="hero-shell hero-ash grid md:grid-cols-2 gap-8 p-8 md:p-12 items-center">
+      <div class="flex flex-col gap-5">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-blue-900 leading-tight font-fjalla text-center">Gallery</h1>
+        <p class="text-sm sm:text-base md:text-lg text-black font-medium max-w-md leading-relaxed mx-auto md:mx-0 text-center">
+          Browse through our curated photos from services, programs, evangelism, missions,
+          donations and special moments since our inception—and beyond.
+        </p>
+      </div>
+      <div>
+        <div class="rounded-2xl overflow-hidden shadow-2xl border border-blue-200 aspect-[4/3] bg-white/40">
+          <img src="gallery4.jpg" alt="Highlight" class="w-full h-full object-cover">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANNIVERSARY SECTION -->
+  <section id="anniversary" class="gallery-section max-w-7xl mx-auto px-4">
+    <!-- REPLACED gradient banner with plain heading styled like Sovereign Praise -->
+    <div class="text-center mb-8">
+      <h2 class="text-3xl md:text-4xl font-bold font-[Playfair Display]">
+        <span class="block text-black">Global Peace Christian Centre</span>
+        <span class="block text-black text-base md:text-xl font-normal mt-1">2nd Anniversary Celebration</span>
+      </h2>
+      <p class="mt-3 max-w-2xl mx-auto text-sm md:text-base text-blue-900/80 font-medium">
+        One of our maiden anniversary celebrations after moving into the “PEACE TEMPLE”.
+      </p>
+    </div>
+
+    <!-- Desktop Grid -->
+    <div class="desktop-only gallery-grid anniv-grid">
+      <div class="g-card" data-group="anniv" data-index="0"><img src="./assets/pastoral-board/anniversary-1.png" alt="Anniversary 1"></div>
+      <div class="g-card" data-group="anniv" data-index="1"><img src="./assets/pastoral-board/anniversary-2.png" alt="Anniversary 2"></div>
+      <div class="g-card" data-group="anniv" data-index="2"><img src="./assets/pastoral-board/anniversary-3.png" alt="Anniversary 3"></div>
+      <div class="g-card" data-group="anniv" data-index="3"><img src="./assets/pastoral-board/anniversary-4.png" alt="Anniversary 4"></div>
+      <div class="g-card" data-group="anniv" data-index="4"><img src="./assets/pastoral-board/anniversary-5.png" alt="Anniversary 5"></div>
+      <div class="g-card" data-group="anniv" data-index="5"><img src="./assets/pastoral-board/anniversary-6.png" alt="Anniversary 6"></div>
+      <div class="g-card" data-group="anniv" data-index="6"><img src="./assets/pastoral-board/anniversary-7.png" alt="Anniversary 7"></div>
+      <div class="g-card" data-group="anniv" data-index="7"><img src="./assets/pastoral-board/anniversary-8.png" alt="Anniversary 8"></div>
+      <div class="g-card" data-group="anniv" data-index="8"><img src="./assets/pastoral-board/anniversary-9.png" alt="Anniversary 9"></div>
+      <div class="g-card" data-group="anniv" data-index="9"><img src="./assets/pastoral-board/anniversary-10.png" alt="Anniversary 10"></div>
+    </div>
+
+    <!-- Mobile Swiper -->
+    <div class="mobile-only">
+      <div class="swiper mobile-swiper anniv-swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img data-group="anniv" data-index="0" src="./assets/pastoral-board/anniversary-1.png" alt="Anniversary 1"></div>
+          <div class="swiper-slide"><img data-group="anniv" data-index="1" src="./assets/pastoral-board/anniversary-2.png" alt="Anniversary 2"></div>
+          <div class="swiper-slide"><img data-group="anniv" data-index="2" src="./assets/pastoral-board/anniversary-3.png" alt="Anniversary 3"></div>
+          <div class="swiper-slide"><img data-group="anniv" data-index="3" src="./assets/pastoral-board/anniversary-4.png" alt="Anniversary 4"></div>
+          <div class="swiper-slide"><img data-group="anniv" data-index="4" src="./assets/pastoral-board/anniversary-5.png" alt="Anniversary 5"></div>
+          <div class="swiper-slide"><img data-group="anniv" data-index="5" src="./assets/pastoral-board/anniversary-6.png" alt="Anniversary 6"></div>
+          <div class="swiper-slide"><img data-group="anniv" data-index="6" src="./assets/pastoral-board/anniversary-7.png" alt="Anniversary 7"></div>
+          <div class="swiper-slide"><img data-group="anniv" data-index="7" src="./assets/pastoral-board/anniversary-8.png" alt="Anniversary 8"></div>
+          <div class="swiper-slide"><img data-group="anniv" data-index="8" src="./assets/pastoral-board/anniversary-9.png" alt="Anniversary 9"></div>
+          <div class="swiper-slide"><img data-group="anniv" data-index="9" src="./assets/pastoral-board/anniversary-10.png" alt="Anniversary 10"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOVEREIGN PRAISE 2019 SECTION -->
+  <section id="sovereign-praise-2019" class="gallery-section max-w-7xl mx-auto px-4">
+    <div class="text-center mb-8">
+      <h2 class="text-3xl md:text-4xl font-bold text-blue-900 font-[Playfair Display]">Sovereign Praise 2019</h2>
+      <p class="mt-3 max-w-2xl mx-auto text-sm md:text-base text-blue-900/80 font-medium">
+        Annual Gospel Rock Concert — a night of Spirit‑filled performances and ministration.
+      </p>
+    </div>
+
+    <!-- Desktop Grid -->
+    <div class="desktop-only gallery-grid sp-grid">
+      <div class="g-card" data-group="sp2019" data-index="0"><img src="./assets/pastoral-board/sp2019-1.jpg" alt="Sovereign Praise 1"></div>
+      <div class="g-card" data-group="sp2019" data-index="1"><img src="./assets/pastoral-board/sp2019-2.jpg" alt="Sovereign Praise 2"></div>
+      <div class="g-card" data-group="sp2019" data-index="2"><img src="./assets/pastoral-board/sp2019-3.jpg" alt="Sovereign Praise 3"></div>
+      <div class="g-card" data-group="sp2019" data-index="3"><img src="./assets/pastoral-board/sp2019-4.jpg" alt="Sovereign Praise 4"></div>
+      <div class="g-card" data-group="sp2019" data-index="4"><img src="./assets/pastoral-board/sp2019-5.jpg" alt="Sovereign Praise 5"></div>
+      <div class="g-card" data-group="sp2019" data-index="5"><img src="./assets/pastoral-board/sp2019-6.jpg" alt="Sovereign Praise 6"></div>
+      <div class="g-card" data-group="sp2019" data-index="6"><img src="./assets/pastoral-board/sp2019-7.jpg" alt="Sovereign Praise 7"></div>
+      <div class="g-card" data-group="sp2019" data-index="7"><img src="./assets/pastoral-board/sp2019-8.jpg" alt="Sovereign Praise 8"></div>
+      <div class="g-card" data-group="sp2019" data-index="8"><img src="./assets/pastoral-board/sp2019-9.jpg" alt="Sovereign Praise 9"></div>
+      <div class="g-card" data-group="sp2019" data-index="9"><img src="./assets/pastoral-board/sp2019-10.jpg" alt="Sovereign Praise 10"></div>
+      <div class="g-card" data-group="sp2019" data-index="10"><img src="./assets/pastoral-board/sp2019-11.jpg" alt="Sovereign Praise 11"></div>
+      <div class="g-card" data-group="sp2019" data-index="11"><img src="./assets/pastoral-board/sp2019-12.jpg" alt="Sovereign Praise 12"></div>
+    </div>
+
+    <!-- Mobile Swiper -->
+    <div class="mobile-only">
+      <div class="swiper mobile-swiper sp2019-swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img data-group="sp2019" data-index="0" src="./assets/pastoral-board/sp2019-1.jpg" alt="Sovereign Praise 1"></div>
+          <div class="swiper-slide"><img data-group="sp2019" data-index="1" src="./assets/pastoral-board/sp2019-2.jpg" alt="Sovereign Praise 2"></div>
+          <div class="swiper-slide"><img data-group="sp2019" data-index="2" src="./assets/pastoral-board/sp2019-3.jpg" alt="Sovereign Praise 3"></div>
+          <div class="swiper-slide"><img data-group="sp2019" data-index="3" src="./assets/pastoral-board/sp2019-4.jpg" alt="Sovereign Praise 4"></div>
+          <div class="swiper-slide"><img data-group="sp2019" data-index="4" src="./assets/pastoral-board/sp2019-5.jpg" alt="Sovereign Praise 5"></div>
+          <div class="swiper-slide"><img data-group="sp2019" data-index="5" src="./assets/pastoral-board/sp2019-6.png" alt="Sovereign Praise 6"></div>
+          <div class="swiper-slide"><img data-group="sp2019" data-index="6" src="./assets/pastoral-board/sp2019-7.png" alt="Sovereign Praise 7"></div>
+          <div class="swiper-slide"><img data-group="sp2019" data-index="7" src="./assets/pastoral-board/sp2019-8.png" alt="Sovereign Praise 8"></div>
+          <div class="swiper-slide"><img data-group="sp2019" data-index="8" src="./assets/pastoral-board/sp2019-9.png" alt="Sovereign Praise 9"></div>
+          <div class="swiper-slide"><img data-group="sp2019" data-index="9" src="./assets/pastoral-board/sp2019-10.png" alt="Sovereign Praise 10"></div>
+          <div class="swiper-slide"><img data-group="sp2019" data-index="10" src="./assets/pastoral-board/sp2019-11.jpg" alt="Sovereign Praise 11"></div>
+          <div class="swiper-slide"><img data-group="sp2019" data-index="11" src="./assets/pastoral-board/sp2019-12.jpg" alt="Sovereign Praise 12"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEW: CAPTURED ON SUNDAY SECTION (styled like Sovereign Praise) -->
+  <section id="captured-sunday" class="gallery-section max-w-7xl mx-auto px-4">
+    <div class="text-center mb-8">
+      <h2 class="text-3xl md:text-4xl font-bold text-blue-900 font-[Playfair Display]">Captured On Sunday</h2>
+      <p class="mt-3 max-w-2xl mx-auto text-sm md:text-base text-blue-900/80 font-medium">
+        Weekly worship, fellowship and joyful expressions of praise.
+      </p>
+    </div>
+    <!-- Desktop Grid -->
+    <div class="desktop-only gallery-grid sp-grid" style="grid-template-columns:repeat(4,minmax(0,1fr));">
+      <!-- Replace placeholder filenames with actual Sunday images (keep data-group & index) -->
+      <div class="g-card" data-group="sunday" data-index="0"><img src="./assets/pastoral-board/sunday-1.png" alt="Sunday Moment 1"></div>
+      <div class="g-card" data-group="sunday" data-index="1"><img src="./assets/pastoral-board/sunday-2.png" alt="Sunday Moment 2"></div>
+      <div class="g-card" data-group="sunday" data-index="2"><img src="./assets/pastoral-board/sunday-3.png" alt="Sunday Moment 3"></div>
+      <div class="g-card" data-group="sunday" data-index="3"><img src="./assets/pastoral-board/sunday-4.png" alt="Sunday Moment 4"></div>
+      <div class="g-card" data-group="sunday" data-index="4"><img src="./assets/pastoral-board/sunday-5.jpg" alt="Sunday Moment 5"></div>
+      <div class="g-card" data-group="sunday" data-index="5"><img src="./assets/pastoral-board/sunday-6.jpg" alt="Sunday Moment 6"></div>
+      <div class="g-card" data-group="sunday" data-index="6"><img src="./assets/pastoral-board/sunday-7.jpg" alt="Sunday Moment 7"></div>
+      <div class="g-card" data-group="sunday" data-index="7"><img src="./assets/pastoral-board/sunday-8.jpg" alt="Sunday Moment 8"></div>
+    </div>
+    <!-- Mobile Swiper -->
+    <div class="mobile-only">
+      <div class="swiper mobile-swiper sunday-swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img data-group="sunday" data-index="0" src="./assets/pastoral-board/sunday-1.png" alt="Sunday Moment 1"></div>
+          <div class="swiper-slide"><img data-group="sunday" data-index="1" src="./assets/pastoral-board/sunday-2.png" alt="Sunday Moment 2"></div>
+          <div class="swiper-slide"><img data-group="sunday" data-index="2" src="./assets/pastoral-board/sunday-3.png" alt="Sunday Moment 3"></div>
+          <div class="swiper-slide"><img data-group="sunday" data-index="3" src="./assets/pastoral-board/sunday-4.png" alt="Sunday Moment 4"></div>
+          <div class="swiper-slide"><img data-group="sunday" data-index="4" src="./assets/pastoral-board/sunday-5.jpg" alt="Sunday Moment 5"></div>
+          <div class="swiper-slide"><img data-group="sunday" data-index="5" src="./assets/pastoral-board/sunday-6.jpg" alt="Sunday Moment 6"></div>
+          <div class="swiper-slide"><img data-group="sunday" data-index="6" src="./assets/pastoral-board/sunday-7.jpg" alt="Sunday Moment 7"></div>
+          <div class="swiper-slide"><img data-group="sunday" data-index="7" src="./assets/pastoral-board/sunday-8.jpg" alt="Sunday Moment 8"></div>
+          <div class="swiper-slide"><img data-group="sunday" data-index="8" src="./assets/pastoral-board/sunday-9.jpg" alt="Sunday Moment 9"></div>
+          <div class="swiper-slide"><img data-group="sunday" data-index="9" src="./assets/pastoral-board/sunday-10.jpg" alt="Sunday Moment 10"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEW: 2023 10th ANNIVERSARY CELEBRATION SECTION -->
+  <section id="anniversary-2023" class="gallery-section max-w-7xl mx-auto px-4">
+    <div class="text-center mb-8">
+      <h2 class="text-3xl md:text-4xl font-bold text-blue-900 font-[Playfair Display]">2023 – 10th Anniversary Celebration</h2>
+      <p class="mt-3 max-w-2xl mx-auto text-sm md:text-base text-blue-900/80 font-medium">
+        A decade of growth, service and covenant faithfulness.
+      </p>
+    </div>
+    <!-- Desktop Grid -->
+    <div class="desktop-only gallery-grid sp-grid" style="grid-template-columns:repeat(4,minmax(0,1fr));">
+      <!-- Placeholder filenames; replace with real 10th anniversary images -->
+      <div class="g-card" data-group="anniv2023" data-index="0"><img src="./assets/pastoral-board/anniv2023-1.jpg" alt="10th Anniversary 1"></div>
+      <div class="g-card" data-group="anniv2023" data-index="1"><img src="./assets/pastoral-board/anniv2023-2.jpg" alt="10th Anniversary 2"></div>
+      <div class="g-card" data-group="anniv2023" data-index="2"><img src="./assets/pastoral-board/anniv2023-3.jpg" alt="10th Anniversary 3"></div>
+      <div class="g-card" data-group="anniv2023" data-index="3"><img src="./assets/pastoral-board/anniv2023-4.jpg" alt="10th Anniversary 4"></div>
+      <div class="g-card" data-group="anniv2023" data-index="4"><img src="./assets/pastoral-board/anniv2023-5.jpg" alt="10th Anniversary 5"></div>
+      <div class="g-card" data-group="anniv2023" data-index="5"><img src="./assets/pastoral-board/anniv2023-6.jpg" alt="10th Anniversary 6"></div>
+      <div class="g-card" data-group="anniv2023" data-index="6"><img src="./assets/pastoral-board/anniv2023-7.jpg" alt="10th Anniversary 7"></div>
+      <div class="g-card" data-group="anniv2023" data-index="7"><img src="./assets/pastoral-board/anniv2023-9.jpg" alt="10th Anniversary 8"></div>
+      <div class="g-card" data-group="anniv2023" data-index="8"><img src="./assets/pastoral-board/anniv2023-10.jpg" alt="10th Anniversary 8"></div>
+      <div class="g-card" data-group="anniv2023" data-index="9"><img src="./assets/pastoral-board/anniv2023-11.jpg" alt="10th Anniversary 8"></div>
+      <div class="g-card" data-group="anniv2023" data-index="10"><img src="./assets/pastoral-board/anniv2023-12.jpg" alt="10th Anniversary 8"></div>
+      <div class="g-card" data-group="anniv2023" data-index="1"><img src="./assets/pastoral-board/anniv2023-13.jpg" alt="10th Anniversary 8"></div>
+    </div>
+    <!-- Mobile Swiper -->
+    <div class="mobile-only">
+      <div class="swiper mobile-swiper anniv2023-swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img data-group="anniv2023" data-index="0" src="./assets/pastoral-board/anniv2023-1.jpg" alt="10th Anniversary 1"></div>
+          <div class="swiper-slide"><img data-group="anniv2023" data-index="1" src="./assets/pastoral-board/anniv2023-2.jpg" alt="10th Anniversary 2"></div>
+          <div class="swiper-slide"><img data-group="anniv2023" data-index="2" src="./assets/pastoral-board/anniv2023-3.jpg" alt="10th Anniversary 3"></div>
+          <div class="swiper-slide"><img data-group="anniv2023" data-index="3" src="./assets/pastoral-board/anniv2023-4.jpg" alt="10th Anniversary 4"></div>
+          <div class="swiper-slide"><img data-group="anniv2023" data-index="4" src="./assets/pastoral-board/anniv2023-5.jpg" alt="10th Anniversary 5"></div>
+          <div class="swiper-slide"><img data-group="anniv2023" data-index="5" src="./assets/pastoral-board/anniv2023-6.jpg" alt="10th Anniversary 6"></div>
+          <div class="swiper-slide"><img data-group="anniv2023" data-index="6" src="./assets/pastoral-board/anniv2023-7.jpg" alt="10th Anniversary 7"></div>
+          <div class="swiper-slide"><img data-group="anniv2023" data-index="7" src="./assets/pastoral-board/anniv2023-8.jpg" alt="10th Anniversary 8"></div>
+          <div class="swiper-slide"><img data-group="anniv2023" data-index="8" src="./assets/pastoral-board/anniv2023-9.jpg" alt="10th Anniversary 8"></div>
+          <div class="swiper-slide"><img data-group="anniv2023" data-index="9" src="./assets/pastoral-board/anniv2023-10.jpg" alt="10th Anniversary 8"></div>
+          <div class="swiper-slide"><img data-group="anniv2023" data-index="10" src="./assets/pastoral-board/anniv2023-11.jpg" alt="10th Anniversary 8"></div>
+          <div class="swiper-slide"><img data-group="anniv2023" data-index="11" src="./assets/pastoral-board/anniv2023-12.jpg" alt="10th Anniversary 8"></div>
+          <div class="swiper-slide"><img data-group="anniv2023" data-index="12" src="./assets/pastoral-board/anniv2023-13.jpg" alt="10th Anniversary 8"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BACK TO HOME button (added just after last gallery section, before lightbox) -->
+  <div class="max-w-7xl mx-auto px-4 mt-6 text-center">
+    <a href="index.html"
+       class="inline-block px-8 py-3 rounded-full bg-blue-900 text-white font-semibold shadow hover:bg-blue-700 transition">
+      BACK TO HOME
+    </a>
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div id="gallery-lightbox" aria-hidden="true">
+    <div class="lb-shell">
+      <button class="lb-close" type="button" aria-label="Close gallery">&times;</button>
+      <div class="swiper lb-swiper">
+        <div class="swiper-wrapper"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-pagination"></div>
+      </div>
+      <div class="lb-caption" id="lb-caption"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="w-full bg-[#181c17] relative mt-16">
+    <div class="absolute inset-0 w-full h-full">
+      <img src="footer-bg.jpg" alt="Peace Temple Interior" class="w-full h-full object-cover opacity-40"/>
+      <div class="absolute inset-0 bg-black/40"></div>
+    </div>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 py-8 flex flex-col md:flex-row md:justify-between md:items-start text-white">
+      <div class="mb-6 md:mb-0">
+        <div class="mb-3">
+          <span class="font-semibold">Address:</span><br>
+          P. O. Box AN 11587, Accra-North<br>
+          ABLOR ADJEI OFF THE AGBOGBA-ABOKOBI ROAD
+        </div>
+        <div class="mb-3">
+          <span class="font-semibold">Contact:</span><br>
+          <span class="block">+233 (208) 180 188 &nbsp; +233 (246) 224 766</span>
+          <a href="mailto:info@gpcconline.org" class="text-blue-200 underline hover:text-blue-400">info@gpcconline.org</a>
+        </div>
+        <div class="text-xs mt-2">&copy; 2025 GPCC. All rights reserved.</div>
+      </div>
+      <div class="flex flex-col items-end">
+        <div class="mb-3 text-gray-200 font-medium">Social Links</div>
+        <div class="flex gap-4 mb-4">
+          <a href="#" aria-label="Facebook" class="hover:text-blue-400"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Instagram" class="hover:text-pink-400"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="X" class="hover:text-blue-400"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="LinkedIn" class="hover:text-blue-400"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="YouTube" class="hover:text-red-400"><i class="fab fa-youtube"></i></a>
+        </div>
+        <div class="flex gap-4 text-sm">
+          <a href="#" class="hover:underline">Privacy Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS (cleaned; no duplicate trailing text) -->
+  <script>
+    /* Desktop ABOUT dropdown */
+    (function(){
+      const btn=document.getElementById('about-us-desktop-btn');
+      const dd=document.getElementById('about-us-desktop-dropdown');
+      if(!btn||!dd) return;
+      let open=false;
+      btn.addEventListener('click',e=>{
+        e.stopPropagation();
+        dd.classList.toggle('hidden'); open=!open;
+        document.addEventListener('click',function handler(ev){
+          if(open && !dd.contains(ev.target) && ev.target!==btn){
+            dd.classList.add('hidden'); open=false;
+            document.removeEventListener('click',handler);
+          }
+        });
+      });
+    })();
+
+    /* Scroll lock mgmt for mobile nav (same pattern as index) */
+    let __scrollY=0, __lock=false;
+    function lockBody(){
+      if(__lock) return;
+      __scrollY=window.scrollY||document.documentElement.scrollTop;
+      document.body.classList.add('modal-open');
+      document.body.style.top=`-${__scrollY}px`;
+      __lock=true;
+    }
+    function unlockBody(){
+      if(!__lock) return;
+      document.body.classList.remove('modal-open');
+      document.body.style.top='';
+      window.scrollTo(0,__scrollY);
+      __lock=false;
+    }
+
+    /* Mobile menu */
+    (function(){
+      const toggle=document.getElementById('menu-toggle');
+      const menu=document.getElementById('mobile-menu');
+      const panel=document.getElementById('mobile-panel');
+      if(!toggle||!menu||!panel) return;
+      function close(){ if(menu.classList.contains('hidden')) return; menu.classList.add('hidden'); toggle.setAttribute('aria-expanded','false'); unlockBody(); }
+      function open(){ if(!menu.classList.contains('hidden')) return; menu.classList.remove('hidden'); toggle.setAttribute('aria-expanded','true'); lockBody(); }
+      toggle.addEventListener('click',e=>{ e.stopPropagation(); menu.classList.contains('hidden')?open():close(); });
+      menu.addEventListener('click',e=>{ if(!panel.contains(e.target)) close(); });
+      document.addEventListener('keydown',e=>{ if(e.key==='Escape') close(); });
+      window.matchMedia('(min-width:1024px)').addEventListener('change',e=>{ if(e.matches) close(); });
+      const mBtn=document.getElementById('mobile-about-toggle');
+      const mDd=document.getElementById('mobile-about-dropdown');
+      mBtn?.addEventListener('click',e=>{ e.stopPropagation(); mDd.classList.toggle('hidden'); });
+    })();
+
+    /* INIT: mobile section swipers (added sunday & anniv2023) */
+    (function(){
+      if(typeof Swiper==='undefined') return;
+      function initOnce(cls, store){
+        if(document.querySelector(cls) && !window[store]){
+          window[store]=new Swiper(cls,{
+            slidesPerView:1,
+            spaceBetween:14,
+            loop:false,
+            pagination:{el: cls+' .swiper-pagination',clickable:true},
+            speed:500
+          });
+        }
+      }
+      initOnce('.anniv-swiper','__annivSwiper');
+      initOnce('.sp2019-swiper','__spSwiper');
+      initOnce('.sunday-swiper','__sundaySwiper');
+      initOnce('.anniv2023-swiper','__anniv2023Swiper');
+    })();
+
+    /* Lightbox (unchanged logic) */
+    (function(){
+      const lb=document.getElementById('gallery-lightbox');
+      const lbWrapper=lb.querySelector('.lb-swiper .swiper-wrapper');
+      const lbCaption=document.getElementById('lb-caption');
+      const closeBtn=lb.querySelector('.lb-close');
+      let swiper=null,currentGroup=null;
+      const allItems=[...document.querySelectorAll('[data-group]')];
+
+      function build(group){
+        lbWrapper.innerHTML='';
+        allItems.filter(el=>el.dataset.group===group).forEach(el=>{
+          const slide=document.createElement('div');
+          slide.className='swiper-slide';
+          const img=el.querySelector('img')||el;
+          const tag=document.createElement('img');
+          tag.src=img.getAttribute('src');
+          tag.alt=img.getAttribute('alt')||'';
+          slide.appendChild(tag);
+          lbWrapper.appendChild(slide);
+        });
+      }
+      function open(group,index){
+        if(group!==currentGroup){
+          currentGroup=group;
+          build(group);
+          if(swiper){swiper.destroy(true,true);}
+          swiper=new Swiper('.lb-swiper',{
+            loop:false,
+            speed:500,
+            navigation:{nextEl:'.lb-swiper .swiper-button-next',prevEl:'.lb-swiper .swiper-button-prev'},
+            pagination:{el:'.lb-swiper .swiper-pagination',clickable:true},
+            on:{slideChange:updateCaption,init:updateCaption}
+          });
+        }
+        lb.classList.add('open');
+        swiper.slideTo(index,0);
+        updateCaption();
+        document.addEventListener('keydown',esc);
+      }
+      function updateCaption(){
+        if(!swiper) return;
+        const slide=swiper.slides[swiper.activeIndex];
+        const img=slide?slide.querySelector('img'):null;
+        lbCaption.textContent=img?img.alt:'';
+      }
+      function close(){
+        lb.classList.remove('open');
+        document.removeEventListener('keydown',esc);
+      }
+      function esc(e){ if(e.key==='Escape') close(); }
+      document.addEventListener('click',e=>{
+        const t=e.target.closest('[data-group]');
+        if(!t) return;
+        open(t.dataset.group, parseInt(t.dataset.index||'0',10));
+      });
+      closeBtn.addEventListener('click',close);
+      lb.addEventListener('click',e=>{ if(e.target===lb) close(); });
+    })();
+  </script>
+</body>
+</html>
