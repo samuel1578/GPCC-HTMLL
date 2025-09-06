@@ -320,6 +320,15 @@
       line-height: 0; /* remove stray vertical shift */
     }
   </style>
+
+  <!-- Added override: ensure popup dialogs can grow beyond viewport height so background reaches end -->
+  <style>
+    /* Popup background height fix for very small screens */
+    #schedule-dialog,
+    #message-dialog {
+      max-height: none !important; /* remove Tailwind max-h-full limit */
+    }
+  </style>
 </head>
 <body class="bg-[#badcf7] font-sans">
 
