@@ -440,6 +440,22 @@
     }
     /* Center grid items */
     .elders-list { justify-items:center; }
+
+    /* FIX: prevent overlap between View Profile button and pagination (mobile pastoral swiper) */
+    .pastoral-swiper .swiper-pagination {
+      position: static !important;    /* take it out of absolute positioning */
+      margin-top: 0.85rem;            /* space below the card buttons */
+      padding-bottom: 0;              /* clean */
+    }
+    .pastoral-swiper {
+      padding-bottom: 0 !important;   /* remove unused reserve spacing */
+    }
+    /* (Optional) assure bullets center nicely */
+    .pastoral-swiper .swiper-pagination-bullets {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+    }
   </style>
 </head>
 <body class="bg-[#badcf7] font-sans community-page"><!-- added class -->
@@ -517,10 +533,10 @@
       </div>
     </div>
   </header>
-  <div class="h-[60px]"></div><!-- changed spacer 72px -> 60px -->
+  <div class="h-[28px]"></div><!-- reduced spacer (was h-[60px]) -->
 
   <!-- MAIN CONTENT - improved structure while keeping card fixes -->
-  <main class="max-w-7xl mx-auto px-4 py-8 community-content"><!-- added class -->
+  <main class="max-w-7xl mx-auto px-4 py-4 community-content"><!-- reduced top padding (was py-8) -->
     <!-- Inserted: Main page header -->
     <section class="leadership-wrapper text-center">
       <span class="leadership-accent"></span>
@@ -531,7 +547,7 @@
       <div class="board-header-overlay"></div>
       <div class="board-header">The Pastoral Board</div>
     </div>
-    <div class="board-sub">Meet the dedicated leaders of our church community.</div>
+    <div class="board-sub">Meet the Pastoral Board who provide spiritual leadership and guidance for our church family.</div>
 
     <!-- Desktop Hierarchy - unchanged -->
     <div class="hidden lg:block desktop-view">
@@ -541,7 +557,7 @@
         <div class="card founder-card">
           <img src="headpastorj.jpg" alt="President & Founder" class="pastor-img object-cover bg-[#badcf7] border-b-2 border-blue-100">
           <div class="card-content">
-            <div class="card-title">President & Founder</div>
+            <div class="card-title">Chairman & Founder</div>
             <div class="pastor-name">Very Rev Henry Ampomah-Boateng</div>
             <div class="card-desc">Visionary leader and founder of GPCC.</div>
             <button class="view-profile-btn" onclick="window.location.href='profile-president.html'">View Profile</button>
@@ -555,6 +571,7 @@
             <div class="card-title">Vice President</div>
             <div class="pastor-name">Lady Perpetual Ampomah-Boateng</div>
             <div class="card-desc">Guiding our youth to grow in faith and community engagement.</div>
+            <button class="view-profile-btn" onclick="window.location.href='profile-vice-president.html'">View Profile</button>
           </div>
         </div>
       </div>
@@ -571,6 +588,7 @@
             <div class="card-title">Associate Pastor</div>
             <div class="pastor-name">Pastor Benjamin Gogoe</div>
             <div class="card-desc">Leading our congregation in heartfelt worship and praise every Sunday.</div>
+            <button class="view-profile-btn" onclick="window.location.href='profile-pastor-benjamin.html'">View Profile</button>
           </div>
         </div>
         
@@ -581,6 +599,7 @@
             <div class="card-title">Associate Pastor</div>
             <div class="pastor-name">Rev Dr. Mrs Ruby Aikins-Larbi</div>
             <div class="card-desc">Fostering a culture of prayer and support within our church family.</div>
+            <button class="view-profile-btn" onclick="window.location.href='profile-pastor-ruby.html'">View Profile</button>
           </div>
         </div>
       </div>
@@ -594,6 +613,7 @@
             <div class="card-title">Associate Pastor</div>
             <div class="pastor-name">Rev Mrs. Paulina Simpson</div>
             <div class="card-desc">Explore exciting opportunities to serve and grow in our vibrant community.</div>
+            <button class="view-profile-btn" onclick="window.location.href='profile-pastor-paulina.html'">View Profile</button>
           </div>
         </div>
         
@@ -604,6 +624,7 @@
             <div class="card-title">Associate Pastor</div>
             <div class="pastor-name">Pastor Samuel Konadu Wiafe</div>
             <div class="card-desc">Become part of our mission-driven team and make a difference.</div>
+            <button class="view-profile-btn" onclick="window.location.href='profile-pastor-wiafe.html'">View Profile</button>
           </div>
         </div>
         
@@ -614,6 +635,7 @@
             <div class="card-title">Associate Pastor</div>
             <div class="pastor-name">Rec Maxwell Mensah Brayie</div>
             <div class="card-desc">Connecting our church with the community through service and outreach initiatives.</div>
+            <button class="view-profile-btn" onclick="window.location.href='profile-pastor-maxwell.html'">View Profile</button>
           </div>
         </div>
       </div>
@@ -630,10 +652,9 @@
               <div class="card mobile-card">
                 <img src="headpastorj.jpg" alt="President & Founder" class="object-cover w-full bg-[#badcf7] border-b-2 border-blue-100">
                 <div class="card-content">
-                  <div>
-                    <div class="card-title">President & Founder</div>
-                    <div class="pastor-name">Very Rev Henry Ampomah-Boateng</div>
-                  </div>
+                  <div class="card-title">Chairman & Founder</div>
+                  <div class="pastor-name">Very Rev Henry Ampomah-Boateng</div>
+                  <!-- moved button inside card-content to avoid overlap -->
                   <button class="view-profile-btn mt-2" onclick="window.location.href='./profile-president.html'">View Profile</button>
                 </div>
               </div>
@@ -646,12 +667,13 @@
                 <div class="card-content">
                   <div class="card-title">Vice President</div>
                   <div class="pastor-name">Lady Perpetual Ampomah-Boateng</div>
-                  <div class="card-desc">The "mother" of our church.</div>
+                  <div class="card-desc">Quote: To whom much is given much is expected</div>
+                  <button class="view-profile-btn mt-2" onclick="window.location.href='profile-vice-president.html'">View Profile</button>
                 </div>
               </div>
             </div>
             
-            <!-- Associate Pastors -->
+            <!-- Associate Pastor Benjamin -->
             <div class="swiper-slide mobile-card-container">
               <div class="card mobile-card">
                 <img src="pastor-benjamin.jpg" alt="Associate Pastor" class="object-cover w-full bg-[#badcf7] border-b-2 border-blue-100">
@@ -659,9 +681,11 @@
                   <div class="card-title">Associate Pastor</div>
                   <div class="pastor-name">Pastor Benjamin Gogoe</div>
                   <div class="card-desc">Leading our congregation in heartfelt worship and praise every Sunday.</div>
+                  <button class="view-profile-btn mt-2" onclick="window.location.href='profile-pastor-benjamin.html'">View Profile</button>
                 </div>
               </div>
             </div>
+            <!-- Associate Pastor Ruby -->
             <div class="swiper-slide mobile-card-container">
               <div class="card mobile-card">
                 <img src="pastor-ruby.png" alt="Associate Pastor" class="object-cover w-full bg-[#badcf7] border-b-2 border-blue-100">
@@ -669,9 +693,11 @@
                   <div class="card-title">Associate Pastor</div>
                   <div class="pastor-name">Rev Dr. Mrs Ruby Aikins-Larbi</div>
                   <div class="card-desc">Fostering a culture of prayer and support within our church family.</div>
+                  <button class="view-profile-btn mt-2" onclick="window.location.href='profile-pastor-ruby.html'">View Profile</button>
                 </div>
               </div>
             </div>
+            <!-- Associate Pastor Paulina -->
             <div class="swiper-slide mobile-card-container">
               <div class="card mobile-card">
                 <img src="pastor-paulina.png" alt="Associate Pastor" class="object-cover w-full bg-[#badcf7] border-b-2 border-blue-100">
@@ -679,9 +705,11 @@
                   <div class="card-title">Associate Pastor</div>
                   <div class="pastor-name">Rev Mrs. Paulina Simpson</div>
                   <div class="card-desc">Explore exciting opportunities to serve and grow in our vibrant community.</div>
+                  <button class="view-profile-btn mt-2" onclick="window.location.href='profile-pastor-paulina.html'">View Profile</button>
                 </div>
               </div>
             </div>
+            <!-- Associate Pastor Wiafe -->
             <div class="swiper-slide mobile-card-container">
               <div class="card mobile-card">
                 <img src="pastor-wiafe.png" alt="Associate Pastor" class="object-cover w-full bg-[#badcf7] border-b-2 border-blue-100">
@@ -689,9 +717,11 @@
                   <div class="card-title">Associate Pastor</div>
                   <div class="pastor-name">Pastor Samuel Konadu Wiafe</div>
                   <div class="card-desc">Become part of our mission-driven team and make a difference.</div>
+                  <button class="view-profile-btn mt-2" onclick="window.location.href='profile-pastor-wiafe.html'">View Profile</button>
                 </div>
               </div>
             </div>
+            <!-- Associate Pastor Maxwell -->
             <div class="swiper-slide mobile-card-container">
               <div class="card mobile-card">
                 <img src="pastor-maxwell.png" alt="Associate Pastor" class="object-cover w-full bg-[#badcf7] border-b-2 border-blue-100">
@@ -699,6 +729,7 @@
                   <div class="card-title">Associate Pastor</div>
                   <div class="pastor-name">Rec Maxwell Mensah Brayie</div>
                   <div class="card-desc">Connecting our church with the community through service and outreach initiatives.</div>
+                  <button class="view-profile-btn mt-2" onclick="window.location.href='profile-pastor-maxwell.html'">View Profile</button>
                 </div>
               </div>
             </div>
@@ -733,6 +764,7 @@
               <div class="card-title">Vice President</div>
               <div class="pastor-name">Lady Perpetual Ampomah-Boateng</div>
               <div class="card-desc">Guiding our youth to grow in faith and community engagement.</div>
+              <button class="view-profile-btn" onclick="window.location.href='profile-vice-president.html'">View Profile</button>
             </div>
           </div>
           <div class="card tablet-card" data-page="1">
@@ -741,6 +773,7 @@
               <div class="card-title">Associate Pastor</div>
               <div class="pastor-name">Pastor Benjamin Gogoe</div>
               <div class="card-desc">Leading our congregation in heartfelt worship and praise every Sunday.</div>
+              <button class="view-profile-btn" onclick="window.location.href='profile-pastor-benjamin.html'">View Profile</button>
             </div>
           </div>
           <div class="card tablet-card" data-page="1">
@@ -749,6 +782,7 @@
               <div class="card-title">Associate Pastor</div>
               <div class="pastor-name">Rev Dr. Mrs Ruby Aikins-Larbi</div>
               <div class="card-desc">Fostering a culture of prayer and support within our church family.</div>
+              <button class="view-profile-btn" onclick="window.location.href='profile-pastor-ruby.html'">View Profile</button>
             </div>
           </div>
           
@@ -759,7 +793,7 @@
               <div class="card-title">Associate Pastor</div>
               <div class="pastor-name">Rev Mrs. Paulina Simpson</div>
               <div class="card-desc">Explore exciting opportunities to serve and grow in our vibrant community.</div>
-              <button class="view-profile-btn" onclick="window.location.href='profile-pastor-paulina.html'">View Profile</button>
+              <button class="view-profile-btn" onclick="window.location.href='profile-pastoral-board.html'">View Profile</button>
             </div>
           </div>
           <div class="card tablet-card hidden" data-page="2">
@@ -810,7 +844,7 @@
         <div class="board-header-overlay"></div>
         <div class="board-header">Our Elders</div>
       </div>
-      <div class="board-sub">Honoring those who uphold and support the pastoral vision.</div>
+      <div class="board-sub">The Elders who offer guidance and support to the church community.</div>
 
       <div class="max-w-5xl mx-auto bg-white/80 border border-blue-200 rounded-2xl shadow p-5 sm:p-7 mb-12">
         <img src="./assets/pastoral-board/elders-group.jpg"
@@ -833,7 +867,7 @@
         <div class="board-header-overlay"></div>
         <div class="board-header">Editorial Board</div>
       </div>
-      <div class="board-sub">Stewarding written, media and doctrinal communications.</div>
+      <div class="board-sub">The Editorial Board  who contribute to the growth of the church through creativity, insight, and service.</div>
 
       <div class="max-w-5xl mx-auto bg-white/80 border border-blue-200 rounded-2xl shadow p-5 sm:p-7 mb-12">
         <img src="./assets/pastoral-board/elders-group.jpg"

@@ -319,6 +319,39 @@
     #menu-toggle .hamburger-circle {
       line-height: 0; /* remove stray vertical shift */
     }
+    /* Added: narrower width for donate FAQ dropdown */
+    .donate-why {
+      display: inline-block;
+      width: auto;
+      max-width: 340px; /* adjust as desired */
+    }
+
+    /* WhatsApp Join Card Styles */
+    .whatsapp-join {
+      background: linear-gradient(135deg,#e9fdf0 0%,#d9f7e6 60%,#c9f1dc 100%);
+      border:1px solid #a7e3c3;
+    }
+    .whatsapp-join:before{
+      content:"";
+      position:absolute;
+      top:-30%; right:-10%;
+      width:240px; height:240px;
+      background:radial-gradient(circle at 30% 30%,rgba(16,185,129,.25),rgba(16,185,129,0) 70%);
+      pointer-events:none;
+    }
+    .whatsapp-btn {
+      background:#16a34a;
+      transition:.25s;
+    }
+    .whatsapp-btn:hover {
+      background:#15803d;
+      transform:translateY(-2px);
+      box-shadow:0 10px 22px -8px rgba(21,128,61,.45);
+    }
+    .whatsapp-btn:focus-visible{
+      outline:3px solid #bbf7d0;
+      outline-offset:3px;
+    }
   </style>
 
   <!-- Added override: ensure popup dialogs can grow beyond viewport height so background reaches end -->
@@ -328,6 +361,21 @@
     #message-dialog {
       max-height: none !important; /* remove Tailwind max-h-full limit */
     }
+  </style>
+  <!-- Added Oleo Script font for gallery captions -->
+  <link href="https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Congregation Gallery caption + layout fixes */
+    .gallery-caption {
+      font-family: 'Oleo Script', cursive;
+      letter-spacing:.3px;
+      line-height:1.2;
+    }
+    .gallery-swiper .swiper-pagination { position:static !important; margin-top:6px; }
+    .gallery-swiper .swiper-slide { padding-bottom:.25rem; }
+
+    /* ADDED: ensure desktop captions are visible (override hover-hide) */
+    .gallery-caption { opacity:1 !important; }
   </style>
 </head>
 <body class="bg-[#badcf7] font-sans">
@@ -609,27 +657,27 @@
     <div class="hidden md:grid grid-cols-3 gap-4">
       <div class="relative group">
         <img src="gallery1.jpg" alt="Congregation listening during service" class="w-full h-48 object-cover rounded-lg shadow-md"/>
-        <span class="absolute bottom-2 left-2 bg-blue-900/80 text-white text-xs px-3 py-1 rounded opacity-0 group-hover:opacity-100 transition">Congregation listening during service</span>
+        <span class="gallery-caption absolute bottom-2 left-2 bg-blue-900/80 text-white text-xs px-3 py-1 rounded">Congregation listening during service</span>
       </div>
       <div class="relative group">
         <img src="gallery2.jpg" alt="Joyful worship moment" class="w-full h-48 object-cover rounded-lg shadow-md"/>
-        <span class="absolute bottom-2 left-2 bg-blue-900/80 text-white text-xs px-3 py-1 rounded opacity-0 group-hover:opacity-100 transition">Joyful worship moment</span>
+        <span class="gallery-caption absolute bottom-2 left-2 bg-blue-900/80 text-white text-xs px-3 py-1 rounded">Joyful worship moment</span>
       </div>
       <div class="relative group">
         <img src="gallery3.jpg" alt="Praise and prayer" class="w-full h-48 object-cover rounded-lg shadow-md"/>
-        <span class="absolute bottom-2 left-2 bg-blue-900/80 text-white text-xs px-3 py-1 rounded opacity-0 group-hover:opacity-100 transition">Praise and prayer</span>
+        <span class="gallery-caption absolute bottom-2 left-2 bg-blue-900/80 text-white text-xs px-3 py-1 rounded">Praise and prayer</span>
       </div>
       <div class="relative group">
         <img src="gallery4.jpg" alt="Choir leading worship" class="w-full h-48 object-cover rounded-lg shadow-md"/>
-        <span class="absolute bottom-2 left-2 bg-blue-900/80 text-white text-xs px-3 py-1 rounded opacity-0 group-hover:opacity-100 transition">Choir leading worship</span>
+        <span class="gallery-caption absolute bottom-2 left-2 bg-blue-900/80 text-white text-xs px-3 py-1 rounded">Choir leading worship</span>
       </div>
       <div class="relative group">
         <img src="gallery5.jpg" alt="Scripture reading and teaching" class="w-full h-48 object-cover rounded-lg shadow-md"/>
-        <span class="absolute bottom-2 left-2 bg-blue-900/80 text-white text-xs px-3 py-1 rounded opacity-0 group-hover:opacity-100 transition">Scripture reading and teaching</span>
+        <span class="gallery-caption absolute bottom-2 left-2 bg-blue-900/80 text-white text-xs px-3 py-1 rounded">Scripture reading and teaching</span>
       </div>
       <div class="relative group">
         <img src="gallery6.jpg" alt="Congregation in praise" class="w-full h-48 object-cover rounded-lg shadow-md"/>
-        <span class="absolute bottom-2 left-2 bg-blue-900/80 text-white text-xs px-3 py-1 rounded opacity-0 group-hover:opacity-100 transition">Congregation in praise</span>
+        <span class="gallery-caption absolute bottom-2 left-2 bg-blue-900/80 text-white text-xs px-3 py-1 rounded">Congregation in praise</span>
       </div>
     </div>
     <!-- Mobile Swiper -->
@@ -638,27 +686,27 @@
         <div class="swiper-wrapper">
           <div class="swiper-slide flex flex-col items-center">
             <img src="gallery1.jpg" alt="Congregation listening during service" class="w-full h-56 object-cover rounded-lg shadow-md"/>
-            <span class="mt-2 text-xs text-blue-900 bg-blue-100 px-3 py-1 rounded">Congregation listening during service</span>
+            <span class="gallery-caption mt-2 text-xs text-blue-900 bg-blue-100 px-3 py-1 rounded">Congregation listening during service</span>
           </div>
           <div class="swiper-slide flex flex-col items-center">
             <img src="gallery2.jpg" alt="Joyful worship moment" class="w-full h-56 object-cover rounded-lg shadow-md"/>
-            <span class="mt-2 text-xs text-blue-900 bg-blue-100 px-3 py-1 rounded">Joyful worship moment</span>
+            <span class="gallery-caption mt-2 text-xs text-blue-900 bg-blue-100 px-3 py-1 rounded">Joyful worship moment</span>
           </div>
           <div class="swiper-slide flex flex-col items-center">
             <img src="gallery3.jpg" alt="Praise and prayer" class="w-full h-56 object-cover rounded-lg shadow-md"/>
-            <span class="mt-2 text-xs text-blue-900 bg-blue-100 px-3 py-1 rounded">Praise and prayer</span>
+            <span class="gallery-caption mt-2 text-xs text-blue-900 bg-blue-100 px-3 py-1 rounded">Praise and prayer</span>
           </div>
           <div class="swiper-slide flex flex-col items-center">
             <img src="gallery4.jpg" alt="Choir leading worship" class="w-full h-56 object-cover rounded-lg shadow-md"/>
-            <span class="mt-2 text-xs text-blue-900 bg-blue-100 px-3 py-1 rounded">Choir leading worship</span>
+            <span class="gallery-caption mt-2 text-xs text-blue-900 bg-blue-100 px-3 py-1 rounded">Choir leading worship</span>
           </div>
           <div class="swiper-slide flex flex-col items-center">
             <img src="gallery5.jpg" alt="Scripture reading and teaching" class="w-full h-56 object-cover rounded-lg shadow-md"/>
-            <span class="mt-2 text-xs text-blue-900 bg-blue-100 px-3 py-1 rounded">Scripture reading and teaching</span>
+            <span class="gallery-caption mt-2 text-xs text-blue-900 bg-blue-100 px-3 py-1 rounded">Scripture reading and teaching</span>
           </div>
           <div class="swiper-slide flex flex-col items-center">
             <img src="gallery6.jpg" alt="Congregation in praise" class="w-full h-56 object-cover rounded-lg shadow-md"/>
-            <span class="mt-2 text-xs text-blue-900 bg-blue-100 px-3 py-1 rounded">Congregation in praise</span>
+            <span class="gallery-caption mt-2 text-xs text-blue-900 bg-blue-100 px-3 py-1 rounded">Congregation in praise</span>
           </div>
         </div>
         <div class="swiper-pagination gallery-pagination"></div>
@@ -713,18 +761,12 @@
         <!-- Saturday -->
         <div class="rounded-xl p-5 ring-1 ring-blue-100 bg-gradient-to-br from-white to-blue-50 shadow-sm">
           <p class="text-blue-900 font-bold text-lg">Saturday Healing & Deliverance</p>
-          <p class="text-slate-700">8:30am – 11:30am</p>
+          <p class="text-slate-700">8:30am – 10:30am</p>
           <p class="text-red-600 font-semibold flex items-center mt-1">
             <svg class="w-5 h-5 mr-2 text-red-500" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 3l-8 4v2h2v8H4v2h16v-2h-2V9h2V7l-8-4zm0 4.5c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zM12 16c-1.1 0-2 .9-2 2h4c0-1.1-.9-2-2-2zm6-5V9H6v2h12z"/>
             </svg>
             Peace Temple
-          </p>
-          <p class="text-green-700 font-semibold mt-2 flex items-center">
-            <svg class="w-4 h-4 mr-2 text-green-600" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M5 21c6.5 0 14-5 14-14 0-.34-.01-.67-.04-1C17.9 7.62 14.1 9 10 9 7.3 9 4.8 8.35 3 7.3c.1 7.25 4.96 12.9 11 13.64V21H5z"/>
-            </svg>
-            Achimota Forest Grounds
           </p>
         </div>
 
@@ -847,30 +889,30 @@
     <!-- Right: Content -->
     <div class="text-center md:text-left">
       <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-6">
-        Support Our Ministry: Donations, Causes & Project Development
+        Support Our Ministry: Donations, Causes & Project Development 
       </h2>
 
-      <!-- Why Donate dropdown -->
+      <!-- Why Donate dropdown (narrowed) -->
       <div class="mb-6">
-        <details class="bg-white rounded-[30px] shadow p-4 cursor-pointer">
+        <details class="donate-why bg-white rounded-[30px] shadow p-4 cursor-pointer mx-auto md:mx-0">
           <summary class="font-semibold text-lg text-blue-800 cursor-pointer">
             Why should I donate?
           </summary>
           <ul class="mt-3 text-gray-700 space-y-2 list-disc pl-6">
             <li>
-              Facilitation of Sovereign Reign Concert
-              (<a href="events.html#sovereign-praise-concert" class="text-blue-700 underline">Sovereign Praise Concert</a>)
+              Support for annual Sovereign Reign Concert
+              (<a href="events.html#sovereign-praise-concert" class="text-blue-700 underline">View Photos</a>)
             </li>
             <li>
-              Donations to various causes
-              (<a href="gallery.html#donations-gallery" class="text-blue-700 underline">Donations Gallery</a>)
+              Donations to NGO's such as Pantang Hospital and Korle-Bu
+              (<a href="gallery.html#donations-gallery" class="text-blue-700 underline">View Photos</a>)
             </li>
-            <li>Development of Phase 2 GPCC Project</li>
+            <li>Development of Phase 2 GPCC Global Project</li>
           </ul>
         </details>
       </div>
 
-      <!-- CTA Button -->
+      <!-- CTA Button (unchanged full width / auto) -->
       <div>
         <a href="donations.html"
            class="inline-flex items-center justify-center w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-7 rounded-[30px] shadow-lg transition
@@ -922,6 +964,30 @@
           <p id="privacy-note" class="mt-3 text-xs text-gray-700">
             By clicking Sign Up, you agree to our Terms and Conditions.
           </p>
+
+          <!-- ADDED: WhatsApp channel join alternative -->
+          <div class="mt-6 w-full">
+            <div class="relative whatsapp-join rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row gap-5 items-start sm:items-center">
+              <div class="flex items-start gap-4">
+                <span class="flex items-center justify-center w-14 h-14 rounded-2xl bg-green-500 text-white text-3xl shadow-inner">
+                  <i class="fab fa-whatsapp"></i>
+                </span>
+                <div>
+                  <h3 class="text-green-700 font-semibold text-lg leading-snug">Prefer WhatsApp?</h3>
+                  <p class="text-green-800 text-sm leading-snug mt-1 max-w-sm">
+                    Join our broadcast channel for quick alerts, devotionals and event reminders.
+                  </p>
+                </div>
+              </div>
+              <a href="https://wa.me/000000000000?text=I%20would%20like%20to%20join%20the%20GPCC%20updates"
+                 target="_blank" rel="noopener"
+                 class="whatsapp-btn inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-white font-semibold shadow sm:ml-auto">
+                <i class="fab fa-whatsapp text-lg"></i>
+                Join Channel
+              </a>
+            </div>
+          </div>
+          <!-- END WhatsApp alternative -->
         </div>
       </div>
     </div>
