@@ -663,11 +663,10 @@
 <!-- ...existing code... -->
 
 <!-- SERVICE SCHEDULE POPUP (centered, bigger, glossy, animated, elegant list) -->
-<div id="schedule-popup" class="fixed inset-0 hidden justify-center items-center bg-black/50 z-[70] p-4">
+<div id="schedule-popup"
+     class="fixed inset-x-0 top-[60px] bottom-0 hidden justify-center items-start bg-black/50 z-[70] p-4 overflow-y-auto pt-4"><!-- changed: offset below header -->
   <div id="schedule-dialog"
-       class="w-full max-w-3xl bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl ring-1 ring-blue-100 modal-animate
-              /* changed: make scrollable within viewport */
-              max-h-[90vh] overflow-y-auto">
+       class="w-full max-w-3xl bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl ring-1 ring-blue-100 modal-animate max-h-full">
     <!-- Header -->
     <div class="/* changed: make sticky so close button stays visible */ sticky top-0 z-10 w-full px-8 py-6 bg-[#f6fafd] border-b border-blue-100">
       <h2 class="text-2xl md:text-3xl font-bold text-blue-900 text-center">Fellowship Service Times</h2>
@@ -768,8 +767,8 @@
 
 <!-- MESSAGE POPUP (RESTRUCTURED CARD) -->
 <div id="message-popup"
-     class="fixed inset-0 hidden justify-center items-center z-[61] p-4">
-  <div id="message-dialog" class="pastor-shell w-full max-w-3xl max-h-[90vh] overflow-y-auto">
+     class="fixed inset-x-0 top-[60px] bottom-0 hidden justify-center items-start z-[61] p-4 overflow-y-auto pt-4"><!-- changed: offset below header -->
+  <div id="message-dialog" class="pastor-shell w-full max-w-3xl max-h-full">
     <div class="pastor-modal">
       <button class="close-message pastor-close" aria-label="Close biography">&times;</button>
       <div class="pastor-header">
@@ -1235,6 +1234,7 @@ new Swiper('.donation-swiper', {
   });
 
   // (If you want motto-swiper still, add here or keep existing earlier one)
+  // ...existing code (scroll lock, mobile menu, popups, swipe-to-close, form
   // ...existing code (scroll lock, mobile menu, popups, swipe-to-close, form submission)...
 </script>
 </body>
