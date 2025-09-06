@@ -693,3 +693,16 @@ body.nav-lock {
 
 /* Line-height fix utility for circular icon buttons */
 .no-lh { line-height:0; }
+/* hide donation & newsletter sections when biography popup is open */
+body.message-filter #donate,
+body.message-filter #newsletter {
+  display: none; /* Removed !important to allow override if class is stuck */
+}
+/* Ensure popup is visible when hidden class is removed */
+#schedule-popup:not(.hidden),
+#message-popup:not(.hidden) {
+  display: flex !important; /* Force visibility */
+}
+
+/* MESSAGE POPUP (Biography) - positioned below header */
+/* #message-popup ruleset removed as it was empty */
