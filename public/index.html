@@ -6,6 +6,7 @@
   <title>Global Peace Christian Centre</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet"><!-- added Fjalla One -->
   <!-- SwiperJS CDN -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -99,20 +100,241 @@
     }
     /* Show the thank-you when the anchor is targeted */
     #newsletter-thanks:target { display: block; }
+    /* added: lock page scroll when popup open */
+    body.modal-open {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      width: 100%;
+    }
+    /* popup overlay: light blue tint so underlying page (donate / stay connected) remains visible */
+    #message-popup {
+      background: rgba(186,220,247,0.85) !important; /* light blue tint */
+      backdrop-filter: blur(4px);
+    }
+    /* hide donation & newsletter sections when biography popup is open */
+    body.message-filter #donate,
+    body.message-filter #newsletter {
+      display: none !important;
+    }
+    /* Pastor Biography Popup Modern Styles */
+  #message-dialog.pastor-shell {
+    background: transparent;
+    box-shadow: none;
+    border: 0;
+    padding: 0;
+  }
+  .pastor-modal {
+    position: relative;
+    background: linear-gradient(140deg,#ffffff 0%,#f3f8ff 55%,#e6f1ff 100%);
+    border: 1px solid #dbeafe;
+    border-radius: 1.35rem;
+    padding: 1.75rem 1.75rem 2.1rem;
+    box-shadow: 0 18px 48px -12px rgba(30,64,175,0.28),
+                0 4px 18px rgba(30,64,175,0.08);
+    overflow: hidden;
+  }
+  .pastor-modal:before {
+    content:"";
+    position:absolute;
+    top:-18%; right:-12%;
+    width:320px; height:320px;
+    background: radial-gradient(circle at 30% 30%,rgba(96,165,250,0.28),rgba(59,130,246,0) 70%);
+    filter: blur(8px);
+    opacity:.55;
+    pointer-events:none;
+  }
+  .pastor-header {
+    display:flex;
+    align-items:flex-start;
+    gap:1.25rem;
+    flex-wrap:wrap;
+    margin-bottom:1.1rem;
+  }
+  .pastor-photo {
+    width: 150px;
+    height: 190px;
+    object-fit: cover;
+    object-position: center 10%;
+    border-radius: 1rem;
+    border: 3px solid #eff6ff;
+    box-shadow: 0 8px 28px -6px rgba(30,64,175,0.35),
+                0 2px 10px rgba(30,64,175,0.18);
+    background:#fff;
+  }
+  @media (min-width:640px){
+    .pastor-photo { width:170px; height:220px; }
+  }
+  @media (min-width:768px){
+    .pastor-photo { width:190px; height:250px; }
+  }
+  .pastor-title h2 {
+    font-size: clamp(1.35rem,2.1vw,1.9rem);
+    line-height:1.15;
+    color:#0f3a85;
+    font-weight:700;
+    margin:0 0 .35rem 0;
+  }
+  .pastor-role {
+    font-size:.78rem;
+    letter-spacing:.5px;
+    text-transform:uppercase;
+    font-weight:600;
+    background:#1d4ed8;
+    color:#fff;
+    display:inline-block;
+    padding:.4rem .75rem;
+    border-radius: 999px;
+    box-shadow:0 2px 6px rgba(29,78,216,.35);
+  }
+  .pastor-facts {
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:grid;
+    gap:.65rem;
+  }
+  .pastor-facts li {
+    display:flex;
+    gap:.6rem;
+    align-items:flex-start;
+    font-size:.92rem;
+    line-height:1.35rem;
+    background:#ffffff;
+    padding:.65rem .75rem .65rem .7rem;
+    border:1px solid #e2eaf5;
+    border-radius:.85rem;
+    box-shadow:0 4px 14px -6px rgba(30,64,175,0.20);
+  }
+  .pastor-facts li .icon {
+    width:1.45rem;
+    height:1.45rem;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:.78rem;
+    font-weight:600;
+    color:#0f3a85;
+    background:linear-gradient(140deg,#dbeafe,#bfdbfe);
+    border:1px solid #93c5fd;
+    border-radius:.55rem;
+  }
+  .pastor-actions {
+    margin-top:1.15rem;
+    display:flex;
+    justify-content:flex-end;
+  }
+  .pastor-actions a {
+    background:#0f3a85;
+    color:#fff;
+    font-weight:600;
+    padding:.75rem 1.25rem;
+    border-radius: 999px;
+    font-size:.9rem;
+    display:inline-flex;
+    align-items:center;
+    gap:.45rem;
+    box-shadow:0 6px 20px -6px rgba(15,58,133,.55);
+    transition:background .25s, transform .25s;
+  }
+  .pastor-actions a:hover {
+    background:#1d4ed8;
+    transform:translateY(-2px);
+  }
+  .pastor-close {
+    position:absolute;
+    top:.65rem;
+    right:.65rem;
+    width:2.2rem;
+    height:2.2rem;
+    border-radius: 0.85rem;
+    font-size:1.35rem;
+    line-height:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(255,255,255,.85);
+    color:#0f3a85;
+    border:1px solid #dbeafe;
+    backdrop-filter:blur(6px);
+    cursor:pointer;
+    transition:background .25s;
+  }
+  .pastor-close:hover { background:#eff6ff; }
+
+  /* added: popup exit animation */
+  @keyframes popupExit {
+    0% { opacity:1; transform:translateY(var(--exit-offset,0)) scale(1); }
+    100% { opacity:0; transform:translateY(calc(var(--exit-offset,0) + 55px)) scale(.93); }
+  }
+  .modal-exit {
+    animation: popupExit .34s cubic-bezier(.55,.15,.25,.95) forwards;
+  }
+  .popup-closing { pointer-events:none; }
+
+  /* desktop nav hover highlight */
+  .nav-hover-indicator {
+    position:absolute;
+    top:0; left:0;
+    height:var(--h,100%);
+    width:var(--w,0);
+    background:linear-gradient(135deg,#e0f2ff 0%,#c7e2ff 60%,#bfdcff 100%);
+    border:2px solid #2563eb;
+    border-radius:9999px;
+    box-shadow:0 6px 18px -6px rgba(37,60,125,.35),0 2px 6px rgba(37,60,125,.18);
+    opacity:0;
+    transform:translate(var(--x,0),var(--y,0)) scale(.9);
+    transition:
+      opacity .25s ease,
+      transform .32s cubic-bezier(.4,0,.2,1),
+      width .32s cubic-bezier(.4,0,.2,1),
+      height .32s cubic-bezier(.4,0,.2,1);
+    pointer-events:none;
+    z-index:0;
+  }
+  .nav-hover-parent a,
+  .nav-hover-parent button {
+    position:relative;
+    z-index:1;
+  }
+  .font-fjalla { font-family: 'Fjalla One', sans-serif; letter-spacing:.5px; }
+    .header-brand-img { height:48px; width:48px; object-fit:contain; }
+    @media (min-width:1024px){
+      .header-brand-img { height:50px; width:50px; }
+    }
+    .header-brand-text {
+      /* add ~2px (≈1.5pt) to current sizes */
+      font-size:calc(1.125rem + 2px); /* mobile base */
+      line-height:1.1;
+    }
+    @media (min-width:640px){
+      .header-brand-text { font-size:calc(1.25rem + 2px); }
+    }
+    @media (min-width:1024px){
+      .header-brand-text { font-size:calc(1.25rem + 2px); } /* desktop name */
+    }
+
+    /* Larger hamburger sizing (index.html only) */
+    #menu-toggle .hamburger-circle {
+      line-height: 0; /* remove stray vertical shift */
+    }
   </style>
 </head>
 <body class="bg-[#badcf7] font-sans">
 
   <!-- HEADER / NAVBAR (no hamburger on desktop) -->
-  <header class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur border-b border-blue-200">
-    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-3 flex items-center justify-between">
+  <header class="fixed top-0 left-0 w-full z-[80] bg-white/80 backdrop-blur border-b border-blue-200">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-1 flex items-center justify-between"><!-- changed: py-3 -> py-1 -->
       <a href="index.html" class="flex items-center gap-2">
-        <img src="logo.png" alt="GPCC Logo" class="h-10 w-10 object-contain rounded-sm border border-blue-900/40 bg-transparent">
-        <!-- Mobile short name, Desktop full name -->
-        <span class="text-xl font-bold text-blue-900 inline lg:hidden">GPCC</span>
-        <span class="hidden lg:inline text-xl font-bold text-blue-900">Global Peace Christian Centre</span>
+        <!-- changed: add header-brand-img -->
+        <img src="logo.png" alt="GPCC Logo" class="header-brand-img rounded-sm border border-blue-900/40 bg-transparent">
+        <!-- changed: add header-brand-text -->
+        <span class="font-fjalla text-blue-900 header-brand-text inline lg:hidden">Global Peace Christian Centre</span>
+        <span class="hidden lg:inline font-fjalla text-blue-900 header-brand-text">Global Peace Christian Centre</span>
       </a>
-      <nav class="hidden lg:flex items-center gap-4 bg-white/70 rounded-full border-2 border-blue-900 px-6 py-2 shadow-lg">
+      <nav id="desktop-nav"
+           class="hidden lg:flex relative items-center gap-4 bg-white/70 rounded-full border-2 border-blue-900 px-6 py-2 shadow-lg">
         <a href="index.html" class="px-4 py-2 rounded-full bg-blue-900 text-white font-semibold shadow">HOME</a>
         <div class="relative">
           <button id="about-us-desktop-btn"
@@ -127,9 +349,9 @@
     class="absolute top-full left-0 mt-2 hidden bg-white border border-blue-200 rounded-lg shadow-lg w-72 py-2"
     role="menu">
   <li><a href="who-we-are.html" class="block px-4 py-2 hover:bg-blue-50">Who We Are</a></li>
-  <li><a href="pastoral-board.html" class="block px-4 py-2 hover:bg-blue-50">The Pastoral Board</a></li>
-  <li><a href="eldership-deacons.html" class="block px-4 py-2 hover:bg-blue-50">Eldership &amp; Deacons</a></li>
+  <li><a href="pastoral-board.html" class="block px-4 py-2 hover:bg-blue-50">The Leadership</a></li>
   <li><a href="community-journey.html" class="block px-4 py-2 hover:bg-blue-50">Our Journey Through the Community</a></li>
+  <li><a href="testimonies.html" class="block px-4 py-2 hover:bg-blue-50">Testimonies</a></li>
 </ul>
         </div>
         <a href="ministries.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MINISTRIES</a>
@@ -138,9 +360,10 @@
         <a href="contact-us.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">CONTACT US</a>
       </nav>
       <!-- Hamburger (mobile only) -->
-      <button id="menu-toggle" class="lg:hidden fixed top-4 right-4 focus:outline-none z-50"
-        aria-label="Open Menu" aria-expanded="false">
-        <span class="flex items-center justify-center w-11 h-11 rounded-full bg-blue-900 hover:bg-blue-700 shadow-lg transition duration-200">
+      <button id="menu-toggle"
+            class="lg:hidden fixed top-2 right-4 focus:outline-none z-50"
+            aria-label="Open Menu" aria-expanded="false"><!-- changed top-3 -> top-2 -->
+        <span class="hamburger-circle flex items-center justify-center w-12 h-12 rounded-full bg-blue-900 hover:bg-blue-700 shadow-xl ring-2 ring-blue-200 transition duration-200"><!-- changed w/h 14 -> 12 -->
           <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M4 7h16M4 12h16M4 17h16"/>
@@ -149,8 +372,8 @@
       </button>
     </div>
     <div id="mobile-menu"
-         class="fixed inset-0 hidden justify-start items-start bg-[#badcf7]/95 z-50 lg:hidden">
-      <div id="mobile-panel" class="absolute right-4 top-20 w-80 px-2 py-4 rounded-2xl bg-white shadow-2xl border border-blue-200 text-center glass modal-animate">
+       class="fixed inset-x-0 top-[60px] bottom-0 hidden justify-start items-start bg-[#badcf7]/95 z-[60] lg:hidden"><!-- changed top-[72px] -> top-[60px] -->
+      <div id="mobile-panel" class="absolute right-4 top-4 w-80 px-2 py-4 rounded-2xl bg-white shadow-2xl border border-blue-200 text-center glass modal-animate">
         <nav class="space-y-4 mt-3">
           <a href="index.html" class="block w-full px-5 py-3 rounded-full bg-blue-900 text-white font-semibold">HOME</a>
           <div>
@@ -163,9 +386,9 @@
             </button>
             <ul id="mobile-about-dropdown" class="hidden mt-2 space-y-2">
   <li><a href="who-we-are.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Who We Are</a></li>
-  <li><a href="pastoral-board.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">The Pastoral Board</a></li>
-  <li><a href="eldership-deacons.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Eldership &amp; Deacons</a></li>
+  <li><a href="pastoral-board.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">The Leadership</a></li>
   <li><a href="community-journey.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Our Journey Through the Community</a></li>
+  <li><a href="testimonies.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Testimonies</a></li>
 </ul>
           </div>
           <a href="ministries.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MINISTRIES</a>
@@ -177,7 +400,7 @@
     </div>
   </header>
 
-  <div class="h-[72px]"></div>
+  <div class="h-[60px]"></div><!-- changed spacer from 72px to 60px -->
 
   <!-- HERO SWIPER (4 images) -->
   <section class="w-full max-w-5xl mx-auto mt-8 px-4 text-center">
@@ -249,10 +472,12 @@
 
   <!-- WARM WELCOME SECTION -->
   <section class="w-full max-w-5xl mx-auto mt-8 px-4">
-    <div class="bg-white/90 rounded-2xl shadow-lg border border-blue-200 p-6 md:p-8 flex flex-col md:flex-row gap-8 items-center justify-center">
+    <div class="bg-white/90 rounded-2xl shadow-lg border border-blue-200 p-8 md:p-12 xl:p-14 flex flex-col md:flex-row gap-10 items-center justify-center">
       <div class="flex-shrink-0">
-        <img src="headpastor.jpg" alt="Head Pastor" class="w-44 h-56 object-cover rounded-xl border-2 border-blue-200 shadow-lg"/>
-        <p class="text-xs text-gray-700 italic mt-2 text-center">Very Reverend Head &amp; President</p>
+        <!-- changed: larger responsive sizes for fuller look -->
+        <img src="headpastorj.jpg" alt="Head Pastor"
+             class="w-60 h-72 sm:w-72 sm:h-88 md:w-80 md:h-[420px] xl:w-96 xl:h-[460px] object-cover object-top rounded-2xl border-2 border-blue-200 shadow-lg"/>
+        <p class="text-xs text-gray-700 italic mt-3 text-center">Very Reverend Henry Ampomah-Boateng</p>
       </div>
       <div class="max-w-2xl flex flex-col items-center justify-center text-center">
         <h3 class="text-2xl font-extrabold text-blue-900 mb-3">A Warm Welcome From Our Head Pastor</h3>
@@ -306,6 +531,7 @@
     </div>
     <!-- Motto Swiper -->
     <div class="mt-8">
+      <h2 class="text-xl sm:text-2xl font-semibold text-blue-900 mb-4 text-center">Our Slogan:</h2>
       <div class="swiper motto-swiper rounded-xl overflow-hidden bg-transparent">
         <div class="swiper-wrapper">
           <div class="swiper-slide flex justify-center items-center h-28">
@@ -333,8 +559,9 @@
             </div>
           </div>
         </div>
+        <!-- added pagination element for slogan slider -->
+        <div class="swiper-pagination motto-pagination"></div>
       </div>
-      <div class="swiper-pagination motto-pagination"></div>
     </div>
   </div>
 </section>
@@ -435,7 +662,7 @@
 </section>
 <!-- ...existing code... -->
 
-  <!-- SERVICE SCHEDULE POPUP (centered, bigger, glossy, animated, elegant list) -->
+<!-- SERVICE SCHEDULE POPUP (centered, bigger, glossy, animated, elegant list) -->
 <div id="schedule-popup" class="fixed inset-0 hidden justify-center items-center bg-black/50 z-[70] p-4">
   <div id="schedule-dialog"
        class="w-full max-w-3xl bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl ring-1 ring-blue-100 modal-animate
@@ -540,35 +767,49 @@
 </script>
 
 <!-- MESSAGE POPUP (RESTRUCTURED CARD) -->
-<div id="message-popup" class="fixed inset-0 hidden justify-center items-center bg-black/40 z-[61] p-4">
-  <div id="message-dialog"
-       class="w-full max-w-3xl max-h-[90vh] overflow-y-auto glass modal-animate modal-shadow rounded-2xl border border-blue-200 relative">
-    <!-- Sticky header with close -->
-    <div class="sticky top-0 bg-white/90 backdrop-blur px-6 py-4 border-b border-blue-100 flex items-start justify-between">
-      <div>
-        <h2 class="text-2xl md:text-3xl font-bold text-blue-900">✝ Apostle Henry Ampomah-Boateng</h2>
-        <p class="text-sm md:text-base text-blue-900/80"><em>Founder & Chairman – Global Peace Christian Centre (GPCC)</em></p>
+<div id="message-popup"
+     class="fixed inset-0 hidden justify-center items-center z-[61] p-4">
+  <div id="message-dialog" class="pastor-shell w-full max-w-3xl max-h-[90vh] overflow-y-auto">
+    <div class="pastor-modal">
+      <button class="close-message pastor-close" aria-label="Close biography">&times;</button>
+      <div class="pastor-header">
+        <img src="headpastorj.jpg" alt="Very Reverend Henry Ampomah-Boateng" class="pastor-photo">
+        <div class="pastor-title">
+          <span class="pastor-role">Founder & Chairman – GPCC</span>
+          <h2>✝ Very Reverend Henry Ampomah-Boateng</h2>
+          <p class="text-[.78rem] md:text-xs tracking-wide text-blue-900/70 font-medium mt-1">
+            Raising a Christ-centred, Spirit-led, globally impactful church.
+          </p>
+        </div>
       </div>
-      <button class="close-message text-3xl leading-none text-blue-900 ml-4" aria-label="Close message popup">&times;</button>
-    </div>
-
-    <!-- Content -->
-    <div class="px-6 py-5">
-      <ul class="space-y-3 text-gray-800">
-        <li>🎓 <span class="font-semibold">Education:</span> BSc (Hons) Building Technology, KNUST (1986–1990)</li>
-        <li>📅 <span class="font-semibold">Call to Ministry:</span> September 1990 (resident of 37 University Hall, Katanga – KNUST)</li>
-        <li>📖 <span class="font-semibold">Publications:</span> <em>“Jesus Walks Into My Room”</em> (details the apostles calling)</li>
-        <li>🙏 <span class="font-semibold">Fellowship Start:</span> June 1996 (PEACE-DOM IN CHRIST PRAYER MINISTRY/FREEDOM IN CHRIST CHURCH.)</li>
-        <li>🌍 <span class="font-semibold">Future Vision:</span> Global Ministry Launch of the Global Peace Christian Ministry worldwide, September 2032</li>
+      <ul class="pastor-facts">
+        <li>
+          <span class="icon">🎓</span>
+          <div><strong>Education:</strong> BSc (Hons) Building Technology, KNUST (1986–1990)</div>
+        </li>
+        <li>
+          <span class="icon">📅</span>
+          <div><strong>Call to Ministry:</strong> September 1990 – 37 University Hall (Katanga), KNUST</div>
+        </li>
+        <li>
+          <span class="icon">📖</span>
+          <div><strong>Publication:</strong> “Jesus Walks Into My Room” (calling encounter)</div>
+        </li>
+        <li>
+          <span class="icon">🙏</span>
+          <div><strong>Fellowship Start:</strong> June 1996 – PEACE-DOM IN CHRIST PRAYER MINISTRY / FREEDOM IN CHRIST CHURCH</div>
+        </li>
+        <li>
+          <span class="icon">🌍</span>
+          <div><strong>Future Vision:</strong> Global Ministry Launch – September 2032</div>
+        </li>
       </ul>
-
-     <div class="mt-6 flex justify-end">
-  <a href="./profile-president.html"
-     class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-blue-900 text-white font-semibold shadow hover:bg-blue-700">
-    Read Full Profile <span aria-hidden="true">→</span>
-  </a>
-</div>
-
+      <div class="pastor-actions">
+        <a href="./profile-president.html">
+          Read Full Profile →
+        </a>
+      </div>
+    </div>
   </div>
 </div>
 <!-- DONATE SECTION -->
@@ -678,108 +919,6 @@
     </div>
   </div>
 </section>
-<!-- ...existing code... -->
-
-<!-- Thank-you message -->
-<div id="newsletter-thanks"
-     class="hidden max-w-7xl mx-auto mt-4 px-4">
-  <div class="bg-green-50 border border-green-200 text-green-900 rounded-lg px-4 py-3">
-    Thank you! You’ve been added to our newsletter.
-  </div>
-</div>
-
-
-<!-- DONATE SECTION (RESTORE) -->
-<section id="donate" class="w-full max-w-3xl md:max-w-7xl mx-auto mt-14 px-4 md:px-12">
-  <div class="bg-sky-100 px-4 py-10 md:py-16 rounded-[30px] shadow-md md:grid md:grid-cols-2 md:gap-12 md:items-center">
-    <div class="mb-8 md:mb-0">
-      <div class="swiper donation-swiper rounded-[30px] overflow-hidden shadow-lg">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide">
-            <img src="donation1.jpg" alt="Supporting Sovereign Praise 2025"
-              class="w-full h-56 sm:h-72 md:h-96 object-cover">
-          </div>
-          <div class="swiper-slide">
-            <img src="donation2.jpg" alt="Community Donations"
-              class="w-full h-56 sm:h-72 md:h-96 object-cover">
-          </div>
-          <div class="swiper-slide">
-            <img src="donation3.jpg" alt="Development of GPCC Phase 2"
-              class="w-full h-56 sm:h-72 md:h-96 object-cover">
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="text-center md:text-left">
-      <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-6">
-        Support Our Ministry: Donations, Causes & Project Development
-      </h2>
-      <!-- Why Donate dropdown -->
-      <div class="mb-6">
-        <details class="bg-white rounded-[30px] shadow p-4 cursor-pointer">
-          <summary class="font-semibold text-lg text-blue-800 cursor-pointer">
-            Why should I donate?
-          </summary>
-          <ul class="mt-3 text-gray-700 space-y-2 list-disc pl-6">
-            <li>
-              Facilitation of Sovereign Reign Concert
-              (<a href="events.html#sovereign-praise-concert" class="text-blue-700 underline">Sovereign Praise Concert</a>)
-            </li>
-            <li>
-              Donations to various causes
-              (<a href="gallery.html#donations-gallery" class="text-blue-700 underline">Donations Gallery</a>)
-            </li>
-            <li>Development of Phase 2 GPCC Project</li>
-          </ul>
-        </details>
-      </div>
-      <!-- CTA Button -->
-      <div>
-        <a href="donations.html"
-          class="inline-flex items-center justify-center w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-7 rounded-[30px] shadow-lg transition
-                focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-300"
-          aria-label="Donate now to support Global Peace Christian Centre">
-          Donate Now
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- NEWSLETTER SIGNUP (RESTORE) -->
-<section id="newsletter" class="w-full max-w-3xl md:max-w-7xl mx-auto mt-14 px-4 md:px-12">
-  <div class="bg-sky-100 px-6 py-12 md:py-20 rounded-[30px] shadow-md md:grid md:grid-cols-2 md:gap-12 md:items-center">
-    <div class="mb-8 md:mb-0">
-      <img src="connect.jpg" alt="Stay connected with GPCC"
-        class="w-full h-64 md:h-96 object-contain rounded-[30px] shadow-lg">
-    </div>
-    <div class="flex flex-col justify-center text-center md:text-left">
-      <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-4">
-        Stay Connected with GPCC
-      </h2>
-      <p class="text-lg text-gray-700 mb-6">
-        Sign up to receive church updates, event reminders, and devotionals directly in your inbox.
-      </p>
-      <form id="newsletter-form" action="https://script.google.com/macros/s/AKfycbw3F16H0XvE9bO8fLQhn0FLjj-1ahE4IizRNIC4OSgQjhG3ZXOxySJ2VVh9Y1xjrF8s/exec" method="POST"
-        class="flex flex-col sm:flex-row gap-3">
-        <label for="newsletter-email" class="sr-only">Your Email</label>
-        <input id="newsletter-email" name="email" type="email" required autocomplete="email"
-          placeholder="Your Email Here"
-          class="flex-1 rounded-lg border border-blue-300 px-4 py-3 bg-white/90 text-gray-800 placeholder-gray-500
-                  focus:outline-none focus:ring-4 focus:ring-blue-200">
-        <button type="submit"
-          class="rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-3
-                 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-300">
-          Sign Up
-        </button>
-      </form>
-      <p id="form-message" class="mt-2 text-center text-sm"></p>
-      <p id="privacy-note" class="mt-3 text-xs text-gray-700">
-        By clicking Sign Up, you agree to our Terms and Conditions.
-      </p>
-    </div>
-  </div>
-</section>
 <div id="newsletter-thanks" class="hidden max-w-7xl mx-auto mt-4 px-4">
   <div class="bg-green-50 border border-green-200 text-green-900 rounded-lg px-4 py-3">
     Thank you! You’ve been added to our newsletter.
@@ -861,7 +1000,7 @@
     effect: 'slide',
     speed: 600,
   });
-  // Donation images slider (1.5s per slide)
+// Donation images slider (1.5s per slide)
 new Swiper('.donation-swiper', {
   loop: true,
   autoplay: {
@@ -874,122 +1013,171 @@ new Swiper('.donation-swiper', {
   speed: 600,
 });
 
-    // Mobile menu open/close + close on outside or close button
-    const menuToggle = document.getElementById('menu-toggle');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const mobilePanel = document.getElementById('mobile-panel');
-    menuToggle.addEventListener('click', function(e){
-      e.stopPropagation();
-      mobileMenu.classList.remove('hidden');
-      menuToggle.setAttribute('aria-expanded', 'true');
-    });
-    mobileMenu.addEventListener('click', function(e){
-      if (!mobilePanel.contains(e.target)) {
-        mobileMenu.classList.add('hidden');
-        menuToggle.setAttribute('aria-expanded', 'false');
-      }
-    });
-
-    // ADDED: close mobile menu when clicking anywhere outside panel/toggle, Esc, or when switching to desktop
-  function closeMobileNav() {
-    if (!mobileMenu) return;
-    mobileMenu.classList.add('hidden');
-    menuToggle?.setAttribute('aria-expanded', 'false');
+    /* === Added: Unified scroll lock manager (supports multiple overlays) === */
+  let __scrollY = 0;
+  let __lockCount = 0;
+  function lockBody() {
+    if (__lockCount === 0) {
+      __scrollY = window.scrollY || document.documentElement.scrollTop;
+      document.body.classList.add('modal-open'); /* class already in CSS */
+      document.body.style.top = `-${__scrollY}px`;
+    }
+    __lockCount++;
   }
-  document.addEventListener('click', function(e) {
-    if (!mobileMenu || mobileMenu.classList.contains('hidden')) return;
-    const target = e.target;
-    if (!mobilePanel.contains(target) && target !== menuToggle && !menuToggle.contains(target)) {
-      closeMobileNav();
+  function unlockBody() {
+    if (__lockCount === 0) return;
+    __lockCount--;
+    if (__lockCount === 0) {
+      document.body.classList.remove('modal-open');
+      document.body.style.top = '';
+      window.scrollTo(0, __scrollY);
+    }
+  }
+
+  /* === Mobile Menu (hamburger) toggle fix === */
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobilePanel = document.getElementById('mobile-panel');
+
+  function openMobileNav() {
+    if (!mobileMenu.classList.contains('hidden')) return;
+    mobileMenu.classList.remove('hidden');
+    mobilePanel.classList.add('mobile-menu-anim'); // class defined in styles.css
+    menuToggle.setAttribute('aria-expanded', 'true');
+    lockBody();
+  }
+  function closeMobileNav() {
+    if (mobileMenu.classList.contains('hidden')) return;
+    mobileMenu.classList.add('hidden');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    unlockBody();
+  }
+  menuToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (mobileMenu.classList.contains('hidden')) openMobileNav();
+    else closeMobileNav();
+  });
+  mobileMenu.addEventListener('click', (e) => {
+    if (!mobilePanel.contains(e.target)) closeMobileNav();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMobileNav(); });
+  window.matchMedia('(min-width:1024px)').addEventListener('change', e => { if (e.matches) closeMobileNav(); });
+
+  // Mobile ABOUT toggle (unchanged)
+  const mobileAboutToggle = document.getElementById('mobile-about-toggle');
+  const mobileAboutDropdown = document.getElementById('mobile-about-dropdown');
+  mobileAboutToggle.addEventListener('click', e => {
+    e.stopPropagation();
+    mobileAboutDropdown.classList.toggle('hidden');
+  });
+
+  /* === Popup animation helper (unchanged logic, just ensured availability) === */
+  function animateAndHide(popupEl, dialogEl, afterFn){
+    if (popupEl.classList.contains('popup-closing')) return;
+    const animTarget = dialogEl.querySelector('.pastor-modal') || dialogEl;
+    popupEl.classList.add('popup-closing');
+    animTarget.classList.add('modal-exit');
+    animTarget.addEventListener('animationend', () => {
+      animTarget.classList.remove('modal-exit');
+      popupEl.classList.add('hidden');
+      popupEl.classList.remove('popup-closing');
+      afterFn && afterFn();
+    }, { once:true });
+  }
+
+  /* === Schedule Popup (updated to lockBody/unlockBody) === */
+  const scheduleBtn = document.getElementById('schedule-btn');
+  const schedulePopup = document.getElementById('schedule-popup');
+  const scheduleDialog = document.getElementById('schedule-dialog');
+  const scheduleClosers = schedulePopup.querySelectorAll('.close-schedule');
+
+  scheduleBtn?.addEventListener('click', () => {
+    schedulePopup.classList.remove('hidden');
+    lockBody();
+  });
+  function closeSchedulePopup() {
+    if (schedulePopup.classList.contains('hidden')) return;
+    animateAndHide(schedulePopup, scheduleDialog, unlockBody);
+  }
+  scheduleClosers.forEach(b => b.addEventListener('click', closeSchedulePopup));
+  schedulePopup.addEventListener('click', e => { if (!scheduleDialog.contains(e.target)) closeSchedulePopup(); });
+
+  /* === Message Popup (updated to lockBody/unlockBody) === */
+  const messageBtn = document.getElementById('message-btn');
+  const messagePopup = document.getElementById('message-popup');
+  const messageDialog = document.getElementById('message-dialog');
+  const messageClosers = messagePopup.querySelectorAll('.close-message');
+
+  messageBtn?.addEventListener('click', () => {
+    messagePopup.classList.remove('hidden');
+    lockBody();
+  });
+  function closeMessagePopup() {
+    if (messagePopup.classList.contains('hidden')) return;
+    animateAndHide(messagePopup, messageDialog, unlockBody);
+  }
+  messageClosers.forEach(b => b.addEventListener('click', closeMessagePopup));
+  messagePopup.addEventListener('click', e => { if (!messageDialog.contains(e.target)) closeMessagePopup(); });
+
+  /* Esc closes both (menu + popups already handled) */
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      closeMessagePopup();
+      closeSchedulePopup();
     }
   });
-  document.addEventListener('keydown', function(e){
-    if (e.key === 'Escape') closeMobileNav();
-  });
-  const mq = window.matchMedia('(min-width: 1024px)');
-  mq.addEventListener('change', (e) => { if (e.matches) closeMobileNav(); });
 
-    // Mobile ABOUT US toggle
-    const mobileAboutToggle = document.getElementById('mobile-about-toggle');
-    const mobileAboutDropdown = document.getElementById('mobile-about-dropdown');
-    mobileAboutToggle.addEventListener('click', function(e){
-      e.stopPropagation();
-      mobileAboutDropdown.classList.toggle('hidden');
-    });
-
-    // Schedule Popup
-    const scheduleBtn = document.getElementById('schedule-btn');
-    const schedulePopup = document.getElementById('schedule-popup');
-    const scheduleDialog = document.getElementById('schedule-dialog');
-    const scheduleClosers = schedulePopup.querySelectorAll('.close-schedule');
-
-    scheduleBtn?.addEventListener('click', function(){
-      schedulePopup.classList.remove('hidden');
-    });
-
-    // Ensure the X button closes the popup
-    scheduleClosers.forEach(btn => btn.addEventListener('click', function(){
-      schedulePopup.classList.add('hidden');
-    }));
-
-    // Click outside dialog closes popup
-    schedulePopup.addEventListener('click', function(e){
-      if (!scheduleDialog.contains(e.target)) schedulePopup.classList.add('hidden');
-    });
-
-    // Message Popup (FIXED)
-    const messageBtn = document.getElementById('message-btn');
-    const messagePopup = document.getElementById('message-popup');
-    const messageDialog = document.getElementById('message-dialog');
-    const messageClosers = messagePopup.querySelectorAll('.close-message');
-    
-    messageBtn?.addEventListener('click', function(){
-      messagePopup.classList.remove('hidden');
-    });
-    
-    messageClosers.forEach(btn => btn.addEventListener('click', function(){
-      messagePopup.classList.add('hidden');
-    }));
-    
-    messagePopup.addEventListener('click', function(e){
-      if (!messageDialog.contains(e.target)) messagePopup.classList.add('hidden');
-    });
-
-    // SwiperJS HERO
-    new Swiper('.hero-swiper', {
-      loop: true,
-      autoplay: {
-        delay: 1200,
-        disableOnInteraction: false,
-      },
-      effect: 'fade',
-      fadeEffect: {
-        crossFade: true
-      },
-      speed: 700,
-      allowTouchMove: true
-    });
-
-    // Motto SwiperJS
-    new Swiper('.motto-swiper', {
-      loop: true,
-      autoplay: {
-        delay: 1000,
-        disableOnInteraction: false,
-      },
-      effect: 'fade',
-      fadeEffect: {
-        crossFade: true
-      },
-      speed: 600,
-      allowTouchMove: true,
-      pagination: {
-        el: '.motto-pagination',
-        clickable: true,
+  /* === Swipe-to-close (unchanged except using close functions) === */
+  function addSwipeToClose(popupEl, dialogEl, closeFn){
+    if(!popupEl || !dialogEl) return;
+    let startY=null, dragging=false, exceeded=false;
+    const target = dialogEl.querySelector('.pastor-modal') || dialogEl;
+    popupEl.addEventListener('touchstart', e=>{
+      if(e.touches.length!==1) return;
+      startY = e.touches[0].clientY;
+      dragging=true; exceeded=false;
+      target.style.transition='none';
+    }, { passive:true });
+    popupEl.addEventListener('touchmove', e=>{
+      if(!dragging || startY===null) return;
+      const delta = e.touches[0].clientY - startY;
+      if(delta>0){
+        const damp = Math.min(delta,180);
+        target.style.transform = `translateY(${damp*0.55}px)`;
+        target.style.opacity = String(Math.max(.35,1-damp/300));
       }
-    });
+      if(delta>130) exceeded=true;
+    }, { passive:true });
+    function end(){
+      if(!dragging) return;
+      dragging=false;
+      target.style.transition='';
+      if(exceeded){
+        const m = getComputedStyle(target).transform;
+        let ty=0;
+        if(m && m!=='none'){ const parts=m.split(','); ty=parseFloat(parts[5])||0; }
+        target.style.transform=`translateY(${ty}px)`;
+        target.style.opacity='1';
+        target.style.setProperty('--exit-offset', ty+'px');
+        requestAnimationFrame(()=>{
+          closeFn();
+          setTimeout(()=>target.style.removeProperty('--exit-offset'), 450);
+        });
+      } else {
+        target.style.transition='transform .28s ease, opacity .28s ease';
+        target.style.transform='';
+        target.style.opacity='1';
+        setTimeout(()=>{ target.style.transition=''; },300);
+      }
+      startY=null;
+    }
+    popupEl.addEventListener('touchend', end, { passive:true });
+    popupEl.addEventListener('touchcancel', end, { passive:true });
+  }
+  addSwipeToClose(messagePopup, messageDialog, closeMessagePopup);
+  addSwipeToClose(schedulePopup, scheduleDialog, closeSchedulePopup);
 
-    // Handle form submission for Google Apps Script
+  // Handle form submission for Google Apps Script
   const newsletterForm = document.getElementById('newsletter-form');
   const formMessage = document.getElementById('form-message');
   const thanksMessage = document.getElementById('newsletter-thanks');
@@ -1012,6 +1200,7 @@ new Swiper('.donation-swiper', {
           if (thanksMessage) {
             thanksMessage.style.display = 'block';
             setTimeout(() => {
+
               thanksMessage.style.display = 'none';
             }, 5000);
           }
@@ -1026,36 +1215,29 @@ new Swiper('.donation-swiper', {
       }
     });
   }
-</script>
-  <script>
-  const form = document.getElementById("newsletter-form");
-  const message = document.getElementById("form-message");
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(form);
-
-    try {
-      const response = await fetch("https://script.google.com/macros/s/AKfycbw3F16H0XvE9bO8fLQhn0FLjj-1ahE4IizRNIC4OSgQjhG3ZXOxySJ2VVh9Y1xjrF8s/exec", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (response.ok) {
-        message.textContent = "✅ Thank you for subscribing!";
-        message.className = "mt-2 text-center text-green-600 text-sm";
-        form.reset();
-      } else {
-        throw new Error("Network error");
-      }
-    } catch (error) {
-      message.textContent = "❌ Something went wrong. Please try again.";
-      message.className = "mt-2 text-center text-red-600 text-sm";
-    }
+  /* Add (restore) HERO swiper (2s visible, 2s fade transition) */
+  new Swiper('.hero-swiper', {
+    loop: true,
+    autoplay: { delay: 2000, disableOnInteraction: false },
+    effect: 'fade',
+    fadeEffect: { crossFade: true },
+    speed: 2000,
+    allowTouchMove: true
   });
-</script>
+  // ADDED: Slogan / Motto swiper (loop + autoplay)
+  new Swiper('.motto-swiper', {
+    loop: true,
+    autoplay: { delay: 2500, disableOnInteraction: false },
+    slidesPerView: 1,
+    speed: 600,
+    pagination: { el: '.motto-pagination', clickable: true }
+  });
 
-  
+  // (If you want motto-swiper still, add here or keep existing earlier one)
+  // ...existing code (scroll lock, mobile menu, popups, swipe-to-close, form submission)...
+</script>
+</body>
+</script>
 </body>
 </html>

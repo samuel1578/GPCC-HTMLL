@@ -7,6 +7,9 @@
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap" rel="stylesheet"><!-- added Rowdies -->
   <!-- SwiperJS CDN -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -383,20 +386,73 @@
         gap: 2rem;
       }
     }
+
+    /* Added: unified header styles to match index */
+    .font-fjalla { font-family:'Fjalla One',sans-serif; letter-spacing:.5px; }
+    .header-brand-img { height:48px; width:48px; object-fit:contain; }
+    @media (min-width:1024px){ .header-brand-img { height:50px; width:50px; } }
+    .header-brand-text { font-size:calc(1.125rem + 2px); line-height:1.1; }
+    @media (min-width:640px){ .header-brand-text { font-size:calc(1.25rem + 2px); } }
+    @media (min-width:1024px){ .header-brand-text { font-size:calc(1.25rem + 2px); } }
+    #menu-toggle .hamburger-circle { line-height:0; }
+
+    /* New main page header styles */
+    .leadership-title{
+      font-family:'Abril Fatface',serif;
+      font-size:clamp(2.35rem,4.3vw,3.4rem);
+      line-height:1.05;
+      background:linear-gradient(95deg,#123d87 0%,#1d4ed8 42%,#ef4444 92%);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      letter-spacing:.25px;
+      text-shadow:0 2px 12px rgba(29,78,216,.18);
+      position:relative;
+      display:inline-block;
+      padding:0 .4rem;
+    }
+    .leadership-title:after{
+      content:"";
+      display:block;
+      height:4px;
+      width:55%;
+      margin:.55rem auto 0;
+      border-radius:999px;
+      background:linear-gradient(90deg,#1d4ed8,#ef4444);
+      box-shadow:0 2px 6px -2px rgba(0,0,0,.18);
+    }
+    @media (max-width:640px){
+      .leadership-wrapper{ padding:.75rem .75rem .5rem; }
+      .leadership-title:after{ height:3px; }
+    }
+
+    /* Elders list styling */
+    .elders-list {
+      font-family:'Rowdies', cursive;
+      text-align:center;
+      font-weight:400;
+    }
+    .elders-list li {
+      list-style:none;
+    }
+    @media (min-width:640px){
+      .elders-list { font-weight:500; }
+    }
+    /* Center grid items */
+    .elders-list { justify-items:center; }
   </style>
 </head>
 <body class="bg-[#badcf7] font-sans community-page"><!-- added class -->
-  <!-- RESTORE ORIGINAL HEADER STRUCTURE -->
-  <header class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur border-b border-blue-200">
-    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-3 flex items-center justify-between">
+  <!-- REPLACED HEADER -->
+  <header class="fixed top-0 left-0 w-full z-[80] bg-white/80 backdrop-blur border-b border-blue-200">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-1 flex items-center justify-between">
       <a href="index.html" class="flex items-center gap-2">
-        <img src="logo.png" alt="GPCC Logo" class="h-10 w-10 object-contain rounded-sm border border-blue-900/40 bg-transparent">
-        <!-- Mobile short name, Desktop full name -->
-        <span class="text-xl font-bold text-blue-900 inline lg:hidden">GPCC</span>
-        <span class="hidden lg:inline text-xl font-bold text-blue-900">Global Peace Christian Centre</span>
+        <img src="logo.png" alt="GPCC Logo" class="header-brand-img rounded-sm border border-blue-900/40 bg-transparent">
+        <span class="font-fjalla header-brand-text text-blue-900 inline lg:hidden">Global Peace Christian Centre</span>
+        <span class="hidden lg:inline font-fjalla header-brand-text text-blue-900">Global Peace Christian Centre</span>
       </a>
-      <!-- Desktop nav (only visible on large screens) -->
-      <nav class="hidden lg:flex items-center gap-4 bg-white/70 rounded-full border-2 border-blue-900 px-6 py-2 shadow-lg desktop-nav">
+      <nav id="desktop-nav"
+           class="hidden lg:flex relative items-center gap-4 bg-white/70 rounded-full border-2 border-blue-900 px-6 py-2 shadow-lg">
         <a href="index.html" class="px-4 py-2 rounded-full bg-blue-900 text-white font-semibold shadow">HOME</a>
         <div class="relative">
           <button id="about-us-desktop-btn"
@@ -411,35 +467,31 @@
               class="absolute top-full left-0 mt-2 hidden bg-white border border-blue-200 rounded-lg shadow-lg w-72 py-2"
               role="menu">
             <li><a href="who-we-are.html" class="block px-4 py-2 hover:bg-blue-50">Who We Are</a></li>
-            <li><a href="pastoral-board.html" class="block px-4 py-2 hover:bg-blue-50">The Pastoral Board</a></li>
-            <li><a href="eldership-deacons.html" class="block px-4 py-2 hover:bg-blue-50">Eldership &amp; Deacons</a></li>
+            <li><a href="pastoral-board.html" class="block px-4 py-2 hover:bg-blue-50">The Leadership</a></li>
             <li><a href="community-journey.html" class="block px-4 py-2 hover:bg-blue-50">Our Journey Through the Community</a></li>
+            <li><a href="testimonies.html" class="block px-4 py-2 hover:bg-blue-50">Testimonies</a></li>
           </ul>
         </div>
-        <!-- Other desktop menu items -->
         <a href="ministries.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MINISTRIES</a>
-        <a href="#" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MEDIA CENTER</a>
         <a href="events.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">EVENTS</a>
-        <a href="#" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">GALLERY</a>
+        <a href="gallery.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">GALLERY</a>
         <a href="contact-us.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">CONTACT US</a>
       </nav>
-      
-      <!-- FIXED: Restore original hamburger button -->
-      <button id="menu-toggle" class="lg:hidden fixed top-4 right-4 focus:outline-none z-50"
-        aria-label="Open Menu" aria-expanded="false">
-        <span class="flex items-center justify-center w-11 h-11 rounded-full bg-blue-900 hover:bg-blue-700 shadow-lg transition duration-200">
+      <button id="menu-toggle"
+              class="lg:hidden fixed top-2 right-4 focus:outline-none z-50"
+              aria-label="Open Menu" aria-expanded="false">
+        <span class="hamburger-circle flex items-center justify-center w-12 h-12 rounded-full bg-blue-900 hover:bg-blue-700 shadow-xl ring-2 ring-blue-200 transition duration-200">
           <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M4 7h16M4 12h16M4 17h16"/>
+                  d="M4 7h16M4 12h16M4 17h16"/>
           </svg>
         </span>
       </button>
     </div>
-    
-    <!-- Mobile menu - restored to original -->
     <div id="mobile-menu"
-         class="fixed inset-0 hidden justify-start items-start bg-[#badcf7]/95 z-50 lg:hidden">
-      <div id="mobile-panel" class="absolute right-4 top-20 w-80 px-2 py-4 rounded-2xl bg-white shadow-2xl border border-blue-200 text-center glass modal-animate">
+         class="fixed inset-x-0 top-[60px] bottom-0 hidden justify-start items-start bg-[#badcf7]/95 z-[60] lg:hidden">
+      <div id="mobile-panel"
+           class="absolute right-4 top-4 w-80 px-2 py-4 rounded-2xl bg-white shadow-2xl border border-blue-200 text-center glass modal-animate">
         <nav class="space-y-4 mt-3">
           <a href="index.html" class="block w-full px-5 py-3 rounded-full bg-blue-900 text-white font-semibold">HOME</a>
           <div>
@@ -452,27 +504,29 @@
             </button>
             <ul id="mobile-about-dropdown" class="hidden mt-2 space-y-2">
               <li><a href="who-we-are.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Who We Are</a></li>
-              <li><a href="pastoral-board.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">The Pastoral Board</a></li>
-              <li><a href="eldership-deacons.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Eldership &amp; Deacons</a></li>
+              <li><a href="pastoral-board.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">The Leadership</a></li>
               <li><a href="community-journey.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Our Journey Through the Community</a></li>
+              <li><a href="testimonies.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Testimonies</a></li>
             </ul>
           </div>
-          <!-- Other mobile menu items -->
-          <a href="ministries.html" class="block px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MINISTRIES</a>
-          <a href="#" class="block px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MEDIA CENTER</a>
-          <a href="events.html" class="block px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">EVENTS</a>
-          <a href="#" class="block px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">GALLERY</a>
-          <a href="contact-us.html" class="block px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">CONTACT US</a>
+          <a href="ministries.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MINISTRIES</a>
+          <a href="events.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">EVENTS</a>
+          <a href="gallery.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">GALLERY</a>
+          <a href="contact-us.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">CONTACT US</a>
         </nav>
       </div>
     </div>
   </header>
-  
-  <!-- Spacer to account for fixed header -->
-  <div class="h-[72px]"></div>
+  <div class="h-[60px]"></div><!-- changed spacer 72px -> 60px -->
 
   <!-- MAIN CONTENT - improved structure while keeping card fixes -->
   <main class="max-w-7xl mx-auto px-4 py-8 community-content"><!-- added class -->
+    <!-- Inserted: Main page header -->
+    <section class="leadership-wrapper text-center">
+      <span class="leadership-accent"></span>
+      <h1 class="leadership-title">The Leadership</h1>
+    </section>
+
     <div class="board-header-wrap">
       <div class="board-header-overlay"></div>
       <div class="board-header">The Pastoral Board</div>
@@ -485,7 +539,7 @@
       <div class="desktop-founders-row">
         <!-- President & Founder -->
         <div class="card founder-card">
-          <img src="president.jpg" alt="President & Founder" class="pastor-img object-cover bg-[#badcf7] border-b-2 border-blue-100">
+          <img src="headpastorj.jpg" alt="President & Founder" class="pastor-img object-cover bg-[#badcf7] border-b-2 border-blue-100">
           <div class="card-content">
             <div class="card-title">President & Founder</div>
             <div class="pastor-name">Very Rev Henry Ampomah-Boateng</div>
@@ -574,12 +628,11 @@
             <!-- President & Founder -->
             <div class="swiper-slide mobile-card-container">
               <div class="card mobile-card">
-                <img src="president.jpg" alt="President & Founder" class="object-cover w-full bg-[#badcf7] border-b-2 border-blue-100">
+                <img src="headpastorj.jpg" alt="President & Founder" class="object-cover w-full bg-[#badcf7] border-b-2 border-blue-100">
                 <div class="card-content">
                   <div>
                     <div class="card-title">President & Founder</div>
                     <div class="pastor-name">Very Rev Henry Ampomah-Boateng</div>
-                    <div class="card-desc">Visionary leader and founder of GPCC.</div>
                   </div>
                   <button class="view-profile-btn mt-2" onclick="window.location.href='./profile-president.html'">View Profile</button>
                 </div>
@@ -593,7 +646,7 @@
                 <div class="card-content">
                   <div class="card-title">Vice President</div>
                   <div class="pastor-name">Lady Perpetual Ampomah-Boateng</div>
-                  <div class="card-desc">Guiding our youth to grow in faith and community engagement.</div>
+                  <div class="card-desc">The "mother" of our church.</div>
                 </div>
               </div>
             </div>
@@ -749,9 +802,55 @@
           </button>
         </div>
       </div>
-    </div>
-  </main>
+    </div> <!-- end mobile/tablet container -->
 
+    <!-- INSERTED: Our Elders section -->
+    <section class="max-w-7xl mx-auto px-4">
+      <div class="board-header-wrap mt-4">
+        <div class="board-header-overlay"></div>
+        <div class="board-header">Our Elders</div>
+      </div>
+      <div class="board-sub">Honoring those who uphold and support the pastoral vision.</div>
+
+      <div class="max-w-5xl mx-auto bg-white/80 border border-blue-200 rounded-2xl shadow p-5 sm:p-7 mb-12">
+        <img src="./assets/pastoral-board/elders-group.jpg"
+             alt="Group photo of GPCC Elders"
+             class="w-full h-72 sm:h-96 object-cover rounded-xl border border-blue-100 mb-5"/>
+
+        <ul class="elders-list grid sm:grid-cols-2 lg:grid-cols-3 gap-3 justify-items-center mx-auto text-sm md:text-base text-blue-900 leading-snug">
+          <!-- Replace placeholders with ONLY Elder names sourced from eldership-deacons.html (exclude Deacons) -->
+          <li>Elder Charles Boakye</li>
+          <li>Elder Alexander Ofosu Agyenim-Boateng</li>
+          <li>Elder Deborah Gogoe</li>
+          <li>Elder Alexander Gogoe</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- INSERTED: Editorial Board section -->
+    <section class="max-w-7xl mx-auto px-4">
+      <div class="board-header-wrap mt-4">
+        <div class="board-header-overlay"></div>
+        <div class="board-header">Editorial Board</div>
+      </div>
+      <div class="board-sub">Stewarding written, media and doctrinal communications.</div>
+
+      <div class="max-w-5xl mx-auto bg-white/80 border border-blue-200 rounded-2xl shadow p-5 sm:p-7 mb-12">
+        <img src="./assets/pastoral-board/elders-group.jpg"
+             alt="Group photo of GPCC Editorial Board"
+             class="w-full h-72 sm:h-96 object-cover rounded-xl border border-blue-100 mb-5"/>
+
+        <ul class="elders-list grid sm:grid-cols-2 lg:grid-cols-3 gap-3 justify-items-center mx-auto text-sm md:text-base text-blue-900 leading-snug">
+          <li>Editor-in-Chief (Mr Benjamin Alhijah)</li>
+          <li>Managing Editor (Mrs Sndra Boamah)</li>
+          <li>Senior Theological Reviewer (Placeholder)</li>
+          <li>Content & Publications Lead (Placeholder)</li>
+          <li>Media Archivist (Placeholder)</li>
+          <li>Associate Editor (Placeholder)</li>`
+        </ul>
+      </div>
+    </section>
+  </main>
   <!-- Footer - now with static positioning -->
   <footer class="w-full bg-[#181c17] text-white py-8 text-center">
     <div class="max-w-7xl mx-auto px-4">

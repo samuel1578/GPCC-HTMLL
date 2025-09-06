@@ -11,6 +11,9 @@ body {
   line-height: 1.6;
 }
 
+/* Shared Fjalla utility (so other pages can drop inline definition) */
+.font-fjalla { font-family:'Fjalla One',sans-serif; letter-spacing:.5px; } /* added for shared header */
+
 /* Header */
 header {
   background: #fff;
@@ -655,3 +658,38 @@ footer { flex-shrink: 0; }
     overflow-y: auto !important;
   }
 }
+
+/* Simple fade/slide animation utility for mobile menu */
+.mobile-menu-anim {
+  animation: mmFade .35s cubic-bezier(.4,0,.2,1);
+}
+@keyframes mmFade {
+  0% { opacity:0; transform:translateY(-12px); }
+  100% { opacity:1; transform:translateY(0); }
+}
+
+/* body scroll lock when mobile nav is open */
+body.nav-lock {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  width:100%;
+}
+
+/* Shared compact header utilities (apply to other pages with headers) */
+.header-compact .header-inner { padding-top:.25rem; padding-bottom:.25rem; }
+.header-compact .header-brand-img { height:48px; width:48px; }
+@media (min-width:1024px){
+  .header-compact .header-brand-img { height:50px; width:50px; }
+}
+.header-compact .header-brand-text { font-size:calc(1.125rem + 2px); line-height:1.1; }
+@media (min-width:640px){
+  .header-compact .header-brand-text { font-size:calc(1.25rem + 2px); }
+}
+
+/* Larger hamburger button style (optional class) */
+.hamburger-lg { width:3rem; height:3rem; }
+.hamburger-lg svg { width:1.75rem; height:1.75rem; }
+
+/* Line-height fix utility for circular icon buttons */
+.no-lh { line-height:0; }

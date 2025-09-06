@@ -6,34 +6,77 @@
   <title>Profile: Apostle Henry Ampomah-Boateng | GPCC</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    /* desktop nav hover highlight */
+    .nav-hover-indicator {
+      position:absolute;
+      top:0; left:0;
+      height:var(--h,100%);
+      width:var(--w,0);
+      background:linear-gradient(135deg,#e0f2ff 0%,#c7e2ff 60%,#bfdcff 100%);
+      border:2px solid #2563eb;
+      border-radius:9999px;
+      box-shadow:0 6px 18px -6px rgba(37,60,125,.35),0 2px 6px rgba(37,60,125,.18);
+      opacity:0;
+      transform:translate(var(--x,0),var(--y,0)) scale(.9);
+      transition:opacity .25s ease,transform .32s cubic-bezier(.4,0,.2,1),
+                 width .32s cubic-bezier(.4,0,.2,1),height .32s cubic-bezier(.4,0,.2,1);
+      pointer-events:none;
+      z-index:0;
+    }
+    .nav-hover-parent a,
+    .nav-hover-parent button { position:relative; z-index:1; }
+
+    /* Updated: compact shared header sizing to match index.html */
+    .header-brand-img { height:48px; width:48px; object-fit:contain; }
+    @media (min-width:1024px){
+      .header-brand-img { height:50px; width:50px; }
+    }
+    .header-brand-text { font-size:calc(1.125rem + 2px); line-height:1.1; }
+    @media (min-width:640px){
+      .header-brand-text { font-size:calc(1.25rem + 2px); }
+    }
+    @media (min-width:1024px){
+      .header-brand-text { font-size:calc(1.25rem + 2px); }
+    }
+    /* Ensure no vertical shift in enlarged hamburger */
+    #menu-toggle .hamburger-circle { line-height:0; }
+
+    /* added: match index header font utility */
+    .font-fjalla { font-family:'Fjalla One',sans-serif; letter-spacing:.5px; }
+  </style>
 </head>
 <body class="bg-[#badcf7] font-sans bio-page">
-  <!-- Header -->
-  <header class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur border-b border-blue-200">
-    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-3 flex items-center justify-between">
+  <!-- REPLACED HEADER with index.html version -->
+  <header class="fixed top-0 left-0 w-full z-[80] bg-white/80 backdrop-blur border-b border-blue-200">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-1 flex items-center justify-between">
       <a href="index.html" class="flex items-center gap-2">
-        <img src="logo.png" alt="GPCC Logo" class="h-10 w-10 object-contain rounded-sm border border-blue-900/40 bg-transparent">
-        <span class="text-xl font-bold text-blue-900 inline lg:hidden">GPCC</span>
-        <span class="hidden lg:inline text-xl font-bold text-blue-900">Global Peace Christian Centre</span>
+        <img src="logo.png" alt="GPCC Logo" class="header-brand-img rounded-sm border border-blue-900/40 bg-transparent">
+        <span class="font-fjalla header-brand-text text-blue-900 inline lg:hidden">Global Peace Christian Centre</span>
+        <span class="hidden lg:inline font-fjalla header-brand-text text-blue-900">Global Peace Christian Centre</span>
       </a>
-      <nav class="hidden lg:flex items-center gap-4 bg-white/70 rounded-full border-2 border-blue-900 px-6 py-2 shadow-lg">
+      <nav id="desktop-nav"
+           class="hidden lg:flex relative items-center gap-4 bg-white/70 rounded-full border-2 border-blue-900 px-6 py-2 shadow-lg">
         <a href="index.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">HOME</a>
         <div class="relative">
           <button id="about-us-desktop-btn"
-                  class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold flex items-center gap-2 hover:bg-blue-50 transition"
+                  class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold flex items-center gap-2 hover:bg-blue-50 transition focus:outline-none"
                   aria-haspopup="true" aria-expanded="false">
             ABOUT US
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6"/></svg>
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6"/>
+            </svg>
           </button>
           <ul id="about-us-desktop-dropdown"
               class="absolute top-full left-0 mt-2 hidden bg-white border border-blue-200 rounded-lg shadow-lg w-72 py-2"
               role="menu">
             <li><a href="who-we-are.html" class="block px-4 py-2 hover:bg-blue-50">Who We Are</a></li>
-            <li><a href="pastoral-board.html" class="block px-4 py-2 hover:bg-blue-50">The Pastoral Board</a></li>
-            <li><a href="eldership-deacons.html" class="block px-4 py-2 hover:bg-blue-50">Eldership &amp; Deacons</a></li>
+            <li><a href="pastoral-board.html" class="block px-4 py-2 hover:bg-blue-50">The Leadership</a></li>
             <li><a href="community-journey.html" class="block px-4 py-2 hover:bg-blue-50">Our Journey Through the Community</a></li>
+            <li><a href="testimonies.html" class="block px-4 py-2 hover:bg-blue-50">Testimonies</a></li>
           </ul>
         </div>
         <a href="ministries.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MINISTRIES</a>
@@ -41,27 +84,36 @@
         <a href="gallery.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">GALLERY</a>
         <a href="contact-us.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">CONTACT US</a>
       </nav>
-      <!-- Hamburger -->
-      <button id="menu-toggle" class="lg:hidden fixed top-4 right-4 focus:outline-none z-50" aria-label="Open Menu" aria-expanded="false">
-        <span class="flex items-center justify-center w-11 h-11 rounded-full bg-blue-900 hover:bg-blue-700 shadow-lg transition duration-200">
-          <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16"/></svg>
+      <button id="menu-toggle"
+              class="lg:hidden fixed top-2 right-4 focus:outline-none z-50"
+              aria-label="Open Menu" aria-expanded="false">
+        <span class="hamburger-circle flex items-center justify-center w-12 h-12 rounded-full bg-blue-900 hover:bg-blue-700 shadow-xl ring-2 ring-blue-200 transition duration-200">
+          <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
         </span>
       </button>
     </div>
-    <div id="mobile-menu" class="fixed inset-0 hidden justify-start items-start bg-[#badcf7]/95 z-50 lg:hidden">
-      <div id="mobile-panel" class="absolute right-4 top-20 w-80 px-2 py-4 rounded-2xl bg-white shadow-2xl border border-blue-200 text-center">
+    <div id="mobile-menu"
+         class="fixed inset-x-0 top-[60px] bottom-0 hidden justify-start items-start bg-[#badcf7]/95 z-[60] lg:hidden">
+      <div id="mobile-panel"
+           class="absolute right-4 top-4 w-80 px-2 py-4 rounded-2xl bg-white shadow-2xl border border-blue-200 text-center glass modal-animate">
         <nav class="space-y-4 mt-3">
           <a href="index.html" class="block w-full px-5 py-3 rounded-full bg-blue-900 text-white font-semibold">HOME</a>
           <div>
-            <button id="mobile-about-toggle" class="w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold flex items-center justify-center gap-2">
+            <button id="mobile-about-toggle"
+                    class="w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold flex items-center justify-center gap-2 focus:outline-none">
               ABOUT US
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6"/></svg>
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6"/>
+              </svg>
             </button>
             <ul id="mobile-about-dropdown" class="hidden mt-2 space-y-2">
               <li><a href="who-we-are.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Who We Are</a></li>
-              <li><a href="pastoral-board.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">The Pastoral Board</a></li>
-              <li><a href="eldership-deacons.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Eldership &amp; Deacons</a></li>
+              <li><a href="pastoral-board.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">The Leadership</a></li>
               <li><a href="community-journey.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Our Journey Through the Community</a></li>
+              <li><a href="testimonies.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Testimonies</a></li>
             </ul>
           </div>
           <a href="ministries.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MINISTRIES</a>
@@ -73,7 +125,7 @@
     </div>
   </header>
 
-  <div class="h-[72px]"></div>
+  <div class="h-[60px]"></div><!-- changed spacer 72px -> 60px -->
 
   <!-- HERO: mobile swiper, desktop 2x2 grid -->
   <section class="w-full max-w-6xl mx-auto px-4 mt-6">
@@ -90,12 +142,14 @@
         </div>
       </div>
       <div class="hidden md:block">
-        <div class="bio-hero-grid">
-          <!-- changed: use same images as mobile + top-focused crop -->
-          <img src="headpastore.jpg" alt="Apostle Henry ministering" class="portrait-top">
-          <img src="./assets/pastoral-board/president-2.jpg" alt="Ministry moments" class="portrait-top">
-          <img src="./assets/pastoral-board/president-3.jpg" alt="Worship scene" class="portrait-top">
-          <img src="./assets/pastoral-board/president-4.jpg" alt="Community outreach" class="portrait-top">
+        <!-- replaced static grid with swiper -->
+        <div class="swiper bio-hero-desktop rounded-xl overflow-hidden">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="headpastore.jpg" alt="Apostle Henry ministering" class="portrait-top"></div>
+            <div class="swiper-slide"><img src="./assets/pastoral-board/president-2.jpg" alt="Ministry moments" class="portrait-top"></div>
+            <div class="swiper-slide"><img src="./assets/pastoral-board/president-3.jpg" alt="Worship scene" class="portrait-top"></div>
+            <div class="swiper-slide"><img src="./assets/pastoral-board/president-4.jpg" alt="Community outreach" class="portrait-top"></div>
+          </div>
         </div>
       </div>
       <div class="mt-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
@@ -238,7 +292,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
-    // Desktop ABOUT dropdown
+    // REPLACED NAV SCRIPTS with index-like logic
     const aboutBtn = document.getElementById('about-us-desktop-btn');
     const aboutDropdown = document.getElementById('about-us-desktop-dropdown');
     let aboutOpen = false;
@@ -255,56 +309,104 @@
       });
     });
 
-    // Mobile menu open/close + global closers
+    // Mobile menu (index pattern)
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
     const mobilePanel = document.getElementById('mobile-panel');
-    menuToggle?.addEventListener('click', function(e){
-      e.stopPropagation();
-      mobileMenu.classList.remove('hidden');
-      menuToggle.setAttribute('aria-expanded', 'true');
-    });
-    mobileMenu?.addEventListener('click', function(e){
-      if (!mobilePanel.contains(e.target)) {
-        mobileMenu.classList.add('hidden');
-        menuToggle.setAttribute('aria-expanded', 'false');
-      }
-    });
-    function closeMobileNav() {
-      mobileMenu?.classList.add('hidden');
-      menuToggle?.setAttribute('aria-expanded', 'false');
+
+    function lockBody() {
+      if (document.body.classList.contains('nav-lock')) return;
+      document.body.classList.add('nav-lock');
+      window.__scrollY = window.scrollY;
+      document.body.style.top = `-${window.__scrollY}px`;
     }
-    document.addEventListener('click', function(e){
-      if (!mobileMenu || mobileMenu.classList.contains('hidden')) return;
-      const t = e.target;
-      if (!mobilePanel.contains(t) && t !== menuToggle && !menuToggle.contains(t)) closeMobileNav();
+    function unlockBody() {
+      if (!document.body.classList.contains('nav-lock')) return;
+      document.body.classList.remove('nav-lock');
+      document.body.style.top = '';
+      window.scrollTo(0, window.__scrollY || 0);
+    }
+
+    function openMobileNav() {
+      mobileMenu.classList.remove('hidden');
+      mobilePanel.classList.add('mobile-menu-anim');
+      menuToggle.setAttribute('aria-expanded','true');
+      lockBody();
+    }
+    function closeMobileNav() {
+      if (mobileMenu.classList.contains('hidden')) return;
+      mobileMenu.classList.add('hidden');
+      menuToggle.setAttribute('aria-expanded','false');
+      unlockBody();
+    }
+    menuToggle?.addEventListener('click', e => {
+      e.stopPropagation();
+      if (mobileMenu.classList.contains('hidden')) openMobileNav();
+      else closeMobileNav();
     });
-    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeMobileNav(); });
-    const mq = window.matchMedia('(min-width: 1024px)');
-    mq.addEventListener('change', (e) => { if (e.matches) closeMobileNav(); });
+    mobileMenu?.addEventListener('click', e => {
+      if (!mobilePanel.contains(e.target)) closeMobileNav();
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMobileNav(); });
+    window.matchMedia('(min-width:1024px)').addEventListener('change', e => { if (e.matches) closeMobileNav(); });
+
+    // Mobile ABOUT toggle
     const mobileAboutToggle = document.getElementById('mobile-about-toggle');
     const mobileAboutDropdown = document.getElementById('mobile-about-dropdown');
-    mobileAboutToggle?.addEventListener('click', function(e){
+    mobileAboutToggle?.addEventListener('click', e => {
       e.stopPropagation();
       mobileAboutDropdown.classList.toggle('hidden');
     });
 
-    // Back button: previous page or home fallback
-    document.getElementById('back-btn')?.addEventListener('click', function(){
-      if (window.history.length > 1) history.back();
-      else window.location.href = 'index.html';
-    });
-
-    // Mobile hero swiper
+    // Mobile hero swiper (delay updated to 2500ms)
     try {
       new Swiper('.bio-hero-mobile', {
         loop: true,
-        autoplay: { delay: 1800, disableOnInteraction: false },
+        autoplay: { delay: 2500, disableOnInteraction: false },
         slidesPerView: 1,
         spaceBetween: 12,
-        speed: 500
+        speed: 600
       });
     } catch(e) {}
+
+    // Added: desktop hero swiper (2500ms)
+    try {
+      new Swiper('.bio-hero-desktop', {
+        loop: true,
+        autoplay: { delay: 2500, disableOnInteraction: false },
+        slidesPerView: 1,
+        spaceBetween: 12,
+        speed: 600
+      });
+    } catch(e) {}
+
+    function initDesktopNavHover(navId){
+      const nav = document.getElementById(navId);
+      if(!nav) return;
+      nav.classList.add('nav-hover-parent');
+      const indicator = document.createElement('span');
+      indicator.className='nav-hover-indicator';
+      indicator.setAttribute('aria-hidden','true');
+      nav.prepend(indicator);
+      const items=[...nav.querySelectorAll('a,button')];
+      items.forEach(el=>{
+        el.addEventListener('mouseenter',()=>{
+          const r=el.getBoundingClientRect();
+          const nr=nav.getBoundingClientRect();
+          indicator.style.setProperty('--x',(r.left-nr.left)+'px');
+          indicator.style.setProperty('--y',(r.top-nr.top)+'px');
+          indicator.style.setProperty('--w',r.width+'px');
+          indicator.style.setProperty('--h',r.height+'px');
+          indicator.style.opacity='1';
+          indicator.style.transform='translate(var(--x),var(--y)) scale(1)';
+        });
+      });
+      nav.addEventListener('mouseleave',()=>{
+        indicator.style.opacity='0';
+        indicator.style.transform='translate(var(--x),var(--y)) scale(.9)';
+      });
+    }
+    initDesktopNavHover('desktop-nav');
   </script>
 </body>
 </html>
