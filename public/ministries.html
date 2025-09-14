@@ -9,6 +9,59 @@
   <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
+    /* Added: lock page scroll when popup open */
+    body.modal-open {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      width: 100%;
+    }
+    
+    /* Glass effect for mobile panel */
+    .glass {
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px) saturate(180%);
+      box-shadow: 0 6px 36px 0 rgba(55,100,150,0.25);
+      border: 2px solid #dbeafe;
+    }
+    
+    /* Modal animation */
+    .modal-animate {
+      animation: modalPop .4s cubic-bezier(.35,.85,.39,1.1);
+    }
+    @keyframes modalPop {
+      0% { opacity: 0; transform: scale(0.9);}
+      100% { opacity: 1; transform: scale(1);}
+    }
+
+    /* Hamburger button refinements */
+    #menu-toggle .hamburger-circle { 
+      background: linear-gradient(135deg,#1e40af,#2563eb); 
+      box-shadow: 0 12px 28px -10px rgba(37,99,235,.55); 
+      border: 1px solid rgba(255,255,255,.28); 
+      transition: background .2s, box-shadow .2s, transform .15s; 
+    }
+    #menu-toggle .hamburger-circle:hover { 
+      transform: translateY(-1px); 
+    }
+    #menu-toggle.open .hamburger-circle { 
+      background: transparent !important; 
+      box-shadow: none !important; 
+      border-color: transparent; 
+    }
+    #menu-toggle.open .icon-close { 
+      color:#1d4ed8 !important; 
+    }
+
+    /* Added: unified header styles to match index */
+    .font-fjalla { font-family:'Fjalla One',sans-serif; letter-spacing:.5px; }
+    .header-brand-img { height:48px; width:48px; object-fit:contain; }
+    @media (min-width:1024px){ .header-brand-img { height:50px; width:50px; } }
+    .header-brand-text { font-size:calc(1.125rem + 2px); line-height:1.1; }
+    @media (min-width:640px){ .header-brand-text { font-size:calc(1.25rem + 2px); } }
+    @media (min-width:1024px){ .header-brand-text { font-size:calc(1.25rem + 2px); } }
+    #menu-toggle .hamburger-circle { line-height:0; }
+
     .glass { background: rgba(255,255,255,0.92); backdrop-filter: blur(12px) saturate(180%); box-shadow: 0 6px 36px 0 rgba(55,100,150,0.25); border: 2px solid #dbeafe; }
     .card { border-radius: 1rem; background: white; border: 1px solid #e0e7ef; box-shadow: 0 6px 28px rgba(0,0,0,0.06); overflow: hidden; display: flex; flex-direction: column; }
     .card img { width: 100%; height: 180px; object-fit: cover; }
@@ -60,6 +113,7 @@
         </div>
         <a href="ministries.html" class="px-4 py-2 rounded-full bg-blue-900 text-white font-semibold shadow">MINISTRIES</a>
         <a href="events.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">EVENTS</a>
+        <a href="media-center.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MEDIA CENTER</a>
         <a href="gallery.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">GALLERY</a>
         <a href="contact-us.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">CONTACT US</a>
       </nav>
@@ -67,9 +121,13 @@
               class="lg:hidden fixed top-2 right-4 focus:outline-none z-50"
               aria-label="Open Menu" aria-expanded="false">
         <span class="hamburger-circle flex items-center justify-center w-12 h-12 rounded-full bg-blue-900 hover:bg-blue-700 shadow-xl ring-2 ring-blue-200 transition duration-200">
-          <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M4 7h16M4 12h16M4 17h16"/>
+          <!-- Hamburger icon -->
+          <svg class="icon-hamburger w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+          <!-- Close icon (hidden by default) -->
+          <svg class="icon-close w-7 h-7 text-white hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6l12 12M18 6l-12 12" />
           </svg>
         </span>
       </button>
@@ -78,8 +136,15 @@
          class="fixed inset-x-0 top-[60px] bottom-0 hidden justify-start items-start bg-[#badcf7]/95 z-[60] lg:hidden">
       <div id="mobile-panel"
            class="absolute right-4 top-4 w-80 px-2 py-4 rounded-2xl bg-white shadow-2xl border border-blue-200 text-center glass modal-animate">
+        <!-- panel header with logo + brand -->
+        <div class="flex items-center justify-between px-3 pb-2 border-b border-blue-100">
+          <div class="flex items-center gap-2">
+            <img src="logo.png" alt="GPCC Logo" class="w-10 h-10 rounded-sm"/>
+            <span class="font-fjalla text-blue-900 text-lg">Global Peace Christian Centre</span>
+          </div>
+        </div>
         <nav class="space-y-4 mt-3">
-          <a href="index.html" class="block w-full px-5 py-3 rounded-full bg-blue-900 text-white font-semibold">HOME</a>
+          <a href="index.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">HOME</a>
           <div>
             <button id="mobile-about-toggle"
                     class="w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold flex items-center justify-center gap-2 focus:outline-none">
@@ -95,8 +160,9 @@
               <li><a href="testimonies.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Testimonies</a></li>
             </ul>
           </div>
-          <a href="ministries.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MINISTRIES</a>
+          <a href="ministries.html" class="block w-full px-5 py-3 rounded-full bg-blue-900 text-white font-semibold">MINISTRIES</a>
           <a href="events.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">EVENTS</a>
+          <a href="media-center.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MEDIA CENTER</a>
           <a href="gallery.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">GALLERY</a>
           <a href="contact-us.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">CONTACT US</a>
         </nav>
@@ -248,13 +314,81 @@
     // year
     (function(){ var y=document.getElementById('copyright-year'); if(y) y.textContent=new Date().getFullYear(); })();
 
-    // Desktop ABOUT US dropdown
+    /* === Added: Unified scroll lock manager (supports multiple overlays) === */
+    let __scrollY = 0;
+    let __lockCount = 0;
+    function lockBody() {
+      if (__lockCount === 0) {
+        __scrollY = window.scrollY || document.documentElement.scrollTop;
+        document.body.classList.add('modal-open');
+        document.body.style.top = `-${__scrollY}px`;
+      }
+      __lockCount++;
+    }
+    function unlockBody() {
+      if (__lockCount === 0) return;
+      __lockCount--;
+      if (__lockCount === 0) {
+        document.body.classList.remove('modal-open');
+        document.body.style.top = '';
+        window.scrollTo(0, __scrollY);
+      }
+    }
+
+    /* === Mobile Menu (hamburger) toggle fix === */
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobilePanel = document.getElementById('mobile-panel');
+    const iconHamburger = document.querySelector('#menu-toggle .icon-hamburger');
+    const iconClose = document.querySelector('#menu-toggle .icon-close');
+
+    function openMobileNav() {
+      if (!mobileMenu.classList.contains('hidden')) return;
+      mobileMenu.classList.remove('hidden');
+      mobilePanel.classList.add('mobile-menu-anim');
+      menuToggle.setAttribute('aria-expanded', 'true');
+      menuToggle.setAttribute('aria-label', 'Close Menu');
+      menuToggle.classList.add('open');
+      iconHamburger?.classList.add('hidden');
+      iconClose?.classList.remove('hidden');
+      lockBody();
+    }
+    function closeMobileNav() {
+      if (mobileMenu.classList.contains('hidden')) return;
+      mobileMenu.classList.add('hidden');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.setAttribute('aria-label', 'Open Menu');
+      menuToggle.classList.remove('open');
+      iconClose?.classList.add('hidden');
+      iconHamburger?.classList.remove('hidden');
+      unlockBody();
+    }
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (mobileMenu.classList.contains('hidden')) openMobileNav();
+      else closeMobileNav();
+    });
+    mobileMenu.addEventListener('click', (e) => {
+      if (!mobilePanel.contains(e.target)) closeMobileNav();
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMobileNav(); });
+    window.matchMedia('(min-width:1024px)').addEventListener('change', e => { if (e.matches) closeMobileNav(); });
+
+    // Mobile ABOUT toggle
+    const mobileAboutToggle = document.getElementById('mobile-about-toggle');
+    const mobileAboutDropdown = document.getElementById('mobile-about-dropdown');
+    mobileAboutToggle.addEventListener('click', e => {
+      e.stopPropagation();
+      mobileAboutDropdown.classList.toggle('hidden');
+    });
+    
+    // Desktop ABOUT US toggle (click only, not hover)
     const aboutBtn = document.getElementById('about-us-desktop-btn');
     const aboutDropdown = document.getElementById('about-us-desktop-dropdown');
     let aboutOpen = false;
-    aboutBtn?.addEventListener('click', function(e) {
+    aboutBtn.addEventListener('click', function(e) {
       e.stopPropagation();
-      aboutDropdown?.classList.toggle('hidden');
+      aboutDropdown.classList.toggle('hidden');
       aboutOpen = !aboutOpen;
       document.addEventListener('click', function handler(ev) {
         if (aboutOpen && !aboutDropdown.contains(ev.target) && ev.target !== aboutBtn) {
@@ -263,32 +397,6 @@
           document.removeEventListener('click', handler);
         }
       });
-    });
-
-    // Mobile hamburger + close on outside
-    const menuToggle = document.getElementById('menu-toggle');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const mobilePanel = document.getElementById('mobile-panel');
-    menuToggle?.addEventListener('click', function(e) {
-      e.stopPropagation();
-      const hidden = mobileMenu.classList.contains('hidden');
-      mobileMenu.classList.toggle('hidden', !hidden ? true : false);
-      if (hidden) mobileMenu.classList.remove('hidden');
-      menuToggle.setAttribute('aria-expanded', hidden ? 'true' : 'false');
-    });
-    mobileMenu?.addEventListener('click', function(e) {
-      if (!mobilePanel.contains(e.target)) {
-        mobileMenu.classList.add('hidden');
-        menuToggle.setAttribute('aria-expanded', 'false');
-      }
-    });
-
-    // Mobile ABOUT US dropdown
-    const mobileAboutToggle = document.getElementById('mobile-about-toggle');
-    const mobileAboutDropdown = document.getElementById('mobile-about-dropdown');
-    mobileAboutToggle?.addEventListener('click', function(e) {
-      e.stopPropagation();
-      mobileAboutDropdown?.classList.toggle('hidden');
     });
   </script>
 </body>

@@ -6,6 +6,7 @@
   <title>Our Journey | Global Peace Christian Centre</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
   <link rel="stylesheet" href="styles.css"><!-- added -->
   <style>
@@ -43,68 +44,86 @@
 
     /* accessibility focus outlines */
     button:focus, a:focus { outline: 3px solid rgba(37,99,235,0.18); outline-offset:2px; }
+
+    /* Header overrides to match index.html */
+    .font-fjalla { font-family: 'Fjalla One', sans-serif; letter-spacing:.5px; }
+    .header-brand-img { height:48px; width:48px; object-fit:contain; border:0 !important; box-shadow:none !important; background:transparent !important; }
+    @media (min-width:1024px){ .header-brand-img { height:50px; width:50px; } }
+    .header-brand-text { font-size:calc(1.125rem + 2px); line-height:1.1; }
+    @media (min-width:640px){ .header-brand-text { font-size:calc(1.25rem + 2px); } }
+    @media (min-width:1024px){ .header-brand-text { font-size:calc(1.25rem + 2px); } }
+    #menu-toggle .hamburger-circle { line-height:0; }
+    @media (min-width:1024px){
+      #desktop-nav { padding: .35rem .75rem !important; gap:.5rem !important; flex-wrap: wrap; }
+      #desktop-nav a, #desktop-nav button { padding:.35rem .75rem !important; font-size:.95rem !important; }
+    }
+
+    /* Ensure scroll lock style exists */
+    body.modal-open { position: fixed; inset: 0; overflow: hidden; width: 100%; }
+
+    /* Hamburger button refinements */
+    #menu-toggle .hamburger-circle {
+      background: linear-gradient(135deg,#1e40af,#2563eb);
+      box-shadow: 0 12px 28px -10px rgba(37,99,235,.55);
+      border: 1px solid rgba(255,255,255,.28);
+      transition: background .2s ease, box-shadow .2s ease, transform .15s ease;
+    }
+    #menu-toggle .hamburger-circle:hover { transform: translateY(-1px); }
+    #menu-toggle.open .hamburger-circle { background: transparent !important; box-shadow: none !important; border-color: transparent; }
+    #menu-toggle.open .icon-close { color:#1d4ed8 !important; }
   </style>
 </head>
 <body class="bg-[#badcf7] font-sans"><!-- added class -->
-  <!-- Header (fixed) -->
-  <header class="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur border-b border-blue-200">
-    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-3 flex items-center justify-between">
-      <a href="index.html" class="flex items-center gap-2">
-        <img src="logo.png" alt="GPCC Logo" class="h-10 w-10 object-contain rounded-sm border border-blue-900/40 bg-transparent">
-        <span class="text-xl font-bold text-blue-900 inline lg:hidden">GPCC</span>
-        <span class="hidden lg:inline text-xl font-bold text-blue-900">Global Peace Christian Centre</span>
+  <!-- HEADER / NAVBAR (updated to match index.html) -->
+  <header class="fixed top-0 left-0 w-full z-[80] bg-white/80 backdrop-blur border-b border-blue-200">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-1 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2 flex-shrink-0">
+        <img src="logo.png" alt="GPCC Logo" class="header-brand-img rounded-sm">
+        <span class="font-fjalla text-blue-900 header-brand-text inline lg:hidden">Global Peace Christian Centre</span>
+        <span class="hidden lg:inline font-fjalla text-blue-900 header-brand-text whitespace-nowrap">Global Peace Christian Centre</span>
       </a>
-      <nav class="hidden lg:flex items-center gap-4 bg-white/70 rounded-full border-2 border-blue-900 px-6 py-2 shadow-lg">
-        <a href="index.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">HOME</a>
+      <nav id="desktop-nav" class="hidden lg:flex relative items-center gap-4 flex-wrap bg-white/70 rounded-full border-2 border-blue-900 px-6 py-2 shadow-lg">
+        <a href="index.html" class="px-4 py-2 rounded-full bg-blue-900 text-white font-semibold shadow">HOME</a>
         <div class="relative">
-          <button id="about-us-desktop-btn"
-                  class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold flex items-center gap-2 hover:bg-blue-50 transition focus:outline-none"
-                  aria-haspopup="true" aria-expanded="false">
+          <button id="about-us-desktop-btn" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold flex items-center gap-2 hover:bg-blue-50 transition focus:outline-none" aria-haspopup="true" aria-expanded="false">
             ABOUT US
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6"/>
-            </svg>
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6"/></svg>
           </button>
-          <ul id="about-us-desktop-dropdown"
-              class="absolute top-full left-0 mt-2 hidden bg-white border border-blue-200 rounded-lg shadow-lg w-72 py-2"
-              role="menu">
-            <li><a href="who-we-are.html" class="block px-4 py-2 hover:bg-blue-50">Who We Are</a></li>
-            <li><a href="pastoral-board.html" class="block px-4 py-2 hover:bg-blue-50">The Leadership</a></li>
-            <li><a href="community-journey.html" class="block px-4 py-2 hover:bg-blue-50">Our Journey Through the Community</a></li>
-            <li><a href="testimonies.html" class="block px-4 py-2 hover:bg-blue-50">Testimonies</a></li>
+          <ul id="about-us-desktop-dropdown" class="absolute top-full left-0 mt-2 hidden bg-white border border-blue-200 rounded-lg shadow-lg w-auto min-w-[30rem] py-2" role="menu">
+            <li><a href="who-we-are.html" class="block w-full px-4 pr-6 py-2 hover:bg-blue-50 whitespace-nowrap">Who We Are</a></li>
+            <li><a href="pastoral-board.html" class="block w-full px-4 pr-6 py-2 hover:bg-blue-50 whitespace-nowrap">The Leadership</a></li>
+            <li><a href="community-journey.html" class="block w-full px-4 pr-6 py-2 hover:bg-blue-50 whitespace-normal break-words">Our Journey Through the Community</a></li>
+            <li><a href="testimonies.html" class="block w-full px-4 pr-6 py-2 hover:bg-blue-50 whitespace-nowrap">Testimonies</a></li>
           </ul>
         </div>
         <a href="ministries.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MINISTRIES</a>
-        <a href="#" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MEDIA CENTER</a>
         <a href="events.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">EVENTS</a>
-        <a href="gallery.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">GALLERY</a><!-- changed -->
+        <a href="media-center.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MEDIA CENTER</a>
+        <a href="gallery.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">GALLERY</a>
         <a href="contact-us.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">CONTACT US</a>
       </nav>
-
-      <!-- mobile hamburger (fixed) -->
-      <button id="menu-toggle" class="lg:hidden fixed top-4 right-4 focus:outline-none z-50"
-        aria-label="Open Menu" aria-expanded="false">
-        <span class="flex items-center justify-center w-11 h-11 rounded-full bg-blue-900 hover:bg-blue-700 shadow-lg transition duration-200">
-          <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M4 7h16M4 12h16M4 17h16"/>
-          </svg>
+      <!-- Hamburger (mobile only) -->
+      <button id="menu-toggle" type="button" class="lg:hidden fixed top-2 right-4 focus:outline-none z-50" aria-label="Open Menu" aria-expanded="false">
+        <span class="hamburger-circle flex items-center justify-center w-12 h-12 rounded-full bg-blue-900 hover:bg-blue-700 shadow-xl ring-2 ring-blue-200 transition duration-200">
+          <svg class="icon-hamburger w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16"/></svg>
+          <svg class="icon-close w-7 h-7 text-white hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6l12 12M18 6l-12 12"/></svg>
         </span>
       </button>
     </div>
-
-    <!-- Mobile full overlay (hidden until open) -->
-    <div id="mobile-menu" class="fixed inset-0 hidden justify-start items-start bg-[#badcf7]/95 z-50">
-      <div id="mobile-panel" class="absolute right-4 top-20 w-80 px-2 py-4 rounded-2xl bg-white shadow-2xl border border-blue-200 text-center">
+    <div id="mobile-menu" class="fixed inset-x-0 top-[60px] bottom-0 hidden justify-start items-start bg-[#badcf7]/95 z-[60] lg:hidden">
+      <div id="mobile-panel" class="absolute right-4 top-4 w-80 px-2 py-4 rounded-2xl bg-white shadow-2xl border border-blue-200 text-center glass modal-animate">
+        <div class="flex items-center justify-between px-3 pb-2 border-b border-blue-100">
+          <div class="flex items-center gap-2">
+            <img src="logo.png" alt="GPCC Logo" class="w-10 h-10 rounded-sm"/>
+            <span class="font-fjalla text-blue-900 text-lg">Global Peace Christian Centre</span>
+          </div>
+        </div>
         <nav class="space-y-4 mt-3">
           <a href="index.html" class="block w-full px-5 py-3 rounded-full bg-blue-900 text-white font-semibold">HOME</a>
           <div>
-            <button id="mobile-about-toggle"
-                    class="w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold flex items-center justify-center gap-2 focus:outline-none">
+            <button id="mobile-about-toggle" class="w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold flex items-center justify-center gap-2 focus:outline-none">
               ABOUT US
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6"/>
-              </svg>
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6"/></svg>
             </button>
             <ul id="mobile-about-dropdown" class="hidden mt-2 space-y-2">
               <li><a href="who-we-are.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Who We Are</a></li>
@@ -114,9 +133,9 @@
             </ul>
           </div>
           <a href="ministries.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MINISTRIES</a>
-          <a href="#" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MEDIA CENTER</a>
           <a href="events.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">EVENTS</a>
-          <a href="gallery.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">GALLERY</a><!-- changed -->
+          <a href="media-center.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MEDIA CENTER</a>
+          <a href="gallery.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">GALLERY</a>
           <a href="contact-us.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">CONTACT US</a>
         </nav>
       </div>
@@ -382,32 +401,62 @@
     function unlockNav(){ if(!document.body.classList.contains('nav-lock')) return;
       document.body.classList.remove('nav-lock'); document.body.style.top=''; window.scrollTo(0,__cjScroll); }
 
+    /* === Mobile Menu (hamburger) toggle fix for Community Journey === */
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
     const mobilePanel = document.getElementById('mobile-panel');
+    const iconHamburger = document.querySelector('#menu-toggle .icon-hamburger');
+    const iconClose = document.querySelector('#menu-toggle .icon-close');
 
-    function openMobileMenu(){
-      mobileMenu.classList.remove('hidden');
-      mobilePanel.classList.add('mobile-menu-anim');
-      menuToggle.setAttribute('aria-expanded','true');
-      lockNav();
+    let __scrollY = 0; let __lockCount = 0;
+    function lockBody(){
+      if(__lockCount===0){
+        __scrollY = window.scrollY || document.documentElement.scrollTop;
+        document.body.classList.add('modal-open');
+        document.body.style.top = `-${__scrollY}px`;
+      }
+      __lockCount++;
     }
-    function closeMobileMenu(){
-      if (mobileMenu.classList.contains('hidden')) return;
+    function unlockBody(){
+      if(__lockCount===0) return;
+      __lockCount--;
+      if(__lockCount===0){
+        document.body.classList.remove('modal-open');
+        document.body.style.top = '';
+        window.scrollTo(0, __scrollY);
+      }
+    }
+
+    function openMobileNav(){
+      if(!mobileMenu || !menuToggle) return;
+      if(!mobileMenu.classList.contains('hidden')) return;
+      mobileMenu.classList.remove('hidden');
+      mobilePanel?.classList.add('mobile-menu-anim');
+      menuToggle.setAttribute('aria-expanded','true');
+      menuToggle.setAttribute('aria-label','Close Menu');
+      menuToggle.classList.add('open');
+      iconHamburger?.classList.add('hidden');
+      iconClose?.classList.remove('hidden');
+      lockBody();
+    }
+    function closeMobileNav(){
+      if(!mobileMenu || !menuToggle) return;
+      if(mobileMenu.classList.contains('hidden')) return;
       mobileMenu.classList.add('hidden');
       menuToggle.setAttribute('aria-expanded','false');
-      unlockNav();
+      menuToggle.setAttribute('aria-label','Open Menu');
+      menuToggle.classList.remove('open');
+      iconClose?.classList.add('hidden');
+      iconHamburger?.classList.remove('hidden');
+      unlockBody();
     }
-    menuToggle.addEventListener('click', e=>{
+    menuToggle?.addEventListener('click', e=>{
       e.stopPropagation();
-      if (mobileMenu.classList.contains('hidden')) openMobileMenu();
-      else closeMobileMenu();
+      if (mobileMenu.classList.contains('hidden')) openMobileNav(); else closeMobileNav();
     });
-    mobileMenu.addEventListener('click', e=>{
-      if (!mobilePanel.contains(e.target)) closeMobileMenu();
-    });
-    document.addEventListener('keydown', e=>{ if (e.key==='Escape') closeMobileMenu(); });
-    window.matchMedia('(min-width:1024px)').addEventListener('change', e=>{ if(e.matches) closeMobileMenu(); });
+    mobileMenu?.addEventListener('click', e=>{ if (!mobilePanel.contains(e.target)) closeMobileNav(); });
+    document.addEventListener('keydown', e=>{ if (e.key==='Escape') closeMobileNav(); });
+    window.matchMedia('(min-width:1024px)').addEventListener('change', e=>{ if (e.matches) closeMobileNav(); });
 
     // Mobile ABOUT US toggle (same as index)
     const mobileAboutToggle = document.getElementById('mobile-about-toggle');

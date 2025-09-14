@@ -5,10 +5,29 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>Gallery | Global Peace Christian Centre</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Fjalla+One&family=Oleo+Script:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap" rel="stylesheet">
+  <!-- SwiperJS CDN -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <style>
+    /* Header/Hamburger overrides */
+    .font-fjalla { font-family: 'Fjalla One', sans-serif; letter-spacing:.5px; }
+    .header-brand-img { height:48px; width:48px; object-fit:contain; border:0 !important; background:transparent !important; box-shadow:none !important; }
+    @media (min-width:1024px){ .header-brand-img { height:50px; width:50px; } }
+    .header-brand-text { font-size:calc(1.125rem + 2px); line-height:1.1; }
+    @media (min-width:640px){ .header-brand-text { font-size:calc(1.25rem + 2px); } }
+    @media (min-width:1024px){ .header-brand-text { font-size:calc(1.25rem + 2px); } }
+    @media (min-width:1024px){ #desktop-nav { padding:.35rem .75rem !important; gap:.5rem !important; flex-wrap:wrap; } #desktop-nav a, #desktop-nav button { padding:.35rem .75rem !important; font-size:.95rem !important; } }
+    /* Hamburger refinements */
+    #menu-toggle .hamburger-circle { background: linear-gradient(135deg,#1e40af,#2563eb); box-shadow: 0 12px 28px -10px rgba(37,99,235,.55); border: 1px solid rgba(255,255,255,.28); transition: background .2s, box-shadow .2s, transform .15s; line-height:0; }
+    #menu-toggle .hamburger-circle:hover { transform: translateY(-1px); }
+    #menu-toggle.open .hamburger-circle { background: transparent !important; box-shadow: none !important; border-color: transparent; }
+    #menu-toggle.open .icon-close { color:#1d4ed8 !important; }
+    body.modal-open { position:fixed; inset:0; overflow:hidden; width:100%; }
+
     body{background:#badcf7;font-family:'Fjalla One',sans-serif;-webkit-font-smoothing:antialiased;}
     .pattern:before{
       content:"";position:fixed;inset:0;z-index:-1;
@@ -188,17 +207,285 @@
       background:linear-gradient(135deg,#ecf6fc 0%,#d9eef9 45%,#cbe6f4 100%);
       border:2px solid #d5e9f3;
     }
+
+    /* Added: lock page scroll when popup open */
+    body.modal-open {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      width: 100%;
+    }
+    
+    /* Glass effect for mobile panel */
+    .glass {
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px) saturate(180%);
+      box-shadow: 0 6px 36px 0 rgba(55,100,150,0.25);
+      border: 2px solid #dbeafe;
+    }
+    
+    /* Modal animation */
+    .modal-animate {
+      animation: modalPop .4s cubic-bezier(.35,.85,.39,1.1);
+    }
+    @keyframes modalPop {
+      0% { opacity: 0; transform: scale(0.9);}
+      100% { opacity: 1; transform: scale(1);}
+    }
+
+    /* Hamburger button refinements */
+    #menu-toggle .hamburger-circle { 
+      background: linear-gradient(135deg,#1e40af,#2563eb); 
+      box-shadow: 0 12px 28px -10px rgba(37,99,235,.55); 
+      border: 1px solid rgba(255,255,255,.28); 
+      transition: background .2s, box-shadow .2s, transform .15s; 
+    }
+    #menu-toggle .hamburger-circle:hover { 
+      transform: translateY(-1px); 
+    }
+    #menu-toggle.open .hamburger-circle { 
+      background: transparent !important; 
+      box-shadow: none !important; 
+      border-color: transparent; 
+    }
+    #menu-toggle.open .icon-close { 
+      color:#1d4ed8 !important; 
+    }
+
+    /* Added: unified header styles to match index */
+    .font-fjalla { font-family:'Fjalla One',sans-serif; letter-spacing:.5px; }
+    .header-brand-img { height:48px; width:48px; object-fit:contain; }
+    @media (min-width:1024px){ .header-brand-img { height:50px; width:50px; } }
+    .header-brand-text { font-size:calc(1.125rem + 2px); line-height:1.1; }
+    @media (min-width:640px){ .header-brand-text { font-size:calc(1.25rem + 2px); } }
+    @media (min-width:1024px){ .header-brand-text { font-size:calc(1.25rem + 2px); } }
+    #menu-toggle .hamburger-circle { line-height:0; }
+
+    /* Mobile menu styles (for completeness) */
+    #mobile-menu {
+      @apply fixed inset-x-0 top-[60px] bottom-0 hidden justify-start items-start bg-[#badcf7]/95 z-[60] lg:hidden;
+    }
+    #mobile-panel {
+      @apply absolute right-4 top-4 w-80 px-2 py-4 rounded-2xl bg-white shadow-2xl border border-blue-200 text-center glass modal-animate;
+    }
+    #mobile-panel .close-btn {
+      @apply absolute top-2 right-2 w-10 h-10 flex items-center justify-center rounded-full bg-blue-900 text-white;
+    }
+    #mobile-panel .close-btn:hover {
+      @apply bg-blue-700;
+    }
+    #mobile-panel nav a {
+      @apply block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold;
+    }
+    #mobile-panel nav a:hover {
+      @apply bg-blue-50;
+    }
+
+    /* Directory List Styles */
+    .directory-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .directory-item {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      border: 1px solid #e5e7eb;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+    
+    .directory-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      border-color: #2563eb;
+    }
+    
+    .directory-content {
+      width: 100%;
+    }
+    
+    .directory-content h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #2563eb;
+      margin: 0 0 1rem 0;
+    }
+    
+    .directory-content p {
+      font-size: 1rem;
+      color: #4b5563;
+      margin: 0 0 1.5rem 0;
+      line-height: 1.6;
+    }
+    
+    .view-photos-btn {
+      background: #ef4444;
+      color: white;
+      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+      display: inline-block;
+      text-decoration: none;
+    }
+    
+    .view-photos-btn:hover {
+      background: #dc2626;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 640px) {
+      .directory-item {
+        padding: 1.25rem;
+      }
+      
+      .directory-content h4 {
+        font-size: 1.25rem;
+      }
+      
+      .directory-content p {
+        font-size: 0.95rem;
+      }
+    }
+
+    /* Gallery Swiper Styles */
+    .gallery-swiper {
+      width: 100%;
+      height: auto;
+      margin: 2rem 0;
+    }
+    
+    .gallery-swiper .swiper-slide {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 300px;
+    }
+    
+    .gallery-swiper .swiper-pagination {
+      position: static !important;
+      margin-top: 1rem;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .gallery-swiper .swiper-pagination-bullet {
+      background: #2563eb;
+      opacity: 0.5;
+      width: 12px;
+      height: 12px;
+      margin: 0 6px;
+    }
+    
+    .gallery-swiper .swiper-pagination-bullet-active {
+      background: #ef4444;
+      opacity: 1;
+      transform: scale(1.2);
+    }
+    
+    .gallery-section {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+    
+    .gallery-section h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #2563eb;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    
+    .gallery-section h3:after {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #2563eb, #ef4444);
+      border-radius: 2px;
+    }
+    
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      max-width: 100%;
+    }
+    
+    .gallery-item {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .gallery-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    
+    .gallery-item img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+    
+    .gallery-item-caption {
+      padding: 1rem;
+      text-align: center;
+    }
+    
+    .gallery-item-title {
+      font-weight: 600;
+      color: #1e40af;
+      margin-bottom: 0.5rem;
+    }
+    
+    .gallery-item-date {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
   </style>
 </head>
 <body class="pattern">
 
-  <!-- HEADER imported from index.html -->
+  <!-- HEADER / NAVBAR (updated) -->
   <header class="fixed top-0 left-0 w-full z-[80] bg-white/80 backdrop-blur border-b border-blue-200">
     <div class="max-w-7xl mx-auto px-4 lg:px-8 py-1 flex items-center justify-between">
       <a href="index.html" class="flex items-center gap-2">
         <img src="logo.png" alt="GPCC Logo" class="header-brand-img rounded-sm border border-blue-900/40 bg-transparent">
-        <span class="font-fjalla text-blue-900 header-brand-text inline lg:hidden">Global Peace Christian Centre</span>
-        <span class="hidden lg:inline font-fjalla text-blue-900 header-brand-text">Global Peace Christian Centre</span>
+        <span class="font-fjalla header-brand-text text-blue-900 inline lg:hidden">Global Peace Christian Centre</span>
+        <span class="hidden lg:inline font-fjalla header-brand-text text-blue-900">Global Peace Christian Centre</span>
       </a>
       <nav id="desktop-nav"
            class="hidden lg:flex relative items-center gap-4 bg-white/70 rounded-full border-2 border-blue-900 px-6 py-2 shadow-lg">
@@ -223,16 +510,21 @@
         </div>
         <a href="ministries.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MINISTRIES</a>
         <a href="events.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">EVENTS</a>
+        <a href="media-center.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MEDIA CENTER</a>
         <a href="gallery.html" class="px-4 py-2 rounded-full bg-blue-900 text-white font-semibold shadow">GALLERY</a>
         <a href="contact-us.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">CONTACT US</a>
       </nav>
       <button id="menu-toggle"
               class="lg:hidden fixed top-2 right-4 focus:outline-none z-50"
               aria-label="Open Menu" aria-expanded="false">
-        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-900 hover:bg-blue-700 shadow-xl ring-2 ring-blue-200 transition duration-200">
-          <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M4 7h16M4 12h16M4 17h16"/>
+        <span class="hamburger-circle flex items-center justify-center w-12 h-12 rounded-full bg-blue-900 hover:bg-blue-700 shadow-xl ring-2 ring-blue-200 transition duration-200">
+          <!-- Hamburger icon -->
+          <svg class="icon-hamburger w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+          <!-- Close icon (hidden by default) -->
+          <svg class="icon-close w-7 h-7 text-white hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6l12 12M18 6l-12 12" />
           </svg>
         </span>
       </button>
@@ -240,12 +532,19 @@
     <div id="mobile-menu"
          class="fixed inset-x-0 top-[60px] bottom-0 hidden justify-start items-start bg-[#badcf7]/95 z-[60] lg:hidden">
       <div id="mobile-panel"
-           class="absolute right-4 top-4 w-80 px-2 py-4 rounded-2xl bg-white shadow-2xl border border-blue-200 text-center glass">
+           class="absolute right-4 top-4 w-80 px-2 py-4 rounded-2xl bg-white shadow-2xl border border-blue-200 text-center glass modal-animate">
+        <!-- panel header with logo + brand -->
+        <div class="flex items-center justify-between px-3 pb-2 border-b border-blue-100">
+          <div class="flex items-center gap-2">
+            <img src="logo.png" alt="GPCC Logo" class="w-10 h-10 rounded-sm"/>
+            <span class="font-fjalla text-blue-900 text-lg">Global Peace Christian Centre</span>
+          </div>
+        </div>
         <nav class="space-y-4 mt-3">
-          <a href="index.html" class="block w-full px-5 py-3 rounded-full bg-blue-900 text-white font-semibold">HOME</a>
+          <a href="index.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">HOME</a>
           <div>
             <button id="mobile-about-toggle"
-                    class="w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold flex items-center justify-center gap-2">
+                    class="w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold flex items-center justify-center gap-2 focus:outline-none">
               ABOUT US
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6"/>
@@ -260,6 +559,7 @@
           </div>
           <a href="ministries.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MINISTRIES</a>
           <a href="events.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">EVENTS</a>
+          <a href="media-center.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MEDIA CENTER</a>
           <a href="gallery.html" class="block w-full px-5 py-3 rounded-full bg-blue-900 text-white font-semibold">GALLERY</a>
           <a href="contact-us.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">CONTACT US</a>
         </nav>
@@ -271,21 +571,225 @@
 
   <!-- HERO (centered heading, black paragraph text) -->
   <section class="max-w-7xl mx-auto px-4 mt-6 md:mt-10">
-    <div class="hero-shell hero-ash grid md:grid-cols-2 gap-8 p-8 md:p-12 items-center">
-      <div class="flex flex-col gap-5">
-        <h1 class="text-4xl md:text-5xl font-extrabold text-blue-900 leading-tight font-fjalla text-center">Gallery</h1>
-        <p class="text-sm sm:text-base md:text-lg text-black font-medium max-w-md leading-relaxed mx-auto md:mx-0 text-center">
+    <div class="hero-shell hero-ash p-8 md:p-12 text-center">
+      <div class="flex flex-col gap-5 max-w-2xl mx-auto">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-blue-900 leading-tight font-fjalla">Gallery</h1>
+        <p class="text-sm sm:text-base md:text-lg text-black font-medium leading-relaxed">
           Browse through our curated photos from services, programs, evangelism, missions,
           donations and special moments since our inception—and beyond.
         </p>
       </div>
-      <div>
-        <div class="rounded-2xl overflow-hidden shadow-2xl border border-blue-200 aspect-[4/3] bg-white/40">
-          <img src="gallery4.jpg" alt="Highlight" class="w-full h-full object-cover">
-        </div>
-      </div>
     </div>
   </section>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-7xl mx-auto px-4 py-8">
+    <!-- Page Title -->
+    <div class="text-center mb-8">
+      <h1 class="text-4xl md:text-5xl font-bold text-blue-900 mb-4">Photo Gallery</h1>
+      <p class="text-lg text-gray-600">Capturing precious moments and memories from our church community</p>
+    </div>
+
+    <!-- Gallery Swiper Container -->
+    <div class="swiper gallery-swiper">
+      <div class="swiper-wrapper">
+        
+        <!-- Slide 1: Church Services -->
+        <div class="swiper-slide">
+          <div class="gallery-section">
+            <h3>Church Services & Worship</h3>
+            <div class="directory-list">
+              <div class="directory-item">
+                <div class="directory-content">
+                  <h4>Sunday Worship Service</h4>
+                  <p>Our main weekly gathering for worship, prayer, and fellowship</p>
+                  <button class="view-photos-btn">View Photos</button>
+                </div>
+              </div>
+              <div class="directory-item">
+                <div class="directory-content">
+                  <h4>Prayer & Intercession</h4>
+                  <p>Dedicated time for community prayer and spiritual intercession</p>
+                  <button class="view-photos-btn">View Photos</button>
+                </div>
+              </div>
+              <div class="directory-item">
+                <div class="directory-content">
+                  <h4>Bible Study Sessions</h4>
+                  <p>In-depth study of scripture with discussion and reflection</p>
+                  <button class="view-photos-btn">View Photos</button>
+                </div>
+              </div>
+              <div class="directory-item">
+                <div class="directory-content">
+                  <h4>Youth Fellowship</h4>
+                  <p>Special worship service designed for young people</p>
+                  <button class="view-photos-btn">View Photos</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 2: Special Events -->
+        <div class="swiper-slide">
+          <div class="gallery-section">
+            <h3>Special Events & Celebrations</h3>
+            <div class="directory-list">
+              <div class="directory-item">
+                <div class="directory-content">
+                  <h4>Church Anniversary</h4>
+                  <p>Annual celebration of our church's founding and milestones</p>
+                  <button class="view-photos-btn">View Photos</button>
+                </div>
+              </div>
+              <div class="directory-item">
+                <div class="directory-content">
+                  <h4>Easter Celebration</h4>
+                  <p>Commemorating the resurrection of Jesus Christ</p>
+                  <button class="view-photos-btn">View Photos</button>
+                </div>
+              </div>
+              <div class="directory-item">
+                <div class="directory-content">
+                  <h4>Christmas Service</h4>
+                  <p>Celebrating the birth of our Lord and Savior</p>
+                  <button class="view-photos-btn">View Photos</button>
+                </div>
+              </div>
+              <div class="directory-item">
+                <div class="directory-content">
+                  <h4>Harvest Festival</h4>
+                  <p>Thanksgiving celebration for God's blessings and provisions</p>
+                  <button class="view-photos-btn">View Photos</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 3: Community Outreach -->
+        <div class="swiper-slide">
+          <div class="gallery-section">
+            <h3>Community Outreach & Service</h3>
+            <div class="directory-list">
+              <div class="directory-item">
+                <div class="directory-content">
+                  <h4>Food Distribution</h4>
+                  <p>Providing meals and groceries to families in need</p>
+                  <button class="view-photos-btn">View Photos</button>
+                </div>
+              </div>
+              <div class="directory-item">
+                <div class="directory-content">
+                  <h4>Medical Outreach</h4>
+                  <p>Free health screenings and medical services for the community</p>
+                  <button class="view-photos-btn">View Photos</button>
+                </div>
+              </div>
+              <div class="directory-item">
+                <div class="directory-content">
+                  <h4>School Ministry</h4>
+                  <p>Educational support and mentorship programs</p>
+                  <button class="view-photos-btn">View Photos</button>
+                </div>
+              </div>
+              <div class="directory-item">
+                <div class="directory-content">
+                  <h4>Community Clean-up</h4>
+                  <p>Environmental care and neighborhood beautification efforts</p>
+                  <button class="view-photos-btn">View Photos</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 4: Youth & Children Ministry -->
+        <div class="swiper-slide">
+          <div class="gallery-section">
+            <h3>Youth & Children Ministry</h3>
+            <div class="directory-list">
+              <div class="directory-item">
+                <div class="directory-content">
+                  <h4>Youth Summer Camp</h4>
+                  <p>Week-long spiritual retreat and fellowship for teenagers</p>
+                  <button class="view-photos-btn">View Photos</button>
+                </div>
+              </div>
+              <div class="directory-item">
+                <div class="directory-content">
+                  <h4>Children's Sunday School</h4>
+                  <p>Age-appropriate Bible lessons and activities for kids</p>
+                  <button class="view-photos-btn">View Photos</button>
+                </div>
+              </div>
+              <div class="directory-item">
+                <div class="directory-content">
+                  <h4>Youth Conference</h4>
+                  <p>Inspiring conference with worship, teaching, and fellowship</p>
+                  <button class="view-photos-btn">View Photos</button>
+                </div>
+              </div>
+              <div class="directory-item">
+                <div class="directory-content">
+                  <h4>Children's Day Celebration</h4>
+                  <p>Special day dedicated to celebrating our children</p>
+                  <button class="view-photos-btn">View Photos</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 5: Church Facilities -->
+        <div class="swiper-slide">
+          <div class="gallery-section">
+            <h3>Church Facilities & Grounds</h3>
+            <div class="directory-list">
+              <div class="directory-item">
+                <div class="directory-content">
+                  <h4>Main Sanctuary</h4>
+                  <p>Our primary worship hall with seating for 500+ members</p>
+                  <button class="view-photos-btn">View Photos</button>
+                </div>
+              </div>
+              <div class="directory-item">
+                <div class="directory-content">
+                  <h4>Church Building</h4>
+                  <p>Modern facility designed for worship and community activities</p>
+                  <button class="view-photos-btn">View Photos</button>
+                </div>
+              </div>
+              <div class="directory-item">
+                <div class="directory-content">
+                  <h4>Fellowship Hall</h4>
+                  <p>Multi-purpose space for events, meetings, and gatherings</p>
+                  <button class="view-photos-btn">View Photos</button>
+                </div>
+              </div>
+              <div class="directory-item">
+                <div class="directory-content">
+                  <h4>Prayer Garden</h4>
+                  <p>Peaceful outdoor space for meditation and quiet reflection</p>
+                  <button class="view-photos-btn">View Photos</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      
+      <!-- Swiper Pagination -->
+      <div class="swiper-pagination"></div>
+    </div>
+
+    <!-- Navigation Instructions -->
+    <div class="text-center mt-8 text-gray-600">
+      <p class="text-sm">Swipe left or right to explore different photo categories.</p>
+    </div>
+  </main>
 
   <!-- ANNIVERSARY SECTION -->
   <section id="anniversary" class="gallery-section max-w-7xl mx-auto px-4">
@@ -528,6 +1032,91 @@
 
   <!-- SCRIPTS (cleaned; no duplicate trailing text) -->
   <script>
+    /* === Added: Unified scroll lock manager (supports multiple overlays) === */
+    let __scrollY = 0;
+    let __lockCount = 0;
+    function lockBody() {
+      if (__lockCount === 0) {
+        __scrollY = window.scrollY || document.documentElement.scrollTop;
+        document.body.classList.add('modal-open');
+        document.body.style.top = `-${__scrollY}px`;
+      }
+      __lockCount++;
+    }
+    function unlockBody() {
+      if (__lockCount === 0) return;
+      __lockCount--;
+      if (__lockCount === 0) {
+        document.body.classList.remove('modal-open');
+        document.body.style.top = '';
+        window.scrollTo(0, __scrollY);
+      }
+    }
+
+    /* === Mobile Menu (hamburger) toggle fix === */
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobilePanel = document.getElementById('mobile-panel');
+    const iconHamburger = document.querySelector('#menu-toggle .icon-hamburger');
+    const iconClose = document.querySelector('#menu-toggle .icon-close');
+
+    function openMobileNav() {
+      if (!mobileMenu.classList.contains('hidden')) return;
+      mobileMenu.classList.remove('hidden');
+      mobilePanel.classList.add('mobile-menu-anim');
+      menuToggle.setAttribute('aria-expanded', 'true');
+      menuToggle.setAttribute('aria-label', 'Close Menu');
+      menuToggle.classList.add('open');
+      iconHamburger?.classList.add('hidden');
+      iconClose?.classList.remove('hidden');
+      lockBody();
+    }
+    function closeMobileNav() {
+      if (mobileMenu.classList.contains('hidden')) return;
+      mobileMenu.classList.add('hidden');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.setAttribute('aria-label', 'Open Menu');
+      menuToggle.classList.remove('open');
+      iconClose?.classList.add('hidden');
+      iconHamburger?.classList.remove('hidden');
+      unlockBody();
+    }
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (mobileMenu.classList.contains('hidden')) openMobileNav();
+      else closeMobileNav();
+    });
+    mobileMenu.addEventListener('click', (e) => {
+      if (!mobilePanel.contains(e.target)) closeMobileNav();
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMobileNav(); });
+    window.matchMedia('(min-width:1024px)').addEventListener('change', e => { if (e.matches) closeMobileNav(); });
+
+    // Mobile ABOUT toggle
+    const mobileAboutToggle = document.getElementById('mobile-about-toggle');
+    const mobileAboutDropdown = document.getElementById('mobile-about-dropdown');
+    mobileAboutToggle.addEventListener('click', e => {
+      e.stopPropagation();
+      mobileAboutDropdown.classList.toggle('hidden');
+    });
+    
+    // Desktop ABOUT US toggle (click only, not hover)
+    const aboutBtn = document.getElementById('about-us-desktop-btn');
+    const aboutDropdown = document.getElementById('about-us-desktop-dropdown');
+    let aboutOpen = false;
+    aboutBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      aboutDropdown.classList.toggle('hidden');
+      aboutOpen = !aboutOpen;
+      document.addEventListener('click', function handler(ev) {
+        if (aboutOpen && !aboutDropdown.contains(ev.target) && ev.target !== aboutBtn) {
+          aboutDropdown.classList.add('hidden');
+          aboutOpen = false;
+          document.removeEventListener('click', handler);
+        }
+      });
+    });
+
     /* Desktop ABOUT dropdown */
     (function(){
       const btn=document.getElementById('about-us-desktop-btn');
@@ -544,40 +1133,6 @@
           }
         });
       });
-    })();
-
-    /* Scroll lock mgmt for mobile nav (same pattern as index) */
-    let __scrollY=0, __lock=false;
-    function lockBody(){
-      if(__lock) return;
-      __scrollY=window.scrollY||document.documentElement.scrollTop;
-      document.body.classList.add('modal-open');
-      document.body.style.top=`-${__scrollY}px`;
-      __lock=true;
-    }
-    function unlockBody(){
-      if(!__lock) return;
-      document.body.classList.remove('modal-open');
-      document.body.style.top='';
-      window.scrollTo(0,__scrollY);
-      __lock=false;
-    }
-
-    /* Mobile menu */
-    (function(){
-      const toggle=document.getElementById('menu-toggle');
-      const menu=document.getElementById('mobile-menu');
-      const panel=document.getElementById('mobile-panel');
-      if(!toggle||!menu||!panel) return;
-      function close(){ if(menu.classList.contains('hidden')) return; menu.classList.add('hidden'); toggle.setAttribute('aria-expanded','false'); unlockBody(); }
-      function open(){ if(!menu.classList.contains('hidden')) return; menu.classList.remove('hidden'); toggle.setAttribute('aria-expanded','true'); lockBody(); }
-      toggle.addEventListener('click',e=>{ e.stopPropagation(); menu.classList.contains('hidden')?open():close(); });
-      menu.addEventListener('click',e=>{ if(!panel.contains(e.target)) close(); });
-      document.addEventListener('keydown',e=>{ if(e.key==='Escape') close(); });
-      window.matchMedia('(min-width:1024px)').addEventListener('change',e=>{ if(e.matches) close(); });
-      const mBtn=document.getElementById('mobile-about-toggle');
-      const mDd=document.getElementById('mobile-about-dropdown');
-      mBtn?.addEventListener('click',e=>{ e.stopPropagation(); mDd.classList.toggle('hidden'); });
     })();
 
     /* INIT: mobile section swipers (added sunday & anniv2023) */
@@ -599,6 +1154,84 @@
       initOnce('.sunday-swiper','__sundaySwiper');
       initOnce('.anniv2023-swiper','__anniv2023Swiper');
     })();
+
+    // Initialize Gallery Swiper
+    const gallerySwiper = new Swiper('.gallery-swiper', {
+      // Enable pagination
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+        dynamicBullets: true,
+      },
+      
+      // Swiper settings
+      slidesPerView: 1,
+      spaceBetween: 30,
+      centeredSlides: true,
+      loop: false,
+      
+      // Enable touch/mouse interactions
+      allowTouchMove: true,
+      grabCursor: true,
+      
+      // Autoplay (optional - can be removed if not desired)
+      autoplay: {
+        delay: 8000,
+        disableOnInteraction: true,
+        pauseOnMouseEnter: true,
+      },
+      
+      // Smooth transitions
+      speed: 600,
+      effect: 'slide',
+      
+      // Navigation arrows (optional)
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      
+      // Keyboard control
+      keyboard: {
+        enabled: true,
+        onlyInViewport: true,
+      },
+      
+      // Auto height adjustment
+      autoHeight: false,
+      
+      // Responsive breakpoints
+      breakpoints: {
+        640: {
+          slidesPerView: 1,
+          spaceBetween: 20,
+        },
+        768: {
+          slidesPerView: 1,
+          spaceBetween: 30,
+        },
+        1024: {
+
+          slidesPerView: 1,
+          spaceBetween: 40,
+        },
+      },
+    });
+
+    // Add loading state management
+    document.addEventListener('DOMContentLoaded', function() {
+      // Lazy load images when slide becomes active
+      gallerySwiper.on('slideChange', function () {
+        const activeSlide = document.querySelector('.swiper-slide-active');
+        const images = activeSlide.querySelectorAll('img[loading="lazy"]');
+        images.forEach(img => {
+          if (img.dataset.src) {
+            img.src = img.dataset.src;
+            img.removeAttribute('data-src');
+          }
+        });
+      });
+    });
 
     /* Lightbox (unchanged logic) */
     (function(){

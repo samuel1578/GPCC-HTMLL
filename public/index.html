@@ -152,8 +152,8 @@
     margin-bottom:1.1rem;
   }
   .pastor-photo {
-    width: 150px;
-    height: 190px;
+    width: 180px;
+    height: 220px;
     object-fit: cover;
     object-position: center 10%;
     border-radius: 1rem;
@@ -161,12 +161,13 @@
     box-shadow: 0 8px 28px -6px rgba(30,64,175,0.35),
                 0 2px 10px rgba(30,64,175,0.18);
     background:#fff;
+    flex-shrink: 0;
   }
   @media (min-width:640px){
-    .pastor-photo { width:170px; height:220px; }
+    .pastor-photo { width:200px; height:260px; }
   }
   @media (min-width:768px){
-    .pastor-photo { width:190px; height:250px; }
+    .pastor-photo { width:220px; height:280px; }
   }
   .pastor-title h2 {
     font-size: clamp(1.35rem,2.1vw,1.9rem);
@@ -273,6 +274,37 @@
   }
   .popup-closing { pointer-events:none; }
 
+  /* Message Content Animation Styles */
+  .message-paragraph {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  .fade-in {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+  @keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  .message-body {
+    max-height: 70vh;
+    overflow-y: auto;
+    padding-right: 8px;
+    scrollbar-width: thin;
+    scrollbar-color: #2563eb #e5f3ff;
+  }
+  .message-body::-webkit-scrollbar {
+    width: 6px;
+  }
+  .message-body::-webkit-scrollbar-track {
+    background: #e5f3ff;
+    border-radius: 3px;
+  }
+  .message-body::-webkit-scrollbar-thumb {
+    background: #2563eb;
+    border-radius: 3px;
+  }
+
   /* desktop nav hover highlight */
   .nav-hover-indicator {
     position:absolute;
@@ -302,6 +334,12 @@
     .header-brand-img { height:48px; width:48px; object-fit:contain; }
     @media (min-width:1024px){
       .header-brand-img { height:50px; width:50px; }
+    }
+    .header-brand-img { border: 0 !important; box-shadow: none !important; background: transparent !important; }
+    @media (min-width:1024px){
+      /* Tighter desktop nav to avoid overlap */
+      #desktop-nav { padding: 0.35rem 0.75rem !important; gap: 0.5rem !important; flex-wrap: wrap; }
+      #desktop-nav a, #desktop-nav button { padding: 0.35rem 0.75rem !important; font-size: 0.95rem !important; }
     }
     .header-brand-text {
       /* add ~2px (≈1.5pt) to current sizes */
@@ -377,21 +415,28 @@
     /* ADDED: ensure desktop captions are visible (override hover-hide) */
     .gallery-caption { opacity:1 !important; }
   </style>
+  <!-- Sync: Hamburger button refinements (match Community Journey) -->
+  <style>
+    #menu-toggle .hamburger-circle { background: linear-gradient(135deg,#1e40af,#2563eb); box-shadow: 0 12px 28px -10px rgba(37,99,235,.55); border: 1px solid rgba(255,255,255,.28); transition: background .2s, box-shadow .2s, transform .15s; }
+    #menu-toggle .hamburger-circle:hover { transform: translateY(-1px); }
+    #menu-toggle.open .hamburger-circle { background: transparent !important; box-shadow: none !important; border-color: transparent; }
+    #menu-toggle.open .icon-close { color:#1d4ed8 !important; }
+  </style>
 </head>
 <body class="bg-[#badcf7] font-sans">
 
   <!-- HEADER / NAVBAR (no hamburger on desktop) -->
   <header class="fixed top-0 left-0 w-full z-[80] bg-white/80 backdrop-blur border-b border-blue-200">
     <div class="max-w-7xl mx-auto px-4 lg:px-8 py-1 flex items-center justify-between"><!-- changed: py-3 -> py-1 -->
-      <a href="index.html" class="flex items-center gap-2">
+      <a href="index.html" class="flex items-center gap-2 flex-shrink-0"><!-- ensure brand doesn't shrink -->
         <!-- changed: add header-brand-img -->
-        <img src="logo.png" alt="GPCC Logo" class="header-brand-img rounded-sm border border-blue-900/40 bg-transparent">
+        <img src="logo.png" alt="GPCC Logo" class="header-brand-img rounded-sm"><!-- removed border/background for seamless look -->
         <!-- changed: add header-brand-text -->
         <span class="font-fjalla text-blue-900 header-brand-text inline lg:hidden">Global Peace Christian Centre</span>
-        <span class="hidden lg:inline font-fjalla text-blue-900 header-brand-text">Global Peace Christian Centre</span>
+        <span class="hidden lg:inline font-fjalla text-blue-900 header-brand-text whitespace-nowrap">Global Peace Christian Centre</span><!-- keep brand on one line -->
       </a>
       <nav id="desktop-nav"
-           class="hidden lg:flex relative items-center gap-4 bg-white/70 rounded-full border-2 border-blue-900 px-6 py-2 shadow-lg">
+           class="hidden lg:flex relative items-center gap-4 flex-wrap bg-white/70 rounded-full border-2 border-blue-900 px-6 py-2 shadow-lg"><!-- allow wrapping to prevent overlap -->
         <a href="index.html" class="px-4 py-2 rounded-full bg-blue-900 text-white font-semibold shadow">HOME</a>
         <div class="relative">
           <button id="about-us-desktop-btn"
@@ -413,17 +458,24 @@
         </div>
         <a href="ministries.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MINISTRIES</a>
         <a href="events.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">EVENTS</a>
+        <!-- Inserted: Media Center between Events and Gallery -->
+        <a href="media-center.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MEDIA CENTER</a>
         <a href="gallery.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">GALLERY</a><!-- changed -->
         <a href="contact-us.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">CONTACT US</a>
       </nav>
       <!-- Hamburger (mobile only) -->
       <button id="menu-toggle"
+            type="button"
             class="lg:hidden fixed top-2 right-4 focus:outline-none z-50"
-            aria-label="Open Menu" aria-expanded="false"><!-- changed top-3 -> top-2 -->
-        <span class="hamburger-circle flex items-center justify-center w-12 h-12 rounded-full bg-blue-900 hover:bg-blue-700 shadow-xl ring-2 ring-blue-200 transition duration-200"><!-- changed w/h 14 -> 12 -->
-          <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M4 7h16M4 12h16M4 17h16"/>
+            aria-label="Open Menu" aria-expanded="false">
+        <span class="hamburger-circle flex items-center justify-center w-12 h-12 rounded-full bg-blue-900 hover:bg-blue-700 shadow-xl ring-2 ring-blue-200 transition duration-200">
+          <!-- Hamburger icon -->
+          <svg class="icon-hamburger w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+          <!-- Close icon (hidden by default) -->
+          <svg class="icon-close w-7 h-7 text-white hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6l12 12M18 6l-12 12" />
           </svg>
         </span>
       </button>
@@ -431,6 +483,14 @@
     <div id="mobile-menu"
        class="fixed inset-x-0 top-[60px] bottom-0 hidden justify-start items-start bg-[#badcf7]/95 z-[60] lg:hidden"><!-- changed top-[72px] -> top-[60px] -->
       <div id="mobile-panel" class="absolute right-4 top-4 w-80 px-2 py-4 rounded-2xl bg-white shadow-2xl border border-blue-200 text-center glass modal-animate">
+        <!-- panel header with logo + brand -->
+        <div class="flex items-center justify-between px-3 pb-2 border-b border-blue-100">
+          <div class="flex items-center gap-2">
+            <img src="logo.png" alt="GPCC Logo" class="w-10 h-10 rounded-sm"/>
+            <span class="font-fjalla text-blue-900 text-lg">Global Peace Christian Centre</span>
+          </div>
+          <!-- internal close removed; hamburger morphs to close icon -->
+        </div>
         <nav class="space-y-4 mt-3">
           <a href="index.html" class="block w-full px-5 py-3 rounded-full bg-blue-900 text-white font-semibold">HOME</a>
           <div>
@@ -450,6 +510,8 @@
           </div>
           <a href="ministries.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MINISTRIES</a>
           <a href="events.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">EVENTS</a>
+          <!-- Inserted: Media Center between Events and Gallery -->
+          <a href="media-center.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MEDIA CENTER</a>
           <a href="gallery.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">GALLERY</a><!-- changed -->
           <a href="contact-us.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">CONTACT US</a>
         </nav>
@@ -471,8 +533,8 @@
           Global Peace Christian Centre
         </h1>
         <p class="mt-3 sm:mt-4 text-base sm:text-lg md:text-xl font-medium text-gray-800 leading-relaxed">
-          Global Peace Christian Centre is a non-denominational, multicultural, egalitarian church of Jesus Christ.
-          We are dedicated to helping people find, grow, and follow Jesus Christ.
+          We are a Bible-Believing, life giving, charismatic, and Pentecostal Church. Our goal is to infuse life and God's love into people AND FAMILIES through POWERFUL worship and Bible Teaching services
+          that are relevant to today's world.
         </p>
       </div>
       <div class="mt-6">
@@ -539,11 +601,12 @@
       <div class="max-w-2xl flex flex-col items-center justify-center text-center">
         <h3 class="text-2xl font-extrabold text-blue-900 mb-3">A Warm Welcome From Our Head Pastor</h3>
         <p class="text-gray-800 font-medium">
-          At Global Peace Christian Centre, it's our joy to have you, and to serve as home, family and partners. Be open to faith, love, and encounters on this spiritual journey.
+          It is a joy to introduce you to the Global Peace Christian Centre(GPCC)! Our passion is to provide a place where you can have a life changing experience with Jesus Christ our Lord, Master and Saviour and offer you the opportunity to grow spiritually
+
         </p>
         <button id="message-btn"
                 class="mt-4 px-5 py-2 bg-red-600 text-white font-bold rounded-lg shadow hover:bg-red-700 transition block mx-auto">
-          View Biography
+          View Full Message
         </button>
       </div>
     </div>
@@ -819,44 +882,76 @@
 <!-- MESSAGE POPUP (RESTRUCTURED CARD) -->
 <div id="message-popup"
      class="fixed inset-x-0 top-[60px] bottom-0 hidden justify-center items-start z-[61] p-4 overflow-y-auto pt-4"><!-- changed: offset below header -->
-  <div id="message-dialog" class="pastor-shell w-full max-w-3xl max-h-full">
+  <div id="message-dialog" class="pastor-shell w-full max-w-4xl max-h-full">
     <div class="pastor-modal">
       <button class="close-message pastor-close" aria-label="Close biography">&times;</button>
       <div class="pastor-header">
-        <img src="headpastorj.jpg" alt="Very Reverend Henry Ampomah-Boateng" class="pastor-photo">
+        <img src="headpastorp.jpg" alt="Very Reverend Henry Ampomah-Boateng" class="pastor-photo">
         <div class="pastor-title">
           <span class="pastor-role">Founder & Chairman – GPCC</span>
           <h2>✝ Very Reverend Henry Ampomah-Boateng</h2>
           <p class="text-[.78rem] md:text-xs tracking-wide text-blue-900/70 font-medium mt-1">
-            Raising a Christ-centred, Spirit-led, globally impactful church.
+            A Message to the WORLD
           </p>
         </div>
       </div>
-      <ul class="pastor-facts">
-        <li>
-          <span class="icon">🎓</span>
-          <div><strong>Education:</strong> BSc (Hons) Building Technology, KNUST (1986–1990)</div>
-        </li>
-        <li>
-          <span class="icon">📅</span>
-          <div><strong>Call to Ministry:</strong> September 1990 – 37 University Hall (Katanga), KNUST</div>
-        </li>
-        <li>
-          <span class="icon">📖</span>
-          <div><strong>Publication:</strong> “Jesus Walks Into My Room” (calling encounter)</div>
-        </li>
-        <li>
-          <span class="icon">🙏</span>
-          <div><strong>Fellowship Start:</strong> June 1996 – FREEDOM IN CHRIST PRAYER MINISTRY / FREEDOM IN CHRIST CHURCH</div>
-        </li>
-        <li>
-          <span class="icon">🌍</span>
-          <div><strong>Future Vision:</strong> Global Ministry Launch – September 2032</div>
-        </li>
-      </ul>
+
+     
+      <!-- Message Content with Animation -->
+      <div class="message-body space-y-6 text-gray-800 leading-relaxed">
+        <div class="message-paragraph fade-in" style="animation-delay: 0.2s;">
+          <p class="text-lg font-medium text-blue-900 mb-3">Dear Beloved,</p>
+          <p>It is a joy to introduce you to the Global Peace Christian Centre (GPCC)! Our passion is to provide a place where you can have a life changing experience with Jesus Christ our Lord, Master and Saviour and offer you the opportunity to grow spiritually.</p>
+        </div>
+
+        <div class="message-paragraph fade-in" style="animation-delay: 0.4s;">
+          <p>At GPCC, we believe that every person matters to God and should matter to the church. Whether you're taking your first steps in faith or you've been following Jesus for years, we want to help you discover your next steps toward God and connecting with others.</p>
+        </div>
+
+        <div class="message-paragraph fade-in" style="animation-delay: 0.6s;">
+          <p>We are a Bible-believing, life-giving, charismatic, and Pentecostal church committed to creating an environment where:</p>
+          <ul class="mt-3 space-y-2 pl-6">
+            <li class="flex items-start gap-2">
+              <span class="text-blue-600 font-bold">•</span>
+              <span>Hearts are transformed through powerful worship and relevant Bible teaching</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-blue-600 font-bold">•</span>
+              <span>Families are strengthened and equipped for life's journey</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-blue-600 font-bold">•</span>
+              <span>Communities are impacted with God's love and grace</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-blue-600 font-bold">•</span>
+              <span>Lives are connected to God's purpose and plan</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="message-paragraph fade-in" style="animation-delay: 0.8s;">
+          <p>Our beautiful worship facility, "Peace Temple," is designed to accommodate over 2,000 worshippers and features state-of-the-art acoustics and lighting to create an atmosphere where hearts meet the presence of God. Every Sunday, we gather to celebrate what God is doing in our lives and in our community.</p>
+        </div>
+
+        <div class="message-paragraph fade-in" style="animation-delay: 1.0s;">
+          <p>We invite you to join us for any of our services and experience firsthand the warmth, love, and authentic community that defines GPCC. Come as you are – God meets us exactly where we are and loves us too much to leave us there.</p>
+        </div>
+
+        <div class="message-paragraph fade-in" style="animation-delay: 1.2s;">
+          <p class="text-lg font-semibold text-blue-900">
+            May God's abundant blessings be upon you and your family as you take this step of faith with us.
+          </p>
+          <p class="mt-4 text-right">
+            <span class="font-semibold">In His Service,</span><br>
+            <span class="font-bold text-blue-900">Very Reverend Henry Ampomah-Boateng</span><br>
+            <span class="text-sm text-gray-600">Founder & Chairman, GPCC</span>
+          </p>
+        </div>
+      </div>
       <div class="pastor-actions">
         <a href="./profile-president.html">
-          Read Full Profile →
+          View Full Profile →
         </a>
       </div>
     </div>
@@ -1112,18 +1207,28 @@ new Swiper('.donation-swiper', {
   const menuToggle = document.getElementById('menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
   const mobilePanel = document.getElementById('mobile-panel');
+  const iconHamburger = document.querySelector('#menu-toggle .icon-hamburger');
+  const iconClose = document.querySelector('#menu-toggle .icon-close');
 
   function openMobileNav() {
     if (!mobileMenu.classList.contains('hidden')) return;
     mobileMenu.classList.remove('hidden');
-    mobilePanel.classList.add('mobile-menu-anim'); // class defined in styles.css
+    mobilePanel.classList.add('mobile-menu-anim');
     menuToggle.setAttribute('aria-expanded', 'true');
+    menuToggle.setAttribute('aria-label', 'Close Menu');
+    menuToggle.classList.add('open'); // add open state for seamless style
+    iconHamburger?.classList.add('hidden');
+    iconClose?.classList.remove('hidden');
     lockBody();
   }
   function closeMobileNav() {
     if (mobileMenu.classList.contains('hidden')) return;
     mobileMenu.classList.add('hidden');
     menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.setAttribute('aria-label', 'Open Menu');
+    menuToggle.classList.remove('open'); // remove open state
+    iconClose?.classList.add('hidden');
+    iconHamburger?.classList.remove('hidden');
     unlockBody();
   }
   menuToggle.addEventListener('click', (e) => {
@@ -1172,7 +1277,7 @@ new Swiper('.donation-swiper', {
   function closeSchedulePopup() {
     if (schedulePopup.classList.contains('hidden')) return;
     animateAndHide(schedulePopup, scheduleDialog, unlockBody);
-  }
+   }
   scheduleClosers.forEach(b => b.addEventListener('click', closeSchedulePopup));
   schedulePopup.addEventListener('click', e => { if (!scheduleDialog.contains(e.target)) closeSchedulePopup(); });
 
@@ -1185,6 +1290,11 @@ new Swiper('.donation-swiper', {
   messageBtn?.addEventListener('click', () => {
     messagePopup.classList.remove('hidden');
     lockBody();
+    // Trigger animations after popup opens
+    setTimeout(() => {
+      const paragraphs = messagePopup.querySelectorAll('.message-paragraph');
+      paragraphs.forEach(p => p.classList.add('fade-in'));
+    }, 100);
   });
   function closeMessagePopup() {
     if (messagePopup.classList.contains('hidden')) return;
@@ -1214,6 +1324,7 @@ new Swiper('.donation-swiper', {
     }, { passive:true });
     popupEl.addEventListener('touchmove', e=>{
       if(!dragging || startY===null) return;
+     
       const delta = e.touches[0].clientY - startY;
       if(delta>0){
         const damp = Math.min(delta,180);
@@ -1312,7 +1423,5 @@ new Swiper('.donation-swiper', {
   // ...existing code (scroll lock, mobile menu, popups, swipe-to-close, form
   // ...existing code (scroll lock, mobile menu, popups, swipe-to-close, form submission)...
 </script>
-</body>
-</html>
 </body>
 </html>
