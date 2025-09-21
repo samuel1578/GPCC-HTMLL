@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Testimonies - Global Peace Christian Centre</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <!-- Add Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+  
   <style>
     .font-fjalla { font-family: 'Fjalla One', sans-serif; letter-spacing:.5px; }
     .header-brand-img { height:48px; width:48px; object-fit:contain; border:0 !important; box-shadow:none !important; background:transparent !important; }
@@ -23,6 +26,931 @@
     @media (min-width:1024px){
       #desktop-nav { padding: .35rem .75rem !important; gap:.5rem !important; flex-wrap: wrap; }
       #desktop-nav a, #desktop-nav button { padding:.35rem .75rem !important; font-size:.95rem !important; }
+    }
+    
+    /* Testimony card hover effect */
+    .testimony-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .testimony-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4);
+    }
+    
+    /* Modal animations - updated for better display */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed;
+      inset: 0;
+      z-index: 100; /* Higher z-index to ensure it appears over everything */
+      background-color: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .modal-content {
+      display: flex;
+      flex-direction: column;
+      background-color: white;
+      border-radius: 0.75rem;
+      max-width: 42rem;
+      margin: 0 1rem;
+      max-height: 85vh;
+      overflow: hidden; /* Changed from overflow-y: auto to hidden */
+      position: relative;
+      transform: translateY(30px);
+      transition: transform 0.3s ease;
+      width: 100%;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      touch-action: pan-y;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    
+    .modal-content.swiping {
+      transition: transform 0.1s ease;
+    }
+    
+    .modal-content.swipe-close {
+      transform: translateY(100vh);
+      opacity: 0;
+    }
+    
+    /* Modal structure adjustment for fixed header */
+    .modal-content {
+      display: flex;
+      flex-direction: column;
+      max-height: 85vh;
+      overflow: hidden; /* Changed from overflow-y: auto to hidden */
+    }
+    
+    /* Fixed header section containing image and title */
+    .modal-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background-color: white;
+      border-top-left-radius: 0.75rem;
+      border-top-right-radius: 0.75rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Image container in fixed header */
+    .modal-header-image-container {
+      width: 100%;
+      position: relative;
+    }
+    
+    /* Title container in fixed header */
+    .modal-header-title {
+      padding: 1rem 1.5rem;
+      background-color: white;
+      position: relative;
+      text-align: center;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Scrollable content area */
+    .modal-scrollable-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem;
+      border-bottom-left-radius: 0.75rem;
+      border-bottom-right-radius: 0.75rem;
+    }
+    
+    /* Prevent background scrolling when modal is open */
+    body.modal-open {
+      overflow: hidden;
+    }
+    
+    /* Centered headings */
+    .testimony-card h3 {
+      text-align: center;
+    }
+    
+    /* Modal heading style */
+    .modal h3 {
+      text-align: center;
+      width: 100%;
+      font-family: 'Fjalla One', sans-serif;
+      color: #1e3a8a;
+      font-size: 1.75rem;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.5px;
+    }
+    
+    /* Enhanced styling for testimony modal images */
+    .testimony-modal-image {
+      width: 100%;
+      height: 250px; /* Increased height for better visibility on desktop */
+      object-fit: cover;
+      border-top-left-radius: 0.75rem;
+      border-top-right-radius: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    
+    /* Specific styling for Modal 7 and 8 images */
+    #testimony7Modal .testimony-modal-image,
+    #testimony8Modal .testimony-modal-image {
+      object-position: center; /* Center the image focus */
+      max-height: 300px; /* Give more space for these specific images */
+    }
+    
+    /* Responsive adjustments for mobile */
+    @media (max-width: 640px) {
+      .testimony-modal-image {
+        height: 180px; /* Smaller height on mobile */
+      }
+      
+      #testimony7Modal .testimony-modal-image,
+      #testimony8Modal .testimony-modal-image {
+        max-height: 220px; /* Still taller than others but more suitable for mobile */
+      }
+    }
+    
+    /* Modal content adjustments */
+    .modal-body {
+      padding: 1.5rem;
+    }
+    
+    /* Enhanced typography for testimony content */
+    .prose p {
+      font-family: 'Merriweather', serif;
+      line-height: 1.8;
+      margin-bottom: 1.2rem;
+    }
+    
+    .prose strong, 
+    .prose b, 
+    .prose .highlight {
+      color: #1e40af;
+      font-weight: 700;
+    }
+    
+    .prose .quote {
+      font-style: italic;
+      padding-left: 1rem;
+      border-left: 3px solid #3b82f6;
+      margin: 1.5rem 0;
+    }
+    
+    /* Testimony specific styles */
+    .testimony-card p {
+      margin: 0.5rem 0;
+      color: #374151; /* Darker text for better readability */
+    }
+    
+    /* Button styles */
+    .read-testimony {
+      background-color: #2563eb;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      font-weight: 600;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+    
+    .read-testimony:hover {
+      background-color: #1d4ed8;
+      transform: translateY(-2px);
+    }
+    
+    /* Testimony sections emphasis */
+    .testimony-emphasis {
+      background-color: rgba(219, 234, 254, 0.5);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin: 1.2rem 0;
+      border-left: 4px solid #3b82f6;
+    }
+    
+    /* Important quotes */
+    .important-quote {
+      font-family: 'Merriweather', serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #1e40af;
+      text-align: center;
+      margin: 2rem 0;
+      padding: 0 1.5rem;
+      line-height: 1.6;
+    }
+    
+    /* Form styling for testimony submission */
+    .testimony-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      width: 100%;
+    }
+    
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .form-group label {
+      font-family: 'Merriweather', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #1e40af;
+    }
+    
+    .form-control {
+      border: 1px solid #cbd5e1;
+      border-radius: 0.5rem;
+      padding: 0.75rem 1rem;
+      font-family: 'Merriweather', serif;
+      font-size: 1rem;
+      transition: border-color 0.15s ease;
+      width: 100%;
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+    
+    textarea.form-control {
+      min-height: 200px;
+      resize: vertical;
+    }
+    
+    .submit-button {
+      background-color: #1e40af;
+      color: white;
+      font-family: 'Fjalla One', sans-serif;
+      font-size: 1.1rem;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+      align-self: center;
+      margin-top: 1rem;
+    }
+    
+    .submit-button:hover {
+      background-color: #1e3a8a;
+      transform: translateY(-2px);
+    }
+    
+    .submission-message {
+      text-align: center;
+      padding: 2rem;
+      font-family: 'Merriweather', serif;
+      font-size: 1.2rem;
+      color: #1e40af;
+      display: none;
+    }
+    
+    .submission-message.show {
+      display: block;
+    }
+    
+    /* Important: Ensure this style is included to avoid conflicts */
+    .modal-content {
+      display: flex;
+      flex-direction: column;
+      background-color: white;
+      border-radius: 0.75rem;
+      max-width: 42rem;
+      margin: 0 1rem;
+      max-height: 85vh;
+      overflow: hidden; /* Changed from overflow-y: auto to hidden */
+      position: relative;
+      transform: translateY(30px);
+      transition: transform 0.3s ease;
+      width: 100%;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      touch-action: pan-y;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    
+    /* Modal refinements */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed;
+      inset: 0;
+      z-index: 100; /* Higher z-index to ensure it appears over everything */
+      background-color: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .modal-content {
+      display: flex;
+      flex-direction: column;
+      background-color: white;
+      border-radius: 0.75rem;
+      max-width: 42rem;
+      margin: 0 1rem;
+      max-height: 85vh;
+      overflow: hidden; /* Changed from overflow-y: auto to hidden */
+      position: relative;
+      transform: translateY(30px);
+      transition: transform 0.3s ease;
+      width: 100%;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      touch-action: pan-y;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    
+    .modal-content.swiping {
+      transition: transform 0.1s ease;
+    }
+    
+    .modal-content.swipe-close {
+      transform: translateY(100vh);
+      opacity: 0;
+    }
+    
+    /* Modal structure adjustment for fixed header */
+    .modal-content {
+      display: flex;
+      flex-direction: column;
+      max-height: 85vh;
+      overflow: hidden; /* Changed from overflow-y: auto to hidden */
+    }
+    
+    /* Fixed header section containing image and title */
+    .modal-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background-color: white;
+      border-top-left-radius: 0.75rem;
+      border-top-right-radius: 0.75rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Image container in fixed header */
+    .modal-header-image-container {
+      width: 100%;
+      position: relative;
+    }
+    
+    /* Title container in fixed header */
+    .modal-header-title {
+      padding: 1rem 1.5rem;
+      background-color: white;
+      position: relative;
+      text-align: center;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Scrollable content area */
+    .modal-scrollable-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem;
+      border-bottom-left-radius: 0.75rem;
+      border-bottom-right-radius: 0.75rem;
+    }
+    
+    /* Prevent background scrolling when modal is open */
+    body.modal-open {
+      overflow: hidden;
+    }
+    
+    /* Centered headings */
+    .testimony-card h3 {
+      text-align: center;
+    }
+    
+    /* Modal heading style */
+    .modal h3 {
+      text-align: center;
+      width: 100%;
+      font-family: 'Fjalla One', sans-serif;
+      color: #1e3a8a;
+      font-size: 1.75rem;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.5px;
+    }
+    
+    /* Enhanced styling for testimony modal images */
+    .testimony-modal-image {
+      width: 100%;
+      height: 250px; /* Increased height for better visibility on desktop */
+      object-fit: cover;
+      border-top-left-radius: 0.75rem;
+      border-top-right-radius: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    
+    /* Specific styling for Modal 7 and 8 images */
+    #testimony7Modal .testimony-modal-image,
+    #testimony8Modal .testimony-modal-image {
+      object-position: center; /* Center the image focus */
+      max-height: 300px; /* Give more space for these specific images */
+    }
+    
+    /* Responsive adjustments for mobile */
+    @media (max-width: 640px) {
+      .testimony-modal-image {
+        height: 180px; /* Smaller height on mobile */
+      }
+      
+      #testimony7Modal .testimony-modal-image,
+      #testimony8Modal .testimony-modal-image {
+        max-height: 220px; /* Still taller than others but more suitable for mobile */
+      }
+    }
+    
+    /* Modal content adjustments */
+    .modal-body {
+      padding: 1.5rem;
+    }
+    
+    /* Enhanced typography for testimony content */
+    .prose p {
+      font-family: 'Merriweather', serif;
+      line-height: 1.8;
+      margin-bottom: 1.2rem;
+    }
+    
+    .prose strong, 
+    .prose b, 
+    .prose .highlight {
+      color: #1e40af;
+      font-weight: 700;
+    }
+    
+    .prose .quote {
+      font-style: italic;
+      padding-left: 1rem;
+      border-left: 3px solid #3b82f6;
+      margin: 1.5rem 0;
+    }
+    
+    /* Testimony specific styles */
+    .testimony-card p {
+      margin: 0.5rem 0;
+      color: #374151; /* Darker text for better readability */
+    }
+    
+    /* Button styles */
+    .read-testimony {
+      background-color: #2563eb;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      font-weight: 600;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+    
+    .read-testimony:hover {
+      background-color: #1d4ed8;
+      transform: translateY(-2px);
+    }
+    
+    /* Testimony sections emphasis */
+    .testimony-emphasis {
+      background-color: rgba(219, 234, 254, 0.5);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin: 1.2rem 0;
+      border-left: 4px solid #3b82f6;
+    }
+    
+    /* Important quotes */
+    .important-quote {
+      font-family: 'Merriweather', serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #1e40af;
+      text-align: center;
+      margin: 2rem 0;
+      padding: 0 1.5rem;
+      line-height: 1.6;
+    }
+    
+    /* Form styling for testimony submission */
+    .testimony-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      width: 100%;
+    }
+    
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .form-group label {
+      font-family: 'Merriweather', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #1e40af;
+    }
+    
+    .form-control {
+      border: 1px solid #cbd5e1;
+      border-radius: 0.5rem;
+      padding: 0.75rem 1rem;
+      font-family: 'Merriweather', serif;
+      font-size: 1rem;
+      transition: border-color 0.15s ease;
+      width: 100%;
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+    
+    textarea.form-control {
+      min-height: 200px;
+      resize: vertical;
+    }
+    
+    .submit-button {
+      background-color: #1e40af;
+      color: white;
+      font-family: 'Fjalla One', sans-serif;
+      font-size: 1.1rem;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+      align-self: center;
+      margin-top: 1rem;
+    }
+    
+    .submit-button:hover {
+      background-color: #1e3a8a;
+      transform: translateY(-2px);
+    }
+    
+    .submission-message {
+      text-align: center;
+      padding: 2rem;
+      font-family: 'Merriweather', serif;
+      font-size: 1.2rem;
+      color: #1e40af;
+      display: none;
+    }
+    
+    .submission-message.show {
+      display: block;
+    }
+    
+    /* Important: Ensure this style is included to avoid conflicts */
+    .modal-content {
+      display: flex;
+      flex-direction: column;
+      background-color: white;
+      border-radius: 0.75rem;
+      max-width: 42rem;
+      margin: 0 1rem;
+      max-height: 85vh;
+      overflow: hidden; /* Changed from overflow-y: auto to hidden */
+      position: relative;
+      transform: translateY(30px);
+      transition: transform 0.3s ease;
+      width: 100%;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      touch-action: pan-y;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    
+    /* Modal refinements */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed;
+      inset: 0;
+      z-index: 100; /* Higher z-index to ensure it appears over everything */
+      background-color: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .modal-content {
+      display: flex;
+      flex-direction: column;
+      background-color: white;
+      border-radius: 0.75rem;
+      max-width: 42rem;
+      margin: 0 1rem;
+      max-height: 85vh;
+      overflow: hidden; /* Changed from overflow-y: auto to hidden */
+      position: relative;
+      transform: translateY(30px);
+      transition: transform 0.3s ease;
+      width: 100%;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      touch-action: pan-y;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    
+    .modal-content.swiping {
+      transition: transform 0.1s ease;
+    }
+    
+    .modal-content.swipe-close {
+      transform: translateY(100vh);
+      opacity: 0;
+    }
+    
+    /* Modal structure adjustment for fixed header */
+    .modal-content {
+      display: flex;
+      flex-direction: column;
+      max-height: 85vh;
+      overflow: hidden; /* Changed from overflow-y: auto to hidden */
+    }
+    
+    /* Fixed header section containing image and title */
+    .modal-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background-color: white;
+      border-top-left-radius: 0.75rem;
+      border-top-right-radius: 0.75rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Image container in fixed header */
+    .modal-header-image-container {
+      width: 100%;
+      position: relative;
+    }
+    
+    /* Title container in fixed header */
+    .modal-header-title {
+      padding: 1rem 1.5rem;
+      background-color: white;
+      position: relative;
+      text-align: center;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Scrollable content area */
+    .modal-scrollable-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem;
+      border-bottom-left-radius: 0.75rem;
+      border-bottom-right-radius: 0.75rem;
+    }
+    
+    /* Prevent background scrolling when modal is open */
+    body.modal-open {
+      overflow: hidden;
+    }
+    
+    /* Centered headings */
+    .testimony-card h3 {
+      text-align: center;
+    }
+    
+    /* Modal heading style */
+    .modal h3 {
+      text-align: center;
+      width: 100%;
+      font-family: 'Fjalla One', sans-serif;
+      color: #1e3a8a;
+      font-size: 1.75rem;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.5px;
+    }
+    
+    /* Enhanced styling for testimony modal images */
+    .testimony-modal-image {
+      width: 100%;
+      height: 250px; /* Increased height for better visibility on desktop */
+      object-fit: cover;
+      border-top-left-radius: 0.75rem;
+      border-top-right-radius: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    
+    /* Specific styling for Modal 7 and 8 images */
+    #testimony7Modal .testimony-modal-image,
+    #testimony8Modal .testimony-modal-image {
+      object-position: center; /* Center the image focus */
+      max-height: 300px; /* Give more space for these specific images */
+    }
+    
+    /* Responsive adjustments for mobile */
+    @media (max-width: 640px) {
+      .testimony-modal-image {
+        height: 180px; /* Smaller height on mobile */
+      }
+      
+      #testimony7Modal .testimony-modal-image,
+      #testimony8Modal .testimony-modal-image {
+        max-height: 220px; /* Still taller than others but more suitable for mobile */
+      }
+    }
+    
+    /* Modal content adjustments */
+    .modal-body {
+      padding: 1.5rem;
+    }
+    
+    /* Enhanced typography for testimony content */
+    .prose p {
+      font-family: 'Merriweather', serif;
+      line-height: 1.8;
+      margin-bottom: 1.2rem;
+    }
+    
+    .prose strong, 
+    .prose b, 
+    .prose .highlight {
+      color: #1e40af;
+      font-weight: 700;
+    }
+    
+    .prose .quote {
+      font-style: italic;
+      padding-left: 1rem;
+      border-left: 3px solid #3b82f6;
+      margin: 1.5rem 0;
+    }
+    
+    /* Testimony specific styles */
+    .testimony-card p {
+      margin: 0.5rem 0;
+      color: #374151; /* Darker text for better readability */
+    }
+    
+    /* Button styles */
+    .read-testimony {
+      background-color: #2563eb;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      font-weight: 600;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+    
+    .read-testimony:hover {
+      background-color: #1d4ed8;
+      transform: translateY(-2px);
+    }
+    
+    /* Testimony sections emphasis */
+    .testimony-emphasis {
+      background-color: rgba(219, 234, 254, 0.5);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin: 1.2rem 0;
+      border-left: 4px solid #3b82f6;
+    }
+    
+    /* Important quotes */
+    .important-quote {
+      font-family: 'Merriweather', serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #1e40af;
+      text-align: center;
+      margin: 2rem 0;
+      padding: 0 1.5rem;
+      line-height: 1.6;
+    }
+    
+    /* Form styling for testimony submission */
+    .testimony-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      width: 100%;
+    }
+    
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .form-group label {
+      font-family: 'Merriweather', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #1e40af;
+    }
+    
+    .form-control {
+      border: 1px solid #cbd5e1;
+      border-radius: 0.5rem;
+      padding: 0.75rem 1rem;
+      font-family: 'Merriweather', serif;
+      font-size: 1rem;
+      transition: border-color 0.15s ease;
+      width: 100%;
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+    
+    textarea.form-control {
+      min-height: 200px;
+      resize: vertical;
+    }
+    
+    .submit-button {
+      background-color: #1e40af;
+      color: white;
+      font-family: 'Fjalla One', sans-serif;
+      font-size: 1.1rem;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+      align-self: center;
+      margin-top: 1rem;
+    }
+    
+    .submit-button:hover {
+      background-color: #1e3a8a;
+      transform: translateY(-2px);
+    }
+    
+    .submission-message {
+      text-align: center;
+      padding: 2rem;
+      font-family: 'Merriweather', serif;
+      font-size: 1.2rem;
+      color: #1e40af;
+      display: none;
+    }
+    
+    .submission-message.show {
+      display: block;
+    }
+    
+    /* Add notification popup styling */
+    .notification-popup {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #1e3a8a;
+      color: white;
+      max-width: 380px;
+      border-radius: 0.5rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+      z-index: 100;
+      overflow: hidden;
+      font-family: 'Merriweather', serif;
+    }
+    
+    .notification-popup.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    
+    .notification-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .notification-title {
+      font-weight: bold;
+      font-size: 1rem;
+    }
+    
+    .notification-close {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      padding: 0.25rem;
+    }
+    
+    .notification-body {
+      padding: 1rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
     }
   </style>
 </head>
@@ -94,6 +1022,541 @@
   </header>
 
   <div class="h-[60px]"></div>
+  
+  <!-- Hero Section -->
+  <section class="relative bg-blue-900 text-white py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8">
+      <div class="text-center">
+        <h1 class="font-fjalla text-4xl md:text-5xl lg:text-6xl mb-4">Testimonies</h1>
+        <p class="max-w-3xl mx-auto text-lg md:text-xl opacity-90">Lives are being transformed through the power of God at Global Peace Christian Centre</p>
+      </div>
+    </div>
+    <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-0 transform">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 60" preserveAspectRatio="none" class="h-12 w-full">
+        <path d="M0,0V60H1200V0C1000,60,800,40,600,30C400,20,200,40,0,0Z" class="fill-[#badcf7]"></path>
+      </svg>
+    </div>
+  </section>
+  
+  <!-- Book Promo Section -->
+  <section class="py-12 md:py-16 bg-[#badcf7]">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8">
+      <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 lg:p-10 flex flex-col md:flex-row items-center gap-8">
+        <div class="w-full md:w-1/3 flex justify-center">
+          <!-- Fix book swiper with correct image paths -->
+          <div class="book-cover-container w-full max-w-xs">
+            <div class="book-carousel">
+              <div class="swiper bookSwiper">
+                <div class="swiper-wrapper">
+                  <div class="swiper-slide">
+                    <img src="./assets/pastoral-board/jwimr.jpg" alt="Jesus Walks Into My Room - Front Cover" class="book-cover">
+                  </div>
+                  <div class="swiper-slide">
+                    <img src="./assets/pastoral-board/jwimr2.jpg" alt="Jesus Walks Into My Room - Back Cover" class="book-cover">
+                  </div>
+                </div>
+                <!-- Add pagination -->
+                <div class="swiper-pagination"></div>
+                <!-- Add navigation buttons -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="w-full md:w-2/3">
+          <h2 class="font-fjalla text-2xl md:text-3xl text-blue-900 mb-4 text-center md:text-left">The Book: "Jesus Walks Into My Room"</h2>
+          <p class="text-lg mb-6">God is touching lives through the book 'Jesus Walks Into My Room' written by Pastor Henry Ampomah-Boateng, Head Pastor and Founder of Global Peace Christian Centre. The testimonies below showcase the miraculous impact this book has had on countless lives.</p>
+          <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+            <a href="#testimonies" class="px-6 py-3 bg-blue-800 text-white font-semibold rounded-full hover:bg-blue-700 transition shadow-lg hover:shadow-xl">Read Testimonies</a>
+            <button class="px-6 py-3 bg-white text-blue-800 font-semibold rounded-full border-2 border-blue-800 hover:bg-blue-50 transition shadow-sm hover:shadow-md">Get The Book</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Testimonies Section -->
+  <section id="testimonies" class="py-12 md:py-16 bg-[#badcf7]">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8">
+      <h2 class="font-fjalla text-3xl md:text-4xl text-blue-900 text-center mb-12">Book Testimonies</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Testimony Card 1 -->
+        <div class="testimony-card bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="bg-blue-800 text-white p-4">
+            <h3 class="font-fjalla text-xl text-center">IT HAS INCREASED MY PRAYER LIFE</h3>
+          </div>
+          <div class="p-6">
+            <p class="text-gray-600 mb-4 line-clamp-3">As a Christian it was always a challenge for me to pray more than 30 minutes, I had always yearned to increase the number of hours I prayed, however...</p>
+            <div class="flex justify-center">
+              <button class="read-testimony px-6 py-2.5 bg-blue-800 text-white rounded-full text-sm hover:bg-blue-700 transition font-semibold" data-testimony="testimony1">Read Testimony</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Testimony Card 2 -->
+        <div class="testimony-card bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="bg-blue-800 text-white p-4">
+            <h3 class="font-fjalla text-xl text-center">MIRACLE TWIN TESTIMONY</h3>
+          </div>
+          <div class="p-6">
+            <p class="text-gray-600 mb-4 line-clamp-3">After having my personal encounter from reading the book Jesus Walks into my Room, I decided to recommend it to family and friends so that they can also partake in the blessings...</p>
+            <div class="flex justify-center">
+              <button class="read-testimony px-6 py-2.5 bg-blue-800 text-white rounded-full text-sm hover:bg-blue-700 transition font-semibold" data-testimony="testimony2">Read Testimony</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Testimony Card 3 -->
+        <div class="testimony-card bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="bg-blue-800 text-white p-4">
+            <h3 class="font-fjalla text-xl text-center">MIRACLE NATURAL DELIVERY</h3>
+          </div>
+          <div class="p-6">
+            <p class="text-gray-600 mb-4 line-clamp-3">"This is not the patient I arranged for Caesarean Section!!" The Doctor screams out in the theatre...</p>
+            <div class="flex justify-center">
+              <button class="read-testimony px-6 py-2.5 bg-blue-800 text-white rounded-full text-sm hover:bg-blue-700 transition font-semibold" data-testimony="testimony3">Read Testimony</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <h2 class="font-fjalla text-3xl md:text-4xl text-blue-900 text-center mt-24 mb-12">More Testimonies from our Ministry</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Testimony Card 4 -->
+        <div class="testimony-card bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="bg-blue-800 text-white p-4">
+            <h3 class="font-fjalla text-xl text-center">A MIRACLE OF SURVIVAL</h3>
+          </div>
+          <div class="p-6">
+            <p class="text-gray-600 mb-4 line-clamp-3">A testimony by Mr Alexander Gogoe, The Nothern Regional Director of the Department of Urban Roads. He experienced the touch of God upon his life through a mighty deliverance...</p>
+            <div class="flex justify-center">
+              <button class="read-testimony px-6 py-2.5 bg-blue-800 text-white rounded-full text-sm hover:bg-blue-700 transition font-semibold" data-testimony="testimony4">Read Testimony</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Testimony Card 5 -->
+        <div class="testimony-card bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="bg-blue-800 text-white p-4">
+            <h3 class="font-fjalla text-xl text-center">TESTIMONY FROM EMMANUEL MANIGAR</h3>
+          </div>
+          <div class="p-6">
+            <p class="text-gray-600 mb-4 line-clamp-3">My name is Emmanuel Manigar, a medical student at the University of Development Studies, Tamale and a proud member of Global Peace Christian Centre(GPCC)...</p>
+            <div class="flex justify-center">
+              <button class="read-testimony px-6 py-2.5 bg-blue-800 text-white rounded-full text-sm hover:bg-blue-700 transition font-semibold" data-testimony="testimony5">Read Testimony</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Testimony Card 6 -->
+        <div class="testimony-card bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="bg-blue-800 text-white p-4">
+            <h3 class="font-fjalla text-xl text-center">THE POWER OF GOD SHOOK OUT ADDICTION</h3>
+          </div>
+          <div class="p-6">
+            <p class="text-gray-600 mb-4 line-clamp-3">Isiah 10:27..."It shall come to pass in that day that his burden will be taken away from your shoulder and his yoke from your neck, and the yokw will be destroyed because of the anointing oil...</p>
+            <div class="flex justify-center">
+              <button class="read-testimony px-6 py-2.5 bg-blue-800 text-white rounded-full text-sm hover:bg-blue-700 transition font-semibold" data-testimony="testimony6">Read Testimony</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Testimony Card 7 -->
+        <div class="testimony-card bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="bg-blue-800 text-white p-4">
+            <h3 class="font-fjalla text-xl text-center">UNCOMMON LIFT HOME AFTER SERVICE</h3>
+          </div>
+          <div class="p-6">
+            <p class="text-gray-600 mb-4 line-clamp-3">It was one of our usual Friday evening prayer meetings, and Head Pastor taught on the subject of excercising faith. I held on to the message till the service ended...</p>
+            <div class="flex justify-center">
+              <button class="read-testimony px-6 py-2.5 bg-blue-800 text-white rounded-full text-sm hover:bg-blue-700 transition font-semibold" data-testimony="testimony7">Read Testimony</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Testimony Card 8 -->
+        <div class="testimony-card bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="bg-blue-800 text-white p-4">
+            <h3 class="font-fjalla text-xl text-center">DELIVERED FROM CHRONIC PAIN</h3>
+          </div>
+          <div class="p-6">
+            <p class="text-gray-600 mb-4 line-clamp-3">This is what the Lord has done for me. My name is Seth and at the time of writing this I had a 10 year old daughter, She started complaining about severe headaches and stomach pains...</p>
+            <div class="flex justify-center">
+              <button class="read-testimony px-6 py-2.5 bg-blue-800 text-white rounded-full text-sm hover:bg-blue-700 transition font-semibold" data-testimony="testimony8">Read Testimony</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Share Your Testimony Section -->
+  <section class="py-16 bg-blue-900 text-white">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 text-center">
+      <h2 class="font-fjalla text-3xl md:text-4xl mb-6">Share Your Testimony</h2>
+      <p class="text-lg max-w-2xl mx-auto mb-8">Has God done something amazing in your life through Global Peace Christian Centre? We'd love to hear your testimony and share it to encourage others.</p>
+      <button id="submitTestimonyButton" class="px-8 py-3 bg-white text-blue-900 font-semibold rounded-full hover:bg-blue-50 transition shadow-lg hover:shadow-xl">Submit Your Testimony</button>
+    </div>
+  </section>
+  
+  <!-- Footer placeholder -->
+  <footer class="bg-blue-950 text-white py-8">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 text-center">
+      <p>© 2025 Global Peace Christian Centre. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Testimony Modals -->
+  <!-- Testimony Modal 1 -->
+  <div id="testimony1Modal" class="modal fixed inset-0 z-50 bg-black/60 flex items-center justify-center">
+    <div class="modal-content bg-white rounded-xl max-w-2xl mx-4 has-image">
+      <!-- Fixed header section with image and title -->
+      <div class="modal-header">
+        <div class="modal-header-image-container">
+          <img src="./assets/pastoral-board/prayer.webp" alt="Prayer" class="testimony-modal-image">
+        </div>
+        <div class="modal-header-title">
+          <h3 class="font-fjalla text-2xl text-blue-900">IT HAS INCREASED MY PRAYER LIFE</h3>
+        </div>
+        <button class="close-modal text-gray-500 hover:text-gray-700 focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Scrollable content area -->
+      <div class="modal-scrollable-content">
+        <div class="prose max-w-none">
+          <p>As a Christian it was always a challenge for me to pray more than 30 minutes, I had always yearned to <strong>increase the number of hours I prayed</strong>, however, the desire and motivation was never there.</p>
+          
+          <div class="testimony-emphasis">
+            After reading the 'Chapter 2' of the book which dwelt on the calling of Pastor by the Lord Jesus Christ, as well as Chapter five, "Baptism of the Holy Spirit", I focussed my prayer life on Acts 1:8.
+          </div>
+          
+          <p class="important-quote">"But you will receive power when the holy spirit comes on you and you will be my witness in Jerusalem and Judea and Samaria and all the ends of the earth..."</p>
+          
+          <p>I have since had a <strong>transformational encounter</strong> with the Lord and can now pray for <strong>2 hours non stop</strong> and I have the book 'Jesus Walks Into My Room' to thank for that.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Testimony Modal 2 -->
+  <div id="testimony2Modal" class="modal fixed inset-0 z-50 bg-black/60 flex items-center justify-center">
+    <div class="modal-content bg-white rounded-xl max-w-2xl mx-4 max-h-[90vh] overflow-y-auto relative has-image">
+      <img src="./assets/pastoral-board/babies.png" alt="Twins Miracle" class="testimony-modal-image">
+      <div class="p-6 md:p-8 modal-body">
+        <div class="flex flex-col items-center mb-6 relative">
+          <h3 class="font-fjalla text-2xl text-blue-900 mb-2">MIRACLE TWIN TESTIMONY</h3>
+          <button class="close-modal text-gray-500 hover:text-gray-700 focus:outline-none absolute right-0 top-0">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+          </button>
+        </div>
+        <div class="prose max-w-none">
+          <p>After having my personal encounter from reading the book Jesus Walks into my Room, I decided to recommend it to family and friends so that they can also partake in the blessings I have.</p>
+          <p>I recommended the book to a cousin who had been married for five(5) years with no issue as a result of several miscarriages. She grabbed the booik with joy and said "This book is written for me". She raid the book three times and placed it on her stomach by faith and prayed to the Lord to visit her as he had visited the man of God, by the grace of God as as the time of writing this testimony she is pregnant with twins.</p>
+          <p>I quote her "Ever since you gave me the book, I was enticed by the title and I told myself "Jesus will indeed touch my stomach"; and indeed my miscarriages are now over, I was pregnant after 5 years of my marriage beginning in pain".</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Testimony Modal 3 -->
+  <div id="testimony3Modal" class="modal fixed inset-0 z-50 bg-black/60 flex items-center justify-center">
+    <div class="modal-content bg-white rounded-xl max-w-2xl mx-4 max-h-[90vh] overflow-y-auto relative has-image">
+      <img src="./assets/pastoral-board/delivery.webp" alt="Natural Delivery Miracle" class="testimony-modal-image">
+      <div class="p-6 md:p-8 modal-body">
+        <div class="flex flex-col items-center mb-6 relative">
+          <h3 class="font-fjalla text-2xl text-blue-900 mb-2">MIRACLE NATURAL DELIVERY</h3>
+          <button class="close-modal text-gray-500 hover:text-gray-700 focus:outline-none absolute right-0 top-0">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+          </button>
+        </div>
+        <div class="prose max-w-none">
+          <p>"This is not the patient I arranged for Caesarean Section!!" The Doctor screams out in the theatre.</p>
+          <p>I introduced the same book to a friend who was pregnant and was due for a Caesarean Section. On that day, she asked that the book be given to her to take to the theatre. She put the book right beside her and prayed a prayer of faith. As soon as the doctor got to the theatre he screamed 'this is not the patient I arranged for CS'. She gave birth through natural delivery, Indeed this is the doing of the Lord and it is marvellous in our sight.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Testimony Modal 4 -->
+  <div id="testimony4Modal" class="modal fixed inset-0 z-50 bg-black/60 flex items-center justify-center">
+    <div class="modal-content bg-white rounded-xl max-w-2xl mx-4 has-image">
+      <!-- Fixed header section with image and title -->
+      <div class="modal-header">
+        <div class="modal-header-image-container">
+          <img src="./assets/pastoral-board/survival.webp" alt="Survival Miracle" class="testimony-modal-image">
+        </div>
+        <div class="modal-header-title">
+          <h3 class="font-fjalla text-2xl text-blue-900">A MIRACLE OF SURVIVAL</h3>
+        </div>
+        <button class="close-modal text-gray-500 hover:text-gray-700 focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Scrollable content area -->
+      <div class="modal-scrollable-content">
+        <div class="prose max-w-none">
+          <p class="font-semibold text-center">By: Elder Alexander Gogoe</p>
+          <p>A testimony by Mr Alexander Gogoe, The Nothern Regional Director of the Department of Urban Roads. He experienced the touch of God upon his life through a mighty deliverance he received under the unction of the anointed man of God, Pastor Henry Ampomah-Boateng at the Church Auditorium of the Global Peace Christian Centre on Friday the 18th of November 2016. He gives a vivid account:</p>
+          
+          <div class="testimony-emphasis">
+            Prior to this fateful day I recall that about six(6) to eight(8) months earlier I started feeling some sporadic sharp pains within the upper part of my chest exactly behind the chest muscle. The pain gradually grew in intensity day after day until I couldn't breathe freely.
+          </div>
+          
+          <p class="important-quote">"He then instructed me to rise up and stand by my bed bare footed with my chest out like a soldier. He advised me to see myself as a soldier in the army of the Lord."</p>
+          
+          <p>After the prayer session he requested me to inhale and exhale five times and asked how I was feeling. To God be the glory and for a truth the excruciating pain had vanished. He then told me he would check on me in the afternoon to see how I was faring. Suddenly I started jumping in my room to the amazement of my family and doing all sorts of excercices till I began sweating profusely amidst shouts of joy, praise, worship and thanksgiving to God.</p>
+          
+          <div class="testimony-emphasis">
+            I suddenly felt refreshed within my system. My breathing normalized. I became very light as I could tell that some heavy load or burden had been lifted of me. The pressure on my rib cage and lungs had vanished.
+          </div>
+          
+          <p>I felt a new being within me. When I went back to post in Tamale all who saw me testified that they could see a new me. Some even went to the extent of taking pictures of me because they claim they could see a radiance on my face and around me.</p>
+          
+          <p>I am greatful to God Almighty for his grace upon my life, and my family. I am equally grateful for the selfless and humble servant Pastor Henry Ampomah-Boateng, his wife, the leadership and the entire congregation of GPCC. I say that "May the good Lord reward your sacrifices for thy Kingdom, and may he continue to fill your hearts with his kind of peace that surpasses all understanding now and forevermore.</p>
+          <p>I say to this to the glory of God I am healed in Jesus Name Amen</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Testimony Modal 5 -->
+  <div id="testimony5Modal" class="modal fixed inset-0 z-50 bg-black/60 flex items-center justify-center">
+    <div class="modal-content bg-white rounded-xl max-w-2xl mx-4 has-image">
+      <!-- Fixed header section with image and title -->
+      <div class="modal-header">
+        <div class="modal-header-image-container">
+          <img src="./assets/pastoral-board/udsboy.webp" alt="Medical Healing" class="testimony-modal-image">
+        </div>
+        <div class="modal-header-title">
+          <h3 class="font-fjalla text-2xl text-blue-900">TESTIMONY FROM EMMANUEL MANIGAR</h3>
+        </div>
+        <button class="close-modal text-gray-500 hover:text-gray-700 focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Scrollable content area -->
+      <div class="modal-scrollable-content">
+        <div class="prose max-w-none">
+          <p>My name is Emmanuel Manigar, a medical student (at the time) at the University of Development Studies, Tamale and a proud member of Global Peace Christian Centre(GPCC).</p>
+          
+          <div class="testimony-emphasis">
+            On 10th April 2017, an unfortunate incident happened when I was training with my college football team ahead of a match between my class and one of the junior undergraduates, during the session the football hit my manhood and I felt severe pains thereafter.
+          </div>
+          
+          <p class="important-quote">"Pastor prayed with me and told me the healing will be manifested by midnight and there will be no pain at all."</p>
+          
+          <div class="testimony-emphasis">
+            At exactly midnight, the power of God was present. I felt again, the power of God upon me just like how I felt when he prayed with me in the church on Saturday and the pain left. Honestly the miracle manifested as he said and I received the healing.
+          </div>
+          
+          <p> The power in my manhood had been restored and I started experiencing normal erections as before the incident happened. On Tuesday April,2017 I went to see the Urologist(Specialist) at Tamale but he was not available, I therefore came down to Accra and went to Achimota Hospital on Thursday 20th April,2017 to do an ultrasonography study of the scrotum and the report confirmed that everything was normal with my manhood, Thank God for Healing Me.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Testimony Modal 6 -->
+  <div id="testimony6Modal" class="modal fixed inset-0 z-50 bg-black/60 flex items-center justify-center">
+    <div class="modal-content bg-white rounded-xl max-w-2xl mx-4 has-image">
+      <!-- Fixed header section with image and title -->
+      <div class="modal-header">
+        <div class="modal-header-image-container">
+          <img src="./assets/pastoral-board/deliverance.webp" alt="Addiction Deliverance" class="testimony-modal-image">
+        </div>
+        <div class="modal-header-title">
+          <h3 class="font-fjalla text-2xl text-blue-900">THE POWER OF GOD SHOOK OUT ADDICTION</h3>
+        </div>
+        <button class="close-modal text-gray-500 hover:text-gray-700 focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Scrollable content area -->
+      <div class="modal-scrollable-content">
+        <div class="prose max-w-none">
+          <p class="font-semibold">FROM: DAVID K BOATENG</p>
+          
+          <p class="important-quote">Isiah 10:27..."It shall come to pass in that day that his burden will be taken away from your shoulder and his yoke from your neck, and the yoke will be destroyed because of the anointing oil."</p>
+          
+          <p>My name is David K Boateng. I testify to the glory of God what God has done in my father in-laws life.</p>
+          
+          <div class="testimony-emphasis">
+            My father in-law was so addicted to alcohol, to the extent that immediately he woke up early in the morning, he headed for the nearest drinking bar. On one of my visits to Accra, I stopped by at Awutu Breku to visit him but when I saw him I was vexed in my spirit and wept because of his state.
+          </div>
+          
+          <p>Two weeks later I was in Accra to visit my spiritual father- Rev. Ampomah-Boateng.</p>
+          
+          <div class="testimony-emphasis">
+            I brought some olive oil and asked Rev. Ampomah-Boateng to pray over it for me, but I didn't mention my father in-laws condition to him. He prayed over the oil and asked me to shake it whenever I wanted to use it.
+          </div>
+          
+          <p>As soon as I got home my wife and I arranged to bring my father in-law to Cape Coast, where we stayed. He was in a very pathetic state. Immediately he arrived I took water to the bathroom for him, brought out the anointing oil that Rev Ampomah-Boateng had prayed over, shook the oil and prayed my heart out to the Lord. "God your servant instructed me to shake the oil before using it; I declare that as I shake it O God to anoint the water my father in-law will bath with, SHAKE OUT EVERY ADDICTION OF ALCOHOLISM OFF HIM IN THE NAME OF JESUS".
+          </div>
+          
+          <p>Brethren since that day to the Glory of God he has stopped taking alcohol, eats very well and looks very healthy. God is merciful and wonderful.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Testimony Modal 7 -->
+  <div id="testimony7Modal" class="modal fixed inset-0 z-50 bg-black/60 flex items-center justify-center">
+    <div class="modal-content bg-white rounded-xl max-w-2xl mx-4 has-image">
+      <!-- Fixed header section with image and title -->
+      <div class="modal-header">
+        <div class="modal-header-image-container">
+          <img src="./assets/pastoral-board/faith.webp" alt="Faith Testimony" class="testimony-modal-image">
+        </div>
+        <div class="modal-header-title">
+          <h3 class="font-fjalla text-2xl text-blue-900">UNCOMMON LIFT HOME AFTER EVENING SERVICE</h3>
+        </div>
+        <button class="close-modal text-gray-500 hover:text-gray-700 focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Scrollable content area -->
+      <div class="modal-scrollable-content">
+        <div class="prose max-w-none">
+          <p>It was one of our usual Friday evening prayer meetings, and Head Pastor taught on the subject of excercising faith. I held on to the message till the service ended. It was 9:36pm when I got to the junction that led to my house-a distance of about 500m.</p>
+          <p>The last taxi at the station had just driven off as I got close. This naturally left me stranded, Holding on to the Head Pastors message which says everything is possible to them that believe; I said to the Lord, "please take me home".</p>
+          <p>No sooner had I spoken to the Lord, than a woman in her mid fifties drove from the opposite direction and picked me up in her car. She instructed me as she passed by me the Lord told her to pick me but she ignored it, She heard the Lord's voice again to come back and pick me up and she ignored it the second time, She said she caould not ignore the voice anymore as it kept sounding in her ears and she finally had to make a turn to pick me up at the junction and drop me off at home.</p>
+          <p>She wanted to know where I fellowship and I told her Global Peace Christian Centre at Abokobi (Ablor-Adjei). She nodded her head in a thoughtful manner and repeated the name of the church twice to herself. That is how the Lord took me home because I believed it was possible to them that believe it was possible.</p>
+          <p>God richly bless you Very Rev. Henry Ampomah-Boateng for your message on that fateful Friday which taught me that indeed, everything is possible to them that believe.</p>
+          <p>Mark 9:23 - If you can believe, all things are possibe to him who believes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Testimony Modal 8 -->
+  <div id="testimony8Modal" class="modal fixed inset-0 z-50 bg-black/60 flex items-center justify-center">
+    <div class="modal-content bg-white rounded-xl max-w-2xl mx-4 has-image">
+      <!-- Fixed header section with image and title -->
+      <div class="modal-header">
+        <div class="modal-header-image-container">
+          <img src="./assets/pastoral-board/pain.webp" alt="Child Deliverance" class="testimony-modal-image">
+        </div>
+        <div class="modal-header-title">
+          <h3 class="font-fjalla text-2xl text-blue-900">THE LORD DELIVERED MY LITTLE GIRL FROM CHRONIC STOMACH PAINS AND HEADACHES</h3>
+        </div>
+        <button class="close-modal text-gray-500 hover:text-gray-700 focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Scrollable content area -->
+      <div class="modal-scrollable-content">
+        <div class="prose max-w-none">
+          <p>This is what the Lord has done for me. My name is Seth and at the time of writing this I had a 10 year old daughter, She started complaining about severe headaches and stomach pains.</p>
+          <p>She fainted at school one afternoon and got admitted to 37 Military Hospital.</p>
+          <p>This became our routine for two or three months, she would be discharged from the hospital and in less than a week we will rush back. We told our Pastor about it and a deliverance prayer session was organized for my family. It was there the evil spirits responsible for her situation were cast out. Since then, she has not been admitted at the 37 Military hospital again. I give thanks to the Lord for the deliverance of my little girl.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Submit Testimony Modal -->
+  <div id="submitTestimonyModal" class="modal fixed inset-0 z-50 bg-black/60 flex items-center justify-center">
+    <div class="modal-content bg-white rounded-xl max-w-2xl mx-4 has-image">
+      <!-- Fixed header section with image and title -->
+      <div class="modal-header">
+        <div class="modal-header-image-container">
+          <img src="./assets/pastoral-board/submit.webp" alt="Submit Testimony" class="testimony-modal-image">
+        </div>
+        <div class="modal-header-title">
+          <h3 class="font-fjalla text-2xl text-blue-900">Submit your Testimony for Review & Publication</h3>
+        </div>
+        <button class="close-modal text-gray-500 hover:text-gray-700 focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Scrollable content area with form -->
+      <div class="modal-scrollable-content">
+        <form id="testimonySubmissionForm" class="testimony-form" novalidate>
+          <div class="form-group">
+            <label for="fullName">Full Name*</label>
+            <input type="text" id="fullName" name="fullName" class="form-control" placeholder="Enter your full name" required>
+            <div class="error-message" id="fullNameError">Please enter your full name</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Email Address*</label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email address" required>
+            <div class="error-message" id="emailError">Please enter a valid email address</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="testimonyTitle">Testimony Title*</label>
+            <input type="text" id="testimonyTitle" name="testimonyTitle" class="form-control" placeholder="Give your testimony a title" required>
+            <div class="error-message" id="testimonyTitleError">Please provide a title for your testimony</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="testimonyText">Your Testimony*</label>
+            <textarea id="testimonyText" name="testimonyText" class="form-control" placeholder="Share how God has worked in your life..." required></textarea>
+            <div class="error-message" id="testimonyTextError">Please share your testimony</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="contactInfo">Phone Number (Optional)</label>
+            <input type="tel" id="contactInfo" name="contactInfo" class="form-control" placeholder="Your contact number (optional)">
+          </div>
+          
+          <!-- Hidden field to help identify the form source -->
+          <input type="hidden" name="_subject" value="New Testimony Submission - GPCC Website">
+          
+          <button type="submit" class="submit-button">Submit Testimony</button>
+        </form>
+        
+        <div id="submissionSuccess" class="submission-message">
+          <svg class="w-16 h-16 mx-auto text-green-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <h4 class="text-xl font-bold mb-2">Thank You!</h4>
+          <p>Your testimony has been submitted successfully. Our team will review it shortly.</p>
+          <button class="close-modal submit-button mt-4">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Replace the notification popup component with this updated version -->
+  <div id="notificationPopup" class="notification-popup">
+    <div class="notification-header">
+      <div class="notification-title">Testimony Submitted</div>
+      <button class="notification-close" aria-label="Close notification">×</button>
+    </div>
+    <div class="notification-body">
+      Thank you for sharing your testimony! Our team will review it and may contact you within the next 3 working days.
+    </div>
+  </div>
 
   <script>
     // ABOUT dropdown (desktop)
@@ -109,7 +1572,6 @@
           if (aboutOpen && !aboutDropdown.contains(ev.target) && ev.target !== aboutBtn) {
             aboutDropdown.classList.add('hidden');
             aboutOpen = false;
-            document.removeEventListener('click', handler);
           }
         });
       });
@@ -135,6 +1597,400 @@
     const mobileAboutToggle = document.getElementById('mobile-about-toggle');
     const mobileAboutDropdown = document.getElementById('mobile-about-dropdown');
     mobileAboutToggle?.addEventListener('click', e=>{ e.stopPropagation(); mobileAboutDropdown?.classList.toggle('hidden'); });
+
+    // Enhanced modal handling with swipe support and fixed headers
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get references to all modals and buttons
+      const modals = document.querySelectorAll('.modal');
+      const readButtons = document.querySelectorAll('.read-testimony');
+      const closeButtons = document.querySelectorAll('.close-modal');
+      
+      // Convert all modals to the new structure with fixed headers
+      modals.forEach(modal => {
+        // Only modify if not already converted
+        if (!modal.querySelector('.modal-header')) {
+          const content = modal.querySelector('.modal-content');
+          const image = content.querySelector('.testimony-modal-image');
+          const titleContainer = content.querySelector('.flex.flex-col.items-center.mb-6.relative');
+          const title = titleContainer?.querySelector('h3');
+          const closeBtn = content.querySelector('.close-modal');
+          const proseContent = content.querySelector('.prose');
+          
+          // Only proceed if we have all necessary elements
+          if (content && image && title && proseContent) {
+            // Create new structure
+            const newStructure = `
+              <div class="modal-header">
+                <div class="modal-header-image-container">
+                  ${image.outerHTML}
+                </div>
+                <div class="modal-header-title">
+                  ${title.outerHTML}
+                </div>
+                ${closeBtn.outerHTML}
+              </div>
+              <div class="modal-scrollable-content">
+                <div class="prose max-w-none">
+                  ${proseContent.innerHTML}
+                </div>
+              </div>
+            `;
+            
+            // Replace old content with new structure
+            content.innerHTML = newStructure;
+            
+            // Remove any leftover elements
+            if (titleContainer) titleContainer.remove();
+          }
+        }
+        
+        // Initially hide all modals
+        modal.style.display = 'none';
+      });
+      
+      // Add click handlers to all "Read Testimony" buttons
+      readButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+          e.preventDefault();
+          const modalId = this.getAttribute('data-testimony') + 'Modal';
+          console.log('Opening modal:', modalId);
+          
+          // Find and show the corresponding modal
+          const modal = document.getElementById(modalId);
+          if (modal) {
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+          }
+        });
+      });
+      
+      // Add click handlers to all close buttons
+      closeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          closeModal(this.closest('.modal'));
+        });
+      });
+      
+      // Close modal when clicking outside the content area
+      modals.forEach(modal => {
+        modal.addEventListener('click', function(e) {
+          if (e.target === this) {
+            closeModal(this);
+          }
+        });
+        
+        // Add swipe to close functionality
+        setupSwipeToClose(modal);
+      });
+      
+      // Close modal with ESC key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          modals.forEach(modal => {
+            if (modal.style.display === 'flex') {
+              closeModal(modal);
+            }
+          });
+        }
+      });
+      
+      // Function to close modal with animation
+      function closeModal(modal) {
+        if (!modal) return;
+        
+        const content = modal.querySelector('.modal-content');
+        content.classList.add('swipe-close');
+        
+        // Wait for animation to complete before hiding
+        setTimeout(() => {
+          modal.style.display = 'none';
+          document.body.style.overflow = ''; // Restore background scrolling
+          content.classList.remove('swipe-close');
+        }, 300);
+      }
+      
+      // Function to setup swipe-to-close functionality
+      function setupSwipeToClose(modal) {
+        const content = modal.querySelector('.modal-content');
+        let startY = 0;
+        let currentY = 0;
+        let isDragging = false;
+        
+        // Touch events for mobile
+        content.addEventListener('touchstart', function(e) {
+          if (e.touches.length === 1) {
+            isDragging = true;
+            startY = e.touches[0].clientY;
+            content.classList.add('swiping');
+          }
+        }, { passive: true });
+        
+        content.addEventListener('touchmove', function(e) {
+          if (!isDragging) return;
+          
+          currentY = e.touches[0].clientY;
+          const deltaY = currentY - startY;
+          
+          // Only allow swiping down
+          if (deltaY > 0) {
+            content.style.transform = `translateY(${deltaY}px)`;
+            
+            // Add opacity effect as user swipes down
+            const opacity = 1 - Math.min(deltaY / 500, 0.6);
+            content.style.opacity = opacity;
+          }
+        }, { passive: true });
+        
+        content.addEventListener('touchend', function() {
+          if (!isDragging) return;
+          
+          isDragging = false;
+          content.classList.remove('swiping');
+          
+          const deltaY = currentY - startY;
+          
+          // If swiped more than 150px down, close the modal
+          if (deltaY > 150) {
+            closeModal(modal);
+          } else {
+            // Reset position and opacity
+            content.style.transform = '';
+            content.style.opacity = '';
+          }
+        });
+        
+        // Mouse events for desktop (optional)
+        content.addEventListener('mousedown', function(e) {
+          if (e.button === 0) { // Left click only
+            isDragging = true;
+            startY = e.clientY;
+            content.classList.add('swiping');
+          }
+        });
+        
+        document.addEventListener('mousemove', function(e) {
+          if (!isDragging) return;
+          
+          currentY = e.clientY;
+          const deltaY = currentY - startY;
+          
+          // Only allow swiping down
+          if (deltaY > 0) {
+            content.style.transform = `translateY(${deltaY}px)`;
+            
+            // Add opacity effect as user swipes down
+            const opacity = 1 - Math.min(deltaY / 500, 0.6);
+            content.style.opacity = opacity;
+          }
+        });
+        
+        document.addEventListener('mouseup', function() {
+          if (!isDragging) return;
+          
+          isDragging = false;
+          content.classList.remove('swiping');
+          
+          const deltaY = currentY - startY;
+          
+          // If moved more than 150px down, close the modal
+          if (deltaY > 150) {
+            closeModal(modal);
+          } else {
+            // Reset position and opacity
+            content.style.transform = '';
+            content.style.opacity = '';
+          }
+        });
+      }
+    });
+    
+    // Submit Testimony Modal handling
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add event listener for the Submit Testimony button
+      const submitTestimonyBtn = document.getElementById('submitTestimonyButton');
+      const submitTestimonyModal = document.getElementById('submitTestimonyModal');
+      
+      if (submitTestimonyBtn && submitTestimonyModal) {
+        submitTestimonyBtn.addEventListener('click', function() {
+          submitTestimonyModal.style.display = 'flex';
+          document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        });
+      }
+      
+      // Form submission handling
+      const testimonyForm = document.getElementById('testimonySubmissionForm');
+      const submissionSuccess = document.getElementById('submissionSuccess');
+      const formspreeEndpoint = 'https://formspree.io/f/xkgqwopp';
+      const notificationPopup = document.getElementById('notificationPopup');
+      
+      if (testimonyForm) {
+        testimonyForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          // Validate the form
+          if (!validateForm()) {
+            return false;
+          }
+          
+          // Show loading state
+          testimonyForm.classList.add('form-submitting');
+          const submitButton = this.querySelector('.submit-button');
+          if (submitButton) {
+            submitButton.disabled = true;
+          }
+          
+          // Get form data
+          const formData = new FormData(testimonyForm);
+          formData.append('_subject', 'New Testimony Submission - GPCC Website');
+          
+          // Submit to Formspree using fetch API
+          fetch(formspreeEndpoint, {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'Accept': 'application/json'
+            }
+          })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            console.log('Form submitted successfully');
+            
+            // Close the modal
+            const modal = document.getElementById('submitTestimonyModal');
+            if (modal) {
+              modal.style.display = 'none';
+              document.body.style.overflow = ''; // Restore background scrolling
+            }
+            
+            // Reset form
+            testimonyForm.reset();
+            
+            // Show notification
+            showNotification();
+            
+            // Remove loading state
+            testimonyForm.classList.remove('form-submitting');
+            if (submitButton) {
+              submitButton.disabled = false;
+            }
+          })
+          .catch(error => {
+            console.error('Error submitting form:', error);
+            alert('There was a problem submitting your testimony. Please try again later.');
+            
+            // Remove loading state
+            testimonyForm.classList.remove('form-submitting');
+            if (submitButton) {
+              submitButton.disabled = false;
+            }
+          });
+        });
+      }
+      
+      // Function to show notification
+      function showNotification() {
+        if (notificationPopup) {
+          notificationPopup.classList.add('show');
+          
+          // Auto-hide after 8 seconds
+          setTimeout(() => {
+            hideNotification();
+          }, 8000);
+          
+          // Add click event to close button
+          const closeButton = notificationPopup.querySelector('.notification-close');
+          if (closeButton) {
+            closeButton.addEventListener('click', hideNotification);
+          }
+        }
+      }
+      
+      // Function to hide notification
+      function hideNotification() {
+        if (notificationPopup) {
+          notificationPopup.classList.remove('show');
+        }
+      }
+      
+      // Keep existing form validation function
+      function validateForm() {
+        let isValid = true;
+        
+        // Reset all error states
+        const formControls = testimonyForm.querySelectorAll('.form-control');
+        formControls.forEach(control => {
+          control.classList.remove('error');
+          const errorElement = document.getElementById(`${control.id}Error`);
+          if (errorElement) errorElement.classList.remove('show');
+        });
+        
+        // Validate required fields
+        const requiredFields = testimonyForm.querySelectorAll('[required]');
+        requiredFields.forEach(field => {
+          if (!field.value.trim()) {
+            field.classList.add('error');
+            const errorElement = document.getElementById(`${field.id}Error`);
+            if (errorElement) errorElement.classList.add('show');
+            isValid = false;
+          }
+        });
+        
+        // Validate email format
+        const emailField = document.getElementById('email');
+        if (emailField && emailField.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailField.value)) {
+          emailField.classList.add('error');
+          const errorElement = document.getElementById('emailError');
+          if (errorElement) {
+            errorElement.textContent = 'Please enter a valid email address';
+            errorElement.classList.add('show');
+          }
+          isValid = false;
+        }
+        
+        return isValid;
+      }
+    });
+    
+    // Initialize Swiper
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize Book Swiper
+      const bookSwiper = new Swiper('.bookSwiper', {
+        // Optional parameters
+        loop: true,
+        effect: 'cards', // Changed from fade to cards for better visualization
+        grabCursor: true,
+        speed: 800,
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true
+        },
+        
+        // If we need pagination
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true
+        },
+        
+        // Navigation arrows
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+      });
+      
+      // Ensure Swiper is properly loaded
+      window.addEventListener('load', function() {
+        if (bookSwiper) {
+          bookSwiper.update();
+        }
+      });
+    });
   </script>
 </body>
 </html>
