@@ -527,10 +527,11 @@
     </div>
   </header>
 
-  <div class="h-[60px]"></div><!-- changed spacer from 72px to 60px -->
+  <!-- Reducing spacer height to match spacing between Theme and Fellowship sections -->
+<div class="h-[20px] sm:h-[25px] md:h-[40px]"></div>
 
   <!-- HERO SWIPER (4 images) -->
-  <section class="w-full max-w-5xl mx-auto mt-8 px-4 text-center">
+  <section class="w-full max-w-5xl mx-auto mt-0 px-4 text-center">
     <div class="bg-[#a2c6e0] rounded-2xl shadow-xl border border-blue-300 p-6 sm:p-8 md:p-10 flex flex-col gap-4 sm:gap-5 md:gap-6">
       <h2 class="text-xl sm:text-2xl font-serif italic text-blue-900 drop-shadow-md tracking-wide"
           style="font-family:'Playfair Display', serif;">
@@ -572,9 +573,15 @@
     <div class="bg-gradient-to-r from-blue-900 via-purple-800 to-red-600 rounded-2xl shadow-2xl border-2 border-gold-400 p-8 text-center relative overflow-hidden">
       <!-- Decorative elements -->
       <div class="absolute top-0 left-0 w-full h-full opacity-10">
+        <!-- Empty top-left position for the logo that will be placed on top -->
         <div class="absolute top-4 left-4 w-16 h-16 border-2 border-white rounded-full"></div>
         <div class="absolute bottom-4 right-4 w-12 h-12 border-2 border-white rounded-full"></div>
         <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 border border-white rounded-full"></div>
+      </div>
+      
+      <!-- Logo positioned on top of the decorative elements -->
+      <div class="absolute top-4 left-4 w-16 h-16 rounded-full z-10 flex items-center justify-center">
+        <img src="logo.png" alt="GPCC Logo" class="w-14 h-14 object-contain">
       </div>
       
       <div class="relative z-10">
@@ -1103,86 +1110,112 @@
 
 <!-- SERVICE SCHEDULE POPUP (centered, bigger, glossy, animated, elegant list) -->
 <div id="schedule-popup"
-     class="fixed inset-x-0 top-[60px] bottom-0 hidden justify-center items-start bg-black/50 z-[70] p-4 overflow-y-auto pt-4"><!-- changed: offset below header -->
+     class="fixed inset-x-0 top-[60px] bottom-0 hidden justify-center items-start bg-black/50 z-[70] p-4 overflow-y-auto pt-4">
   <div id="schedule-dialog"
        class="w-full max-w-3xl bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl ring-1 ring-blue-100 modal-animate max-h-full">
-    <!-- Header -->
-    <div class="/* changed: make sticky so close button stays visible */ sticky top-0 z-10 w-full px-8 py-6 bg-[#f6fafd] border-b border-blue-100">
-      <h2 class="text-2xl md:text-3xl font-bold text-blue-900 text-center">Fellowship Service Times</h2>
-      <button class="close-schedule absolute top-6 right-8 text-3xl leading-none text-blue-900" aria-label="Close schedule popup">&times;</button>
+    <!-- Header - Improved with better spacing and position for close button -->
+    <div class="sticky top-0 z-10 w-full px-8 py-6 bg-gradient-to-r from-blue-50 via-white to-blue-50 border-b border-blue-100 rounded-t-3xl">
+      <h2 class="text-2xl md:text-3xl font-bold text-blue-900 text-center pr-8">Fellowship Service Times</h2>
+      <button class="close-schedule absolute top-5 right-5 text-lg bg-white w-8 h-8 flex items-center justify-center rounded-full shadow-md hover:bg-blue-50 transition-colors border border-blue-100" aria-label="Close schedule popup">
+        <svg class="w-5 h-5 text-blue-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
     </div>
 
-    <!-- Elegant list: line-by-line -->
-    <div class="w-full px-8 py-8">
-      <div class="space-y-4 max-w-2xl mx-auto">
+    <!-- Elegant list: improved styling and center alignment -->
+    <div class="w-full px-4 sm:px-8 py-8 bg-gradient-to-b from-white to-blue-50">
+      <div class="space-y-6 max-w-2xl mx-auto">
 
-        <!-- Wednesday -->
-        <div class="rounded-xl p-5 ring-1 ring-blue-100 bg-gradient-to-br from-white to-blue-50 shadow-sm">
-          <p class="text-blue-900 font-bold text-lg">Wednesday Bible Teaching Service</p>
-          <p class="text-slate-700">6:30pm – 8:30pm</p>
-          <p class="text-red-600 font-semibold flex items-center mt-1">
-            <svg class="w-5 h-5 mr-2 text-red-500" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 3l-8 4v2h2v8H4v2h16v-2h-2V9h2V7l-8-4zm0 4.5c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zM12 16c-1.1 0-2 .9-2 2h4c0-1.1-.9-2-2-2zm6-5V9H6v2h12z"/>
-            </svg>
-            Peace Temple
-          </p>
+        <!-- Wednesday - Redesigned with center alignment -->
+        <div class="rounded-xl overflow-hidden shadow-md">
+          <div class="bg-blue-800 text-white text-center py-3">
+            <h3 class="text-xl font-bold">Wednesday</h3>
+          </div>
+          <div class="bg-gradient-to-br from-white to-blue-50 p-5 text-center">
+            <p class="text-blue-900 font-bold text-lg mb-1">Bible Teaching Service</p>
+            <p class="text-slate-700 text-lg mb-3">6:30pm – 8:30pm</p>
+            <div class="flex items-center justify-center gap-2 mt-2">
+              <svg class="w-5 h-5 text-red-500 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 3l-8 4v2h2v8H4v2h16v-2h-2V9h2V7l-8-4zm0 4.5c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zM12 16c-1.1 0-2 .9-2 2h4c0-1.1-.9-2-2-2zm6-5V9H6v2h12z"/>
+              </svg>
+              <span class="text-red-600 font-semibold">Peace Temple</span>
+            </div>
+          </div>
         </div>
 
-        <!-- Friday -->
-        <div class="rounded-xl p-5 ring-1 ring-blue-100 bg-gradient-to-br from-white to-blue-50 shadow-sm">
-          <p class="text-blue-900 font-bold text-lg">Friday Prayer Meeting</p>
-          <p class="text-slate-700">6:30pm – 8:30pm</p>
-          <p class="text-red-600 font-semibold flex items-center mt-1">
-            <svg class="w-5 h-5 mr-2 text-red-500" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 3l-8 4v2h2v8H4v2h16v-2h-2V9h2V7l-8-4zm0 4.5c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zM12 16c-1.1 0-2 .9-2 2h4c0-1.1-.9-2-2-2zm6-5V9H6v2h12z"/>
-            </svg>
-            Peace Temple
-          </p>
+        <!-- Friday - Redesigned with center alignment -->
+        <div class="rounded-xl overflow-hidden shadow-md">
+          <div class="bg-blue-800 text-white text-center py-3">
+            <h3 class="text-xl font-bold">Friday</h3>
+          </div>
+          <div class="bg-gradient-to-br from-white to-blue-50 p-5 text-center">
+            <p class="text-blue-900 font-bold text-lg mb-1">Prayer Meeting</p>
+            <p class="text-slate-700 text-lg mb-3">6:30pm – 8:30pm</p>
+            <div class="flex items-center justify-center gap-2 mt-2">
+              <svg class="w-5 h-5 text-red-500 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 3l-8 4v2h2v8H4v2h16v-2h-2V9h2V7l-8-4zm0 4.5c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zM12 16c-1.1 0-2 .9-2 2h4c0-1.1-.9-2-2-2zm6-5V9H6v2h12z"/>
+              </svg>
+              <span class="text-red-600 font-semibold">Peace Temple</span>
+            </div>
+          </div>
         </div>
 
-        <!-- Saturday -->
-        <div class="rounded-xl p-5 ring-1 ring-blue-100 bg-gradient-to-br from-white to-blue-50 shadow-sm">
-          <p class="text-blue-900 font-bold text-lg">Saturday Healing & Deliverance</p>
-          <p class="text-slate-700">8:30am – 10:30am</p>
-          <p class="text-red-600 font-semibold flex items-center mt-1">
-            <svg class="w-5 h-5 mr-2 text-red-500" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 3l-8 4v2h2v8H4v2h16v-2h-2V9h2V7l-8-4zm0 4.5c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zM12 16c-1.1 0-2 .9-2 2h4c0-1.1-.9-2-2-2zm6-5V9H6v2h12z"/>
-            </svg>
-            Peace Temple
-          </p>
+        <!-- Saturday - Redesigned with center alignment -->
+        <div class="rounded-xl overflow-hidden shadow-md">
+          <div class="bg-blue-800 text-white text-center py-3">
+            <h3 class="text-xl font-bold">Saturday</h3>
+          </div>
+          <div class="bg-gradient-to-br from-white to-blue-50 p-5 text-center">
+            <p class="text-blue-900 font-bold text-lg mb-1">Healing & Deliverance</p>
+            <p class="text-slate-700 text-lg mb-3">8:30am – 10:30am</p>
+            <div class="flex items-center justify-center gap-2 mt-2">
+              <svg class="w-5 h-5 text-red-500 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 3l-8 4v2h2v8H4v2h16v-2h-2V9h2V7l-8-4zm0 4.5c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zM12 16c-1.1 0-2 .9-2 2h4c0-1.1-.9-2-2-2zm6-5V9H6v2h12z"/>
+              </svg>
+              <span class="text-red-600 font-semibold">Peace Temple</span>
+            </div>
+          </div>
         </div>
 
-        <!-- Sunday -->
-        <div class="rounded-xl p-5 ring-1 ring-blue-100 bg-gradient-to-br from-white to-blue-50 shadow-sm">
-          <p class="text-blue-900 font-bold text-lg">Sunday Church Service</p>
-          <p class="text-slate-700">8:30am – 11:30am</p>
-          <p class="text-red-600 font-semibold flex items-center mt-1">
-            <svg class="w-5 h-5 mr-2 text-red-500" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 3l-8 4v2h2v8H4v2h16v-2h-2V9h2V7l-8-4zm0 4.5c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zM12 16c-1.1 0-2 .9-2 2h4c0-1.1-.9-2-2-2zm6-5V9H6v2h12z"/>
-            </svg>
-            Peace Temple
-          </p>
-          <p class="text-slate-700 mt-2">Children's Church (Ages 3-12): 10:00am – 11:00am</p>
+        <!-- Sunday - Redesigned with center alignment -->
+        <div class="rounded-xl overflow-hidden shadow-md">
+          <div class="bg-blue-800 text-white text-center py-3">
+            <h3 class="text-xl font-bold">Sunday</h3>
+          </div>
+          <div class="bg-gradient-to-br from-white to-blue-50 p-5 text-center">
+            <p class="text-blue-900 font-bold text-lg mb-1">Church Service</p>
+            <p class="text-slate-700 text-lg mb-3">8:30am – 11:30am</p>
+            <div class="flex items-center justify-center gap-2 mt-2">
+              <svg class="w-5 h-5 text-red-500 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 3l-8 4v2h2v8H4v2h16v-2h-2V9h2V7l-8-4zm0 4.5c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zM12 16c-1.1 0-2 .9-2 2h4c0-1.1-.9-2-2-2zm6-5V9H6v2h12z"/>
+              </svg>
+              <span class="text-red-600 font-semibold">Peace Temple</span>
+            </div>
+            <div class="mt-4 pt-3 border-t border-blue-100">
+              <p class="text-blue-900 font-medium">Children's Church (Ages 3-12)</p>
+              <p class="text-slate-700">10:00am – 11:00am</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
     
-
-
-
-  <div class="flex flex-col md:flex-row items-center gap-4">
-  <a href="https://www.google.com/maps/place/Global+Peace+Christian+Centre+(GPCC)/@5.7171585,-0.2102711,17z/data=!4m6!3m5!1s0xfdf9dedc886fb2f:0x4a651067c9806910!8m2!3d5.7171532!4d-0.2076962!16s%2Fg%2F11b6_9jv20?entry=ttu&g_ep=EgoyMDI1MDgxOS4wIKXMDSoASAFQAw%3D%3D"
-     target="_blank" rel="noopener"
-     class="bg-green-700 hover:bg-green-800 text-white font-semibold py-3 px-7 rounded-full transition">
-    Locate Us on Google Maps
-  </a>
-</div>
-
-
+    <!-- Call to action with Google Maps -->
+    <div class="px-8 py-6 flex flex-col md:flex-row items-center gap-4 justify-center bg-gradient-to-t from-blue-100 to-white">
+      <a href="https://www.google.com/maps/place/Global+Peace+Christian+Centre+(GPCC)/@5.7171585,-0.2102711,17z/data=!4m6!3m5!1s0xfdf9dedc886fb2f:0x4a651067c9806910!8m2!3d5.7171532!4d-0.2076962!16s%2Fg%2F11b6_9jv20?entry=ttu&g_ep=EgoyMDI1MDgxOS4wIKXMDSoASAFQAw%3D%3D"
+         target="_blank" rel="noopener"
+         class="bg-green-700 hover:bg-green-800 text-white font-semibold py-3 px-7 rounded-full transition flex items-center gap-2 shadow-lg">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5zM12 16c-1.1 0-2 .9-2 2h4c0-1.1-.9-2-2-2zm6-5V9H6v2h12z"/>
+        </svg>
+        Locate Us on Google Maps
+      </a>
+    </div>
 
     <!-- Footer -->
-    <footer class="w-full px-8 py-4 bg-[#000000] border-t border-blue-100 text-center">
-      <p class="text-slate-600 text-sm">
+    <footer class="w-full px-8 py-4 bg-gradient-to-r from-gray-900 to-blue-900 rounded-b-3xl text-center border-t border-blue-100">
+      <p class="text-blue-200 text-sm">
         &copy; <span id="copyright-year"></span>
         <span class="font-semibold">Global Peace Christian Centre</span>
       </p>

@@ -60,7 +60,7 @@
 
     /* Added: unified header styles to match index */
     .font-fjalla { font-family:'Fjalla One',sans-serif; letter-spacing:.5px; }
-    .header-brand-img { height:48px; width:48px; object-fit:contain; }
+    .header-brand-img { height:48px; width:48px; object-fit:contain; border: 0 !important; box-shadow: none !important; background: transparent !important; }
     @media (min-width:1024px){ .header-brand-img { height:50px; width:50px; } }
     .header-brand-text { font-size:calc(1.125rem + 2px); line-height:1.1; }
     @media (min-width:640px){ .header-brand-text { font-size:calc(1.25rem + 2px); } }
@@ -73,7 +73,7 @@
   <header class="fixed top-0 left-0 w-full z-[80] bg-white/80 backdrop-blur border-b border-blue-200">
     <div class="max-w-7xl mx-auto px-4 lg:px-8 py-1 flex items-center justify-between">
       <a href="index.html" class="flex items-center gap-2">
-        <img src="logo.png" alt="GPCC Logo" class="header-brand-img rounded-sm border border-blue-900/40 bg-transparent">
+        <img src="logo.png" alt="GPCC Logo" class="header-brand-img rounded-sm"><!-- Removed border and bg-transparent -->
         <span class="font-fjalla header-brand-text text-blue-900 inline lg:hidden">Global Peace Christian Centre</span>
         <span class="hidden lg:inline font-fjalla header-brand-text text-blue-900">Global Peace Christian Centre</span>
       </a>
@@ -238,13 +238,16 @@
             <span class="font-semibold text-blue-900">Venue</span>
           </div>
           <p class="text-gray-700 mb-3">Peace Temple</p>
-          <!-- Venue Image -->
+          <!-- Venue Image - Modified to use modal viewer instead of opening in new tab -->
           <div class="mt-3">
-            <img src="OUTSIDE.webp" 
+            <img id="peace-temple-image" 
+                 src="OUTSIDE.webp" 
                  alt="Peace Temple - GPCC Venue" 
-                 class="w-full max-w-xs mx-auto h-32 object-cover rounded-lg border border-blue-200 shadow-sm cursor-pointer hover:shadow-md transition"
-                 onclick="window.open('outside.webp', '_blank')">
-            <p class="text-xs text-gray-500 mt-2">Click to view larger image</p>
+                 class="w-full max-w-xs mx-auto h-32 object-cover rounded-lg border border-blue-200 shadow-sm cursor-pointer hover:shadow-md transition">
+            <div class="text-xs text-gray-500 mt-2">
+              <span class="md:hidden">Tap to view larger image</span>
+              <span class="hidden md:inline">Click to view larger image</span>
+            </div>
           </div>
         </div>
       </div>
@@ -634,20 +637,28 @@
 
     // Image viewer functionality
     const mensWeekImage = document.getElementById('mens-week-image');
+    const peaceTempleImage = document.getElementById('peace-temple-image'); // Added reference to peace temple image
     const imageViewer = document.getElementById('image-viewer');
     const viewerImage = document.getElementById('viewer-image');
     const closeViewer = document.getElementById('close-viewer');
 
-    // Only enable image viewer on mobile
-    if (window.innerWidth < 768) {
-      mensWeekImage.addEventListener('click', () => {
-        viewerImage.src = mensWeekImage.src;
-        viewerImage.alt = mensWeekImage.alt;
-        imageViewer.classList.remove('hidden');
-        imageViewer.classList.add('flex');
-        lockBody();
-      });
-    }
+    // Enable image viewer for both images on all screen sizes
+    mensWeekImage.addEventListener('click', () => {
+      viewerImage.src = mensWeekImage.src;
+      viewerImage.alt = mensWeekImage.alt;
+      imageViewer.classList.remove('hidden');
+      imageViewer.classList.add('flex');
+      lockBody();
+    });
+
+    // Add event listener for Peace Temple image
+    peaceTempleImage.addEventListener('click', () => {
+      viewerImage.src = peaceTempleImage.src;
+      viewerImage.alt = peaceTempleImage.alt;
+      imageViewer.classList.remove('hidden');
+      imageViewer.classList.add('flex');
+      lockBody();
+    });
 
     closeViewer.addEventListener('click', () => {
       imageViewer.classList.add('hidden');

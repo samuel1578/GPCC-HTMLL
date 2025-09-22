@@ -10,6 +10,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap" rel="stylesheet"><!-- added Rowdies -->
+  <!-- Added: STIX Two Text font -->
+  <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- SwiperJS CDN -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -433,7 +435,14 @@
 
     /* Added: unified header styles to match index */
     .font-fjalla { font-family:'Fjalla One',sans-serif; letter-spacing:.5px; }
-    .header-brand-img { height:48px; width:48px; object-fit:contain; }
+    .header-brand-img { 
+      height:48px; 
+      width:48px; 
+      object-fit:contain; 
+      border: 0 !important; 
+      box-shadow: none !important; 
+      background: transparent !important; 
+    }
     @media (min-width:1024px){ .header-brand-img { height:50px; width:50px; } }
     .header-brand-text { font-size:calc(1.125rem + 2px); line-height:1.1; }
     @media (min-width:640px){ .header-brand-text { font-size:calc(1.25rem + 2px); } }
@@ -500,6 +509,27 @@
       justify-content: center;
       gap: 6px;
     }
+
+    /* Added: Pastor name styling using STIX Two Text */
+    .pastor-name {
+      font-family: 'STIX Two Text', serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #0f3a85;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+    /* Responsive font size adjustment */
+    @media (min-width: 640px) {
+      .pastor-name {
+        font-size: 1.2rem;
+      }
+    }
+    @media (min-width: 1024px) {
+      .pastor-name {
+        font-size: 1.25rem;
+      }
+    }
   </style>
 </head>
 <body class="bg-[#badcf7] font-sans community-page"><!-- added class -->
@@ -507,7 +537,7 @@
   <header class="fixed top-0 left-0 w-full z-[80] bg-white/80 backdrop-blur border-b border-blue-200">
     <div class="max-w-7xl mx-auto px-4 lg:px-8 py-1 flex items-center justify-between">
       <a href="index.html" class="flex items-center gap-2">
-        <img src="logo.png" alt="GPCC Logo" class="header-brand-img rounded-sm border border-blue-900/40 bg-transparent">
+        <img src="logo.png" alt="GPCC Logo" class="header-brand-img rounded-sm"><!-- Removed border and bg attributes -->
         <span class="font-fjalla header-brand-text text-blue-900 inline lg:hidden">Global Peace Christian Centre</span>
         <span class="hidden lg:inline font-fjalla header-brand-text text-blue-900">Global Peace Christian Centre</span>
       </a>
@@ -723,7 +753,7 @@
               <div class="card mobile-card">
                 <img src="vice-president.jpg" alt="Vice President" class="object-cover w-full bg-[#badcf7] border-b-2 border-blue-100">
                 <div class="card-content">
-                  <div class="card-title">Vice Chairperson</div>
+                  <div class="card-title">Vice-Chairperson</div>
                   <div class="pastor-name">Lady Perpetual Ampomah-Boateng</div>
                   <div class="card-desc">Quote: To whom much is given much is expected</div>
                   <button class="view-profile-btn mt-2" onclick="window.location.href='profile-vice-president.html'">View Profile</button>
@@ -909,13 +939,6 @@
              alt="Group photo of GPCC Elders"
              class="w-full h-72 sm:h-96 object-cover rounded-xl border border-blue-100 mb-5"/>
 
-        <ul class="elders-list grid sm:grid-cols-2 lg:grid-cols-3 gap-3 justify-items-center mx-auto text-sm md:text-base text-blue-900 leading-snug">
-          <!-- Replace placeholders with ONLY Elder names sourced from eldership-deacons.html (exclude Deacons) -->
-          <li>Elder Charles Boakye</li>
-          <li>Elder Alexander Ofosu Agyenim-Boateng</li>
-          <li>Elder Deborah Gogoe</li>
-          <li>Elder Alexander Gogoe</li>
-        </ul>
       </div>
     </section>
 
@@ -932,14 +955,7 @@
              alt="Group photo of GPCC Editorial Board"
              class="w-full h-72 sm:h-96 object-cover rounded-xl border border-blue-100 mb-5"/>
 
-        <ul class="elders-list grid sm:grid-cols-2 lg:grid-cols-3 gap-3 justify-items-center mx-auto text-sm md:text-base text-blue-900 leading-snug">
-          <li>Editor-in-Chief (Mr Benjamin Alhijah)</li>
-          <li>Managing Editor (Mrs Sndra Boamah)</li>
-          <li>Senior Theological Reviewer (Placeholder)</li>
-          <li>Content & Publications Lead (Placeholder)</li>
-          <li>Media Archivist (Placeholder)</li>
-          <li>Associate Editor (Placeholder)</li>`
-        </ul>
+      
       </div>
     </section>
   </main>
