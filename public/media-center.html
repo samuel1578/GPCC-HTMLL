@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Media Center - Global Peace Christian Centre</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
+  <!-- SwiperJS CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Particles.js CDN -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <style>
+    /* Include styles from index.html for header, footer, and related components */
+    .modal-animate {
+      animation: modalPop .4s cubic-bezier(.35,.85,.39,1.1);
+    }
+    @keyframes modalPop {
+      0% { opacity: 0; transform: scale(0.9);}
+      100% { opacity: 1; transform: scale(1);}
+    }
+    .glass {
+      background: rgba(108, 4, 4, 0.92);
+      backdrop-filter: blur(12px) saturate(180%);
+      box-shadow: 0 6px 36px 0 rgba(55,100,150,0.25);
+      border: 2px solid #dbeafe;
+    }
+    .modal-list li {
+      margin-bottom: 0.75rem;
+      padding: 0.85rem 1.1rem;
+      background: linear-gradient(110deg, #eaf6fb 70%, #badcf7 100%);
+      border-radius: 0.9rem;
+      box-shadow: 0 2px 12px 0 rgba(80,104,120,0.07);
+      font-size: 1.08rem;
+      color: #222b3a;
+      border: 1px solid #e0e7ef;
+    }
+    .modal-list li:last-child {margin-bottom:0;}
+    .modal-shadow {
+      box-shadow: 0 10px 48px 0 rgba(37, 60, 125, 0.18);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .mini-card:hover {
+        transform: scale(1.06);
+        box-shadow: 0 8px 32px 0 rgba(37, 60, 125, 0.18);
+        z-index: 2;
+      }
+      .mini-card:hover svg {
+        transform: scale(1.13) translateY(-4px);
+        filter: drop-shadow(0 2px 8px #badcf7);
+      }
+    }
+    .font-fjalla { font-family: 'Fjalla One', sans-serif; letter-spacing:.5px; }
+    .header-brand-img { height:48px; width:48px; object-fit:contain; }
+    @media (min-width:1024px){
+      .header-brand-img { height:50px; width:50px; }
+    }
+    .header-brand-img { border: 0 !important; box-shadow: none !important; background: transparent !important; }
+    .header-brand-text {
+      /* add ~2px (≈1.5pt) to current sizes */
+      font-size:calc(1.125rem + 2px); /* mobile base */
+      line-height:1.1;
+    }
+    @media (min-width:640px){
+      .header-brand-text { font-size:calc(1.125rem + 2px); }
+    }
+    @media (min-width:1024px){
+      .header-brand-text { font-size:calc(1.25rem + 2px); } /* desktop name */
+      #desktop-nav { padding: 0.35rem 0.75rem !important; gap: 0.5rem !important; flex-wrap: wrap; }
+      #desktop-nav a, #desktop-nav button { padding: 0.35rem 0.75rem !important; font-size: 0.95rem !important; }
+    }
+    #menu-toggle .hamburger-circle {
+      line-height: 0;
+    }
+    #menu-toggle .hamburger-circle { background: linear-gradient(135deg,#1e40af,#2563eb); box-shadow: 0 12px 28px -10px rgba(37,99,235,.55); border: 1px solid rgba(255,255,255,.28); transition: background .2s, box-shadow .2s, transform .15s; }
+    #menu-toggle .hamburger-circle:hover { transform: translateY(-1px); }
+    #menu-toggle.open .hamburger-circle { background: transparent !important; box-shadow: none !important; border-color: transparent; }
+    #menu-toggle.open .icon-close { color:#1d4ed8 !important; }
+    /* Logo Swarm Styles */
+    .logo-swarm {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #a2c6e0 0%, #badcf7 100%);
+      border-radius: 1rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    }
+    .logo-item {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      opacity: 0.8;
+      filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5));
+      animation: drift 10s infinite linear;
+      cursor: pointer;
+      transition: transform 0.2s ease, filter 0.2s ease;
+    }
+    .logo-item:hover {
+      filter: drop-shadow(0 0 20px rgba(59, 130,246, 0.8));
+      transform: scale(1.1);
+    }
+    .logo-item.pulse {
+      animation: pulse 0.5s ease-in-out;
+    }
+    @keyframes drift {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(100px, 50px) rotate(90deg); }
+      50% { transform: translate(200px, 0) rotate(180deg); }
+      75% { transform: translate(100px, -50px) rotate(270deg); }
+      100% { transform: translate(0, 0) rotate(360deg); }
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    /* Different drift paths for variety */
+    .logo-item:nth-child(odd) { animation-duration: 12s; }
+    .logo-item:nth-child(3n) { animation-duration: 15s; }
+    .logo-item:nth-child(5n) { animation-duration: 8s; }
+    /* Hero Particles Styles */
+    .hero-particles {
+      position: relative;
+      width: 100%;
+      height: auto;
+      min-height: 300px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #a2c6e0 0%, #badcf7 100%);
+      border-radius: 1rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    }
+    #particles-js {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      color: rgb(0, 0, 0);
+      text-shadow: 2px 2px 4px rgba(21, 176, 254, 0.7);
+      max-width: 800px;
+      padding: 2rem 2rem 2.5rem; /* Added 0.5rem (20px) bottom padding, close to 0.5cm */
+      text-align: center;
+    }
+    .hero-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+    .hero-subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      font-weight: 300;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body class="bg-[#badcf7] font-sans">
+  <!-- HEADER / NAVBAR (copied from index.html) -->
+  <header class="fixed top-0 left-0 w-full z-[80] bg-white/80 backdrop-blur border-b border-blue-200">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-1 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2 flex-shrink-0">
+        <img src="logo.png" alt="GPCC Logo" class="header-brand-img rounded-sm">
+        <span class="font-fjalla text-blue-900 header-brand-text inline lg:hidden">Global Peace Christian Centre</span>
+        <span class="hidden lg:inline font-fjalla text-blue-900 header-brand-text whitespace-nowrap">Global Peace Christian Centre</span>
+      </a>
+      <nav id="desktop-nav"
+           class="hidden lg:flex relative items-center gap-4 flex-wrap bg-white/70 rounded-full border-2 border-blue-900 px-6 py-2 shadow-lg">
+        <a href="index.html" class="px-4 py-2 rounded-full bg-blue-900 text-white font-semibold shadow">HOME</a>
+        <div class="relative">
+          <button id="about-us-desktop-btn"
+                  class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold flex items-center gap-2 hover:bg-blue-50 transition focus:outline-none"
+                  aria-haspopup="true" aria-expanded="false">
+            ABOUT US
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6"/>
+            </svg>
+          </button>
+          <ul id="about-us-desktop-dropdown"
+    class="absolute top-full left-0 mt-2 hidden bg-white border border-blue-200 rounded-lg shadow-lg w-72 py-2"
+    role="menu">
+  <li><a href="who-we-are.html" class="block px-4 py-2 hover:bg-blue-50">Who We Are</a></li>
+  <li><a href="pastoral-board.html" class="block px-4 py-2 hover:bg-blue-50">The Leadership</a></li>
+  <li><a href="community-journey.html" class="block px-4 py-2 hover:bg-blue-50">Our Journey Through the Community</a></li>
+  <li><a href="testimonies.html" class="block px-4 py-2 hover:bg-blue-50">Testimonies</a></li>
+</ul>
+        </div>
+        <a href="ministries.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MINISTRIES</a>
+        <a href="events.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">EVENTS</a>
+        <a href="media-center.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MEDIA CENTER</a>
+        <a href="gallery.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">GALLERY</a>
+        <a href="contact-us.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">CONTACT US</a>
+      </nav>
+      <button id="menu-toggle"
+            type="button"
+            class="lg:hidden fixed top-2 right-4 focus:outline-none z-50"
+            aria-label="Open Menu" aria-expanded="false">
+        <span class="hamburger-circle flex items-center justify-center w-12 h-12 rounded-full bg-blue-900 hover:bg-blue-700 shadow-xl ring-2 ring-blue-200 transition duration-200">
+          <svg class="icon-hamburger w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+          <svg class="icon-close w-7 h-7 text-white hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6l12 12M18 6l-12 12" />
+          </svg>
+        </span>
+      </button>
+    </div>
+    <div id="mobile-menu"
+       class="fixed inset-x-0 top-[60px] bottom-0 hidden justify-start items-start bg-[#badcf7]/95 z-[60] lg:hidden">
+      <div id="mobile-panel" class="absolute right-4 top-4 w-80 px-2 py-4 rounded-2xl bg-white shadow-2xl border border-blue-200 text-center glass modal-animate">
+        <div class="flex items-center justify-between px-3 pb-2 border-b border-blue-100">
+          <div class="flex items-center gap-2">
+            <img src="logo.png" alt="GPCC Logo" class="w-10 h-10 rounded-sm"/>
+            <span class="font-fjalla text-blue-900 text-lg">Global Peace Christian Centre</span>
+          </div>
+        </div>
+        <nav class="space-y-4 mt-3">
+          <a href="index.html" class="block w-full px-5 py-3 rounded-full bg-blue-900 text-white font-semibold">HOME</a>
+          <div>
+            <button id="mobile-about-toggle"
+                    class="w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold flex items-center justify-center gap-2 focus:outline-none">
+              ABOUT US
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6"/>
+              </svg>
+            </button>
+            <ul id="mobile-about-dropdown" class="hidden mt-2 space-y-2">
+  <li><a href="who-we-are.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Who We Are</a></li>
+  <li><a href="pastoral-board.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">The Leadership</a></li>
+  <li><a href="community-journey.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Our Journey Through the Community</a></li>
+  <li><a href="testimonies.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Testimonies</a></li>
+</ul>
+          </div>
+          <a href="ministries.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MINISTRIES</a>
+          <a href="events.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">EVENTS</a>
+          <a href="media-center.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MEDIA CENTER</a>
+          <a href="gallery.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">GALLERY</a>
+          <a href="contact-us.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">CONTACT US</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Spacer for fixed header -->
+  <div class="h-[20px] sm:h-[25px] md:h-[40px]"></div>
+
+  <!-- HERO SECTION with Particles -->
+  <section class="w-full max-w-5xl mx-auto mt-0 px-4 text-center">
+    <div class="hero-particles">
+      <div id="particles-js"></div>
+      <div class="hero-content">
+        <h2 class="text-xl sm:text-2xl font-serif italic text-white drop-shadow-md tracking-wide mb-4"
+            style="font-family:'Playfair Display', serif;">
+           Welcome to the 
+        </h2>
+        <h1 class="hero-title">Media Center</h1>
+        <p class="hero-subtitle">Explore our sermons, events, and multimedia resources to stay connected with God's word and experience the transformative power of faith.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Page content placeholder (add your media center content here) -->
+  <main class="max-w-7xl mx-auto px-4 py-8">
+    <!-- Media Center Directory Section -->
+    <section class="bg-[#eaf6fb] rounded-2xl shadow-lg border border-blue-200 p-8">
+      <h2 class="text-3xl font-serif text-blue-900 text-center mb-8">Explore Our Media Resources</h2>
+      <div class="grid md:grid-cols-3 gap-6 justify-center">
+        <!-- Sermons Card -->
+        <div class="mini-card group bg-white rounded-xl border-2 border-blue-300 shadow-md p-6 flex flex-col items-center transition-all duration-200 hover:scale-105 hover:shadow-2xl">
+          <svg class="w-12 h-12 text-blue-900 mb-4 transition-transform duration-200 group-hover:-translate-y-1 group-hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+          </svg>
+          <h3 class="text-xl font-bold text-blue-900 mb-2">Sermons</h3>
+          <p class="text-gray-700 text-center mb-4">Listen to powerful messages and teachings from our pastors and guest speakers.</p>
+          <a href="sermons.html" class="mt-auto w-full">
+            <button class="w-full px-5 py-2 rounded-full font-bold text-white shadow-lg transition-all duration-200
+              bg-gradient-to-r from-blue-900 via-blue-700 to-blue-500
+              border-2 border-blue-900
+              relative overflow-hidden
+              flex items-center justify-center
+              african-btn">
+              <span class="relative z-10">Explore</span>
+              <span class="absolute inset-0 opacity-25 pointer-events-none"
+                style="background-image:url('data:image/svg+xml;utf8,<svg width=\'120\' height=\'40\' viewBox=\'0 0 120 40\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'><path d=\'M0 20 Q30 0 60 20 T120 20\' stroke=\'%23fff\' stroke-width=\'2\'/><path d=\'M0 30 Q30 10 60 30 T120 30\' stroke=\'%2300b4d8\' stroke-width=\'2\'/><path d=\'M0 10 Q30 30 60 10 T120 10\' stroke=\'%2300b4d8\' stroke-width=\'2\'/></svg>');background-size:cover;"></span>
+            </button>
+          </a>
+        </div>
+        <!-- Publications Card -->
+        <div class="mini-card group bg-white rounded-xl border-2 border-blue-300 shadow-md p-6 flex flex-col items-center transition-all duration-200 hover:scale-105 hover:shadow-2xl">
+          <svg class="w-12 h-12 text-blue-900 mb-4 transition-transform duration-200 group-hover:-translate-y-1 group-hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+          </svg>
+          <h3 class="text-xl font-bold text-blue-900 mb-2">Publications</h3>
+          <p class="text-gray-700 text-center mb-4">Access books, articles, and written resources for spiritual growth and inspiration.</p>
+          <a href="#publications" class="mt-auto w-full">
+            <button class="w-full px-5 py-2 rounded-full font-bold text-white shadow-lg transition-all duration-200
+              bg-gradient-to-r from-blue-900 via-blue-700 to-blue-500
+              border-2 border-blue-900
+              relative overflow-hidden
+              flex items-center justify-center
+              african-btn">
+              <span class="relative z-10">Explore</span>
+              <span class="absolute inset-0 opacity-25 pointer-events-none"
+                style="background-image:url('data:image/svg+xml;utf8,<svg width=\'120\' height=\'40\' viewBox=\'0 0 120 40\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'><path d=\'M0 20 Q30 0 60 20 T120 20\' stroke=\'%23fff\' stroke-width=\'2\'/><path d=\'M0 30 Q30 10 60 30 T120 30\' stroke=\'%2300b4d8\' stroke-width=\'2\'/><path d=\'M0 10 Q30 30 60 10 T120 10\' stroke=\'%2300b4d8\' stroke-width=\'2\'/></svg>');background-size:cover;"></span>
+            </button>
+          </a>
+        </div>
+        <!-- Church Magazines Card -->
+        <div class="mini-card group bg-white rounded-xl border-2 border-blue-300 shadow-md p-6 flex flex-col items-center transition-all duration-200 hover:scale-105 hover:shadow-2xl">
+          <svg class="w-12 h-12 text-blue-900 mb-4 transition-transform duration-200 group-hover:-translate-y-1 group-hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+          </svg>
+          <h3 class="text-xl font-bold text-blue-900 mb-2">Church Magazines</h3>
+          <p class="text-gray-700 text-center mb-4">Read our monthly magazines featuring church news, events, and community stories.</p>
+          <a href="#magazines" class="mt-auto w-full">
+            <button class="w-full px-5 py-2 rounded-full font-bold text-white shadow-lg transition-all duration-200
+              bg-gradient-to-r from-blue-900 via-blue-700 to-blue-500
+              border-2 border-blue-900
+              relative overflow-hidden
+              flex items-center justify-center
+              african-btn">
+              <span class="relative z-10">Explore</span>
+              <span class="absolute inset-0 opacity-25 pointer-events-none"
+                style="background-image:url('data:image/svg+xml;utf8,<svg width=\'120\' height=\'40\' viewBox=\'0 0 120 40\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'><path d=\'M0 20 Q30 0 60 20 T120 20\' stroke=\'%23fff\' stroke-width=\'2\'/><path d=\'M0 30 Q30 10 60 30 T120 30\' stroke=\'%2300b4d8\' stroke-width=\'2\'/><path d=\'M0 10 Q30 30 60 10 T120 10\' stroke=\'%2300b4d8\' stroke-width=\'2\'/></svg>');background-size:cover;"></span>
+            </button>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER (copied from index.html) -->
+  <footer class="w-full bg-[#181c17] relative mt-12">
+    <div class="absolute inset-0 w-full h-full">
+      <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-40">
+        <source src="logo-animated.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="absolute inset-0 bg-black/40"></div>
+    </div>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 py-8 flex flex-col md:flex-row md:justify-between md:items-start text-white">
+      <div class="mb-6 md:mb-0">
+        <div class="mb-3">
+          <span class="font-semibold">Address:</span><br>
+          P. O. Box AN 11587, Accra-North<br>
+          ABLOR ADJEI OFF THE AGBOGBA-ABOKOBI ROAD
+        </div>
+        <div class="mb-3">
+          <span class="font-semibold">Contact:</span><br>
+          <span class="block">+233 (208) 180 188 &nbsp; +233 (246) 224 766</span>
+          <a href="mailto:info@gpcconline.org" class="text-blue-200 underline hover:text-blue-400">info@gpcconline.org</a>
+        </div>
+        <div class="text-xs mt-2">&copy; 2025 GPCC. All rights reserved.</div>
+      </div>
+      <div class="flex flex-col items-end">
+        <div class="mb-3 text-gray-200 font-medium">Social Links</div>
+        <div class="flex gap-4 mb-4">
+          <a href="#" aria-label="Facebook" class="hover:text-blue-400"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="whatsapp-btn" class="hover:text-pink-400"><i class="fab fa-whatsapp"></i></a>
+          <a href="#" aria-label="YouTube" class="hover:text-red-400"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <!-- SCRIPTS (copied from index.html for header/footer functionality) -->
+  <script>
+    // Desktop ABOUT US toggle
+    const aboutBtn = document.getElementById('about-us-desktop-btn');
+    const aboutDropdown = document.getElementById('about-us-desktop-dropdown');
+    let aboutOpen = false;
+    aboutBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      aboutDropdown.classList.toggle('hidden');
+      aboutOpen = !aboutOpen;
+      document.addEventListener('click', function handler(ev) {
+        if (aboutOpen && !aboutDropdown.contains(ev.target) && ev.target !== aboutBtn) {
+          aboutDropdown.classList.add('hidden');
+          aboutOpen = false;
+          document.removeEventListener('click', handler);
+        }
+      });
+    });
+
+    /* === Added: Unified scroll lock manager === */
+    let __scrollY = 0;
+    let __lockCount = 0;
+    function lockBody() {
+      if (__lockCount === 0) {
+        __scrollY = window.scrollY || document.documentElement.scrollTop;
+        document.body.classList.add('modal-open');
+        document.body.style.top = `-${__scrollY}px`;
+      }
+      __lockCount++;
+    }
+    function unlockBody() {
+      if (__lockCount === 0) return;
+      __lockCount--;
+      if (__lockCount === 0) {
+        document.body.classList.remove('modal-open');
+        document.body.style.top = '';
+        window.scrollTo(0, __scrollY);
+      }
+    }
+
+    /* === Mobile Menu toggle === */
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobilePanel = document.getElementById('mobile-panel');
+    const iconHamburger = document.querySelector('#menu-toggle .icon-hamburger');
+    const iconClose = document.querySelector('#menu-toggle .icon-close');
+
+    function openMobileNav() {
+      if (!mobileMenu.classList.contains('hidden')) return;
+      mobileMenu.classList.remove('hidden');
+      mobilePanel.classList.add('mobile-menu-anim');
+      menuToggle.setAttribute('aria-expanded', 'true');
+      menuToggle.setAttribute('aria-label', 'Close Menu');
+      menuToggle.classList.add('open');
+      iconHamburger?.classList.add('hidden');
+      iconClose?.classList.remove('hidden');
+      lockBody();
+    }
+    function closeMobileNav() {
+      if (mobileMenu.classList.contains('hidden')) return;
+      mobileMenu.classList.add('hidden');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.setAttribute('aria-label', 'Open Menu');
+      menuToggle.classList.remove('open');
+      iconClose?.classList.add('hidden');
+      iconHamburger?.classList.remove('hidden');
+      unlockBody();
+    }
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (mobileMenu.classList.contains('hidden')) openMobileNav();
+      else closeMobileNav();
+    });
+    mobileMenu.addEventListener('click', (e) => {
+      if (!mobilePanel.contains(e.target)) closeMobileNav();
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMobileNav(); });
+    window.matchMedia('(min-width:1024px)').addEventListener('change', e => { if (e.matches) closeMobileNav(); });
+
+    // Mobile ABOUT toggle
+    const mobileAboutToggle = document.getElementById('mobile-about-toggle');
+    const mobileAboutDropdown = document.getElementById('mobile-about-dropdown');
+    mobileAboutToggle.addEventListener('click', e => {
+      e.stopPropagation();
+      mobileAboutDropdown.classList.toggle('hidden');
+    });
+
+    // Logo Swarm Interactions
+    document.querySelectorAll('.logo-item').forEach(item => {
+      item.addEventListener('click', () => {
+        item.classList.add('pulse');
+        setTimeout(() => item.classList.remove('pulse'), 500);
+      });
+      item.addEventListener('mouseenter', () => {
+        item.style.animationPlayState = 'paused';
+      });
+      item.addEventListener('mouseleave', () => {
+        item.style.animationPlayState = 'running';
+      });
+    });
+
+    // Particles.js Configuration
+    particlesJS('particles-js', {
+      "particles": {
+        "number": {
+          "value": 80,
+          "density": {
+            "enable": true,
+            "value_area": 800
+          }
+        },
+        "color": {
+          "value": "#ffffff"
+        },
+        "shape": {
+          "type": "circle",
+          "stroke": {
+            "width": 0,
+            "color": "#000000"
+          },
+          "polygon": {
+            "nb_sides": 5
+          },
+          "image": {
+            "src": "img/github.svg",
+            "width": 100,
+            "height": 100
+          }
+        },
+        "opacity": {
+          "value": 0.5,
+          "random": false,
+          "anim": {
+            "enable": false,
+            "speed": 1,
+            "opacity_min": 0.1,
+            "sync": false
+          }
+        },
+        "size": {
+          "value": 3,
+          "random": true,
+          "anim": {
+            "enable": false,
+            "speed": 40,
+            "size_min": 0.1,
+            "sync": false
+          }
+        },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#ffffff",
+          "opacity": 0.4,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 6,
+          "direction": "none",
+          "random": false,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false,
+          "attract": {
+            "enable": false,
+            "rotateX": 600,
+            "rotateY": 1200
+          }
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": true,
+            "mode": "repulse"
+          },
+          "onclick": {
+            "enable": true,
+            "mode": "push"
+          },
+          "resize": true
+        },
+        "modes": {
+          "grab": {
+            "distance": 400,
+            "line_linked": {
+              "opacity": 1
+            }
+          },
+          "bubble": {
+            "distance": 400,
+            "size": 40,
+            "duration": 2,
+            "opacity": 8,
+            "speed": 3
+          },
+          "repulse": {
+            "distance": 200,
+            "duration": 0.4
+          },
+          "push": {
+            "particles_nb": 4
+          },
+          "remove": {
+            "particles_nb": 2
+          }
+        }
+      },
+      "retina_detect": true
+    });
+  </script>
+</body>
+</html>

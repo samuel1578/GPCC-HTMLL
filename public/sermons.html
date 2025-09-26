@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sermons - Global Peace Christian Centre</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Particles.js CDN -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <style>
+    /* ...existing code from media-center.html... */
+    .font-fjalla { font-family: 'Fjalla One', sans-serif; letter-spacing:.5px; }
+    .header-brand-img { height:48px; width:48px; object-fit:contain; }
+    @media (min-width:1024px){
+      .header-brand-img { height:50px; width:50px; }
+    }
+    .header-brand-img { border: 0 !important; box-shadow: none !important; background: transparent !important; }
+    .header-brand-text {
+      /* add ~2px (≈1.5pt) to current sizes */
+      font-size:calc(1.125rem + 2px); /* mobile base */
+      line-height:1.1;
+    }
+    @media (min-width:640px){
+      .header-brand-text { font-size:calc(1.125rem + 2px); }
+    }
+    @media (min-width:1024px){
+      .header-brand-text { font-size:calc(1.25rem + 2px); } /* desktop name */
+      #desktop-nav { padding: 0.35rem 0.75rem !important; gap: 0.5rem !important; flex-wrap: wrap; }
+      #desktop-nav a, #desktop-nav button { padding: 0.35rem 0.75rem !important; font-size: 0.95rem !important; }
+    }
+    /* Hero Particles Styles */
+    .hero-particles {
+      position: relative;
+      width: 100%;
+      height: auto;
+      min-height: 300px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #a2c6e0 0%, #badcf7 100%);
+      border-radius: 1rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    }
+    #particles-js {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      color: rgb(0, 0, 0);
+      text-shadow: 2px 2px 4px rgba(21, 176, 254, 0.7);
+      max-width: 800px;
+      padding: 2rem 2rem 2.5rem;
+      text-align: center;
+    }
+    .hero-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+    .hero-subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      font-weight: 300;
+      line-height: 1.4;
+    }
+    /* Swiper Coverflow Styles */
+    .sermons-swiper {
+      width: 100%;
+      height: 50vh;
+      padding-top: 50px;
+      padding-bottom: 50px;
+    }
+    .sermons-swiper .swiper-slide {
+      background-position: center;
+      background-size: cover;
+      width: 300px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    }
+    .sermon-card {
+      background: white;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+    .sermon-card iframe {
+      flex: 1;
+      border-radius: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .sermon-card h3 {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #1e40af;
+      margin-bottom: 0.25rem;
+      text-align: center;
+    }
+    .sermon-card p {
+      font-size: 0.9rem;
+      color: #6b7280;
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+    .tunein-logo {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 0.5rem;
+    }
+    /* YouTube Swiper Coverflow Styles */
+    .youtube-sermons-swiper {
+      width: 100%;
+      height: auto;
+      padding-top: 50px;
+      padding-bottom: 50px;
+    }
+    .youtube-sermons-swiper .swiper-slide {
+      background-position: center;
+      background-size: cover;
+      width: 300px;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: 1rem;
+      overflow: visible;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    }
+    /* YouTube Series Styles */
+    .youtube-series-card {
+      background: white;
+      width: 100%;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+      box-sizing: border-box;
+      border-radius: 1rem;
+    }
+    .series-image {
+      width: 100%;
+      height: 150px;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+      object-fit: cover;
+    }
+    .series-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #dc2626;
+      margin-bottom: 1rem;
+      text-align: center;
+      font-family: 'Cinzel', serif;
+    }
+    .video-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .video-link {
+      background: #fef2f2;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      color: rgb(105, 8, 8);
+      font-weight: 1000;
+      transition: background 0.2s;
+      text-align: center;
+      font-family: 'Cinzel', serif;
+    }
+    .video-link:hover {
+      background: #fecaca;
+    }
+    .standout-card {
+      background: linear-gradient(135deg, #2ac4eb, #b91c1c);
+      color: white;
+    }
+    .standout-card .series-title {
+      color: white;
+    }
+    .standout-card .video-link {
+      background: rgba(255,255,255,0.2);
+      color: white;
+    }
+    .standout-card .video-link:hover {
+      background: rgba(255,255,255,0.3);
+    }
+  </style>
+</head>
+<body class="bg-[#badcf7] font-sans">
+  <!-- HEADER / NAVBAR (copied from media-center.html) -->
+  <header class="fixed top-0 left-0 w-full z-[80] bg-white/80 backdrop-blur border-b border-blue-200">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-1 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2 flex-shrink-0">
+        <img src="logo.png" alt="GPCC Logo" class="header-brand-img rounded-sm">
+        <span class="font-fjalla text-blue-900 header-brand-text inline lg:hidden">Global Peace Christian Centre</span>
+        <span class="hidden lg:inline font-fjalla text-blue-900 header-brand-text whitespace-nowrap">Global Peace Christian Centre</span>
+      </a>
+      <nav id="desktop-nav"
+           class="hidden lg:flex relative items-center gap-4 flex-wrap bg-white/70 rounded-full border-2 border-blue-900 px-6 py-2 shadow-lg">
+        <a href="index.html" class="px-4 py-2 rounded-full bg-blue-900 text-white font-semibold shadow">HOME</a>
+        <div class="relative">
+          <button id="about-us-desktop-btn"
+                  class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold flex items-center gap-2 hover:bg-blue-50 transition focus:outline-none"
+                  aria-haspopup="true" aria-expanded="false">
+            ABOUT US
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6"/>
+            </svg>
+          </button>
+          <ul id="about-us-desktop-dropdown"
+    class="absolute top-full left-0 mt-2 hidden bg-white border border-blue-200 rounded-lg shadow-lg w-72 py-2"
+    role="menu">
+  <li><a href="who-we-are.html" class="block px-4 py-2 hover:bg-blue-50">Who We Are</a></li>
+  <li><a href="pastoral-board.html" class="block px-4 py-2 hover:bg-blue-50">The Leadership</a></li>
+  <li><a href="community-journey.html" class="block px-4 py-2 hover:bg-blue-50">Our Journey Through the Community</a></li>
+  <li><a href="testimonies.html" class="block px-4 py-2 hover:bg-blue-50">Testimonies</a></li>
+</ul>
+        </div>
+        <a href="ministries.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MINISTRIES</a>
+        <a href="events.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">EVENTS</a>
+        <a href="media-center.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MEDIA CENTER</a>
+        <a href="gallery.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">GALLERY</a>
+        <a href="contact-us.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">CONTACT US</a>
+      </nav>
+      <button id="menu-toggle"
+            type="button"
+            class="lg:hidden fixed top-2 right-4 focus:outline-none z-50"
+            aria-label="Open Menu" aria-expanded="false">
+        <span class="hamburger-circle flex items-center justify-center w-12 h-12 rounded-full bg-blue-900 hover:bg-blue-700 shadow-xl ring-2 ring-blue-200 transition duration-200">
+          <svg class="icon-hamburger w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+          <svg class="icon-close w-7 h-7 text-white hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6l12 12M18 6l-12 12" />
+          </svg>
+        </span>
+      </button>
+    </div>
+    <div id="mobile-menu"
+       class="fixed inset-x-0 top-[60px] bottom-0 hidden justify-start items-start bg-[#badcf7]/95 z-[60] lg:hidden">
+      <div id="mobile-panel" class="absolute right-4 top-4 w-80 px-2 py-4 rounded-2xl bg-white shadow-2xl border border-blue-200 text-center glass modal-animate">
+        <div class="flex items-center justify-between px-3 pb-2 border-b border-blue-100">
+          <div class="flex items-center gap-2">
+            <img src="logo.png" alt="GPCC Logo" class="w-10 h-10 rounded-sm"/>
+            <span class="font-fjalla text-blue-900 text-lg">Global Peace Christian Centre</span>
+          </div>
+        </div>
+        <nav class="space-y-4 mt-3">
+          <a href="index.html" class="block w-full px-5 py-3 rounded-full bg-blue-900 text-white font-semibold">HOME</a>
+          <div>
+            <button id="mobile-about-toggle"
+                    class="w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold flex items-center justify-center gap-2 focus:outline-none">
+              ABOUT US
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6"/>
+              </svg>
+            </button>
+            <ul id="mobile-about-dropdown" class="hidden mt-2 space-y-2">
+  <li><a href="who-we-are.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Who We Are</a></li>
+  <li><a href="pastoral-board.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">The Leadership</a></li>
+  <li><a href="community-journey.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Our Journey Through the Community</a></li>
+  <li><a href="testimonies.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Testimonies</a></li>
+</ul>
+          </div>
+          <a href="ministries.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MINISTRIES</a>
+          <a href="events.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">EVENTS</a>
+          <a href="media-center.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MEDIA CENTER</a>
+          <a href="gallery.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">GALLERY</a>
+          <a href="contact-us.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">CONTACT US</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Spacer for fixed header -->
+  <div class="h-[20px] sm:h-[25px] md:h-[40px]"></div>
+
+  <!-- HERO SECTION with Particles -->
+  <section class="w-full max-w-5xl mx-auto mt-0 px-4 text-center">
+    <div class="hero-particles">
+      <div id="particles-js"></div>
+      <div class="hero-content">
+        <h2 class="text-xl sm:text-2xl font-serif italic text-white drop-shadow-md tracking-wide mb-4"
+            style="font-family:'Playfair Display', serif;">
+           Welcome to the 
+        </h2>
+        <h1 class="hero-title">Sermons</h1>
+        <p class="hero-subtitle">Listen to powerful messages and teachings from our pastors and guest speakers. Be inspired and uplifted by God's word.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Page content placeholder (add your sermons content here) -->
+  <main class="max-w-7xl mx-auto px-4 py-8">
+    <!-- Latest Sermons Section -->
+    <section class="mb-12">
+      <h2 class="text-3xl font-serif text-blue-900 text-center mb-8">Latest Sermons</h2>
+      <div class="swiper youtube-sermons-swiper">
+        <div class="swiper-wrapper">
+          <!-- IMPACT 2025 -->
+          <div class="swiper-slide">
+            <div class="youtube-series-card">
+              <img src="./assets/pastoral-board/impact-2025.jpg" alt="IMPACT 2025" class="series-image">
+              <h3 class="series-title">IMPACT 2025</h3>
+              <div class="video-links">
+                <a href="https://www.youtube.com/watch?v=OQvdcpv3bA8" target="_blank" class="video-link">Watch Video</a>
+              </div>
+            </div>
+          </div>
+          <!-- WAITING FOR THE PROMISE OF GOD [OBEDIENCE] -->
+          <div class="swiper-slide">
+            <div class="youtube-series-card">
+              <img src="./assets/pastoral-board/obedience.jpg" alt="WAITING FOR THE PROMISE OF GOD [OBEDIENCE]" class="series-image">
+              <h3 class="series-title">WAITING FOR THE PROMISE OF GOD [OBEDIENCE]</h3>
+              <div class="video-links">
+                <a href="https://www.youtube.com/watch?v=DSL0-nhj3vw" target="_blank" class="video-link">PART 1</a>
+                <a href="https://www.youtube.com/watch?v=uj5Ua2ORi-o&pp=0gcJCfYJAYcqIYzv" target="_blank" class="video-link">PART 2</a>
+              </div>
+            </div>
+          </div>
+          <!-- WAITING FOR THE MANIFESTATION OF THE PROMISE OF GOD -->
+          <div class="swiper-slide">
+            <div class="youtube-series-card">
+              <img src="./assets/pastoral-board/waiting.jpg" alt="WAITING FOR THE MANIFESTATION OF THE PROMISE OF GOD" class="series-image">
+              <h3 class="series-title">WAITING FOR THE MANIFESTATION OF THE PROMISE OF GOD</h3>
+              <div class="video-links">
+                <a href="https://www.youtube.com/watch?v=6fFIKtk2Dog&pp=0gcJCfYJAYcqIYzv" target="_blank" class="video-link">PART ONE</a>
+                <a href="https://www.youtube.com/watch?v=GCGrli3Tu_E" target="_blank" class="video-link">PART TWO</a>
+              </div>
+            </div>
+          </div>
+          <!-- BE TRANSFORMED BY THE RENEWING OF YOUR MIND -->
+          <div class="swiper-slide">
+            <div class="youtube-series-card">
+              <img src="./assets/pastoral-board/transform.jpg" alt="BE TRANSFORMED BY THE RENEWING OF YOUR MIND" class="series-image">
+              <h3 class="series-title">BE TRANSFORMED BY THE RENEWING OF YOUR MIND</h3>
+              <div class="video-links">
+                <a href="https://www.youtube.com/watch?v=9Z6pgKNw2sY" target="_blank" class="video-link">Watch Video</a>
+              </div>
+            </div>
+          </div>
+          <!-- FORGIVENESS -->
+          <div class="swiper-slide">
+            <div class="youtube-series-card">
+              <img src="./assets/pastoral-board/forgiveness.jpg" alt="FORGIVENESS" class="series-image">
+              <h3 class="series-title">FORGIVENESS</h3>
+              <div class="video-links">
+                <a href="https://www.youtube.com/watch?v=cT54jkLmtZI" target="_blank" class="video-link">Watch Video</a>
+              </div>
+            </div>
+          </div>
+          <!-- PROMISES OF GOD -->
+          <div class="swiper-slide">
+            <div class="youtube-series-card">
+              <img src="./assets/pastoral-board/promises.jpg" alt="PROMISES OF GOD" class="series-image">
+              <h3 class="series-title">PROMISES OF GOD</h3>
+              <div class="video-links">
+                <a href="https://www.youtube.com/watch?v=so1auoaP-Jw" target="_blank" class="video-link">PART 1</a>
+                <a href="https://www.youtube.com/watch?v=9jlNov8m_Nk" target="_blank" class="video-link">PART 2</a>
+              </div>
+            </div>
+          </div>
+          <!-- GODLINESS WITH CONTENTMENT -->
+          <div class="swiper-slide">
+            <div class="youtube-series-card">
+              <img src="./assets/pastoral-board/content.jpg" alt="GODLINESS WITH CONTENTMENT" class="series-image">
+              <h3 class="series-title">GODLINESS WITH CONTENTMENT</h3>
+              <div class="video-links">
+                <a href="https://www.youtube.com/watch?v=64CVGKOvyLk" target="_blank" class="video-link">Watch Video</a>
+              </div>
+              <a href="pastoral-board.html" class="video-link" style="background: #4a5568; color: white; margin-top: 0.5rem;">VIEW PASTOR WIAFE PROFILE</a>
+            </div>
+          </div>
+          <!-- GO UP TO BETHEL -->
+          <div class="swiper-slide">
+            <div class="youtube-series-card">
+              <img src="./assets/pastoral-board/bethel.jpg" alt="GO UP TO BETHEL" class="series-image">
+              <h3 class="series-title">GO UP TO BETHEL</h3>
+              <div class="video-links">
+                <a href="https://www.youtube.com/watch?v=KP-3Va3O0dk" target="_blank" class="video-link">Watch Video</a>
+              </div>
+              <a href="pastoral-board.html" class="video-link" style="background: #4a5568; color: white; margin-top: 0.5rem;">VIEW PASTOR WIAFE PROFILE</a>
+            </div>
+          </div>
+          <!-- 11th Anniversary Celebration -->
+          <div class="swiper-slide">
+            <div class="youtube-series-card">
+              <img src="./assets/pastoral-board/amin.jpg" alt="11th Anniversary Celebration" class="series-image">
+              <h3 class="series-title">11th Anniversary Celebration</h3>
+              <div class="video-links">
+                <a href="https://www.youtube.com/watch?v=ZPd87lQT9bg" target="_blank" class="video-link">Watch Video</a>
+              </div>
+            </div>
+          </div>
+          <!-- Youth VS Church Cooking Competition -->
+          <div class="swiper-slide">
+            <div class="youtube-series-card">
+              <img src="./assets/pastoral-board/cooking.webp" alt="Youth VS Church Cooking Competition" class="series-image">
+              <h3 class="series-title">Youth VS Church Cooking Competition</h3>
+              <div class="video-links">
+                <a href="https://www.youtube.com/watch?v=Fncx0Trfqio" target="_blank" class="video-link">Watch Video</a>
+              </div>
+            </div>
+          </div>
+          <!-- 2024 MENS WEEK CELEBRATION -->
+          <div class="swiper-slide">
+            <div class="youtube-series-card">
+              <img src="./assets/pastoral-board/olmen.jpg" alt="2024 MENS WEEK CELEBRATION" class="series-image">
+              <h3 class="series-title">2024 MENS WEEK CELEBRATION</h3>
+              <div class="video-links">
+                <a href="https://www.youtube.com/watch?v=3hCFLzLICJc" target="_blank" class="video-link">Watch Video</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </section>
+
+    <!-- YouTube Sermons Section -->
+    <section class="mb-12">
+      <h2 class="text-3xl font-serif text-blue-900 text-center mb-8">YouTube Sermons</h2>
+      <div class="swiper youtube-sermons-swiper">
+        <div class="swiper-wrapper">
+          <!-- Series 1: DO NOT FALL OUT OF GRACE -->
+          <div class="swiper-slide">
+            <div class="youtube-series-card">
+              <img src="./assets/pastoral-board/grace-card.jpg" alt="DO NOT FALL OUT OF GRACE" class="series-image">
+              <h3 class="series-title">DO NOT FALL OUT OF GRACE</h3>
+              <div class="video-links">
+                <a href="https://www.youtube.com/watch?v=OJddJFhqtFE" target="_blank" class="video-link">PART 1</a>
+                <a href="https://www.youtube.com/watch?v=LwMh8WwrdnY" target="_blank" class="video-link">PART 1B</a>
+                <a href="https://www.youtube.com/watch?v=j4YnX88XXFU" target="_blank" class="video-link">PART 2A</a>
+                <a href="https://www.youtube.com/watch?v=fhofjOMLub4" target="_blank" class="video-link">PART 2B</a>
+                <a href="https://www.youtube.com/watch?v=TuyEhw2y3Dk" target="_blank" class="video-link">PART 3A</a>
+                <a href="https://www.youtube.com/watch?v=XtGe_4r5EUQ" target="_blank" class="video-link">PART 3B</a>
+              </div>
+            </div>
+          </div>
+          <!-- Series 2: BE CAREFUL WHO YOU FOLLOW -->
+          <div class="swiper-slide">
+            <div class="youtube-series-card">
+              <img src="./assets/pastoral-board/follow-card.jpg" alt="BE CAREFUL WHO YOU FOLLOW" class="series-image">
+              <h3 class="series-title">BE CAREFUL WHO YOU FOLLOW</h3>
+              <div class="video-links">
+                <a href="https://www.youtube.com/watch?v=Nx68oTGgTzE" target="_blank" class="video-link">PART 1A</a>
+                <a href="https://www.youtube.com/watch?v=CFdpZtao2xQ" target="_blank" class="video-link">PART 1B</a>
+                <a href="https://www.youtube.com/watch?v=l1wTTXbp9Xg" target="_blank" class="video-link">PART 2A</a>
+                <a href="https://www.youtube.com/watch?v=pN62nPm5Db0" target="_blank" class="video-link">PART 2B</a>
+              </div>
+            </div>
+          </div>
+          <!-- Series 3: BE CAREFUL WHERE YOU LAY YOUR HEAD -->
+          <div class="swiper-slide">
+            <div class="youtube-series-card">
+              <img src="./assets/pastoral-board/lay-head-card.png" alt="BE CAREFUL WHERE YOU LAY YOUR HEAD" class="series-image">
+              <h3 class="series-title">BE CAREFUL WHERE YOU LAY YOUR HEAD</h3>
+              <div class="video-links">
+                <a href="https://www.youtube.com/watch?v=-Brl29Iebc0" target="_blank" class="video-link">PART A</a>
+                <a href="https://www.youtube.com/watch?v=UFEt4wGwrmQ" target="_blank" class="video-link">PART B</a>
+              </div>
+            </div>
+          </div>
+          <!-- Standalone: KEEPING THE CONVENANT WITH GOD -->
+          <div class="swiper-slide">
+            <div class="youtube-series-card standout-card">
+              <img src="./assets/pastoral-board/convenant-card.jpg" alt="KEEPING THE CONVENANT WITH GOD" class="series-image">
+              <h3 class="series-title">KEEPING THE CONVENANT WITH GOD</h3>
+              <div class="video-links">
+                <a href="https://www.youtube.com/watch?v=p7u8JcFXWGM" target="_blank" class="video-link">Watch Video</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+      <div class="mt-8 text-center">
+        <a href="https://www.youtube.com/playlist?list=PLnj9GGoq1MGPLQbowZuhsHc2m3sosvldl" target="_blank" class="px-5 py-2 bg-red-600 text-white rounded-full font-semibold shadow hover:bg-red-700 transition">View All Sermons on YouTube</a>
+      </div>
+    </section>
+
+    <!-- TuneIn Sermons Section -->
+    <section class="mb-12">
+      <h2 class="text-3xl font-serif text-blue-900 text-center mb-8">TuneIn Sermons</h2>
+      <div class="swiper sermons-swiper">
+        <div class="swiper-wrapper">
+          <!-- Sermon 1 -->
+          <div class="swiper-slide">
+            <div class="sermon-card">
+              <img src="tunein-icon.svg" alt="TuneIn Logo" class="tunein-logo">
+              <h3>The Power of Prayer</h3>
+              <p>May 19, 2024</p>
+              <iframe src="https://tunein.com/embed/player/p1187330/?topicId=158194612" width="100%" height="100" frameborder="0" allowfullscreen style="border-radius: 12px;"></iframe>
+            </div>
+          </div>
+          <!-- Sermon 2 -->
+          <div class="swiper-slide">
+            <div class="sermon-card">
+              <img src="tunein-icon.svg" alt="TuneIn Logo" class="tunein-logo">
+              <h3>The Blessing of Abraham</h3>
+              <p>May 12, 2024</p>
+              <iframe src="https://tunein.com/embed/player/p1187330/?topicId=158194611" width="100%" height="100" frameborder="0" allowfullscreen style="border-radius: 12px;"></iframe>
+            </div>
+          </div>
+          <!-- Sermon 3 -->
+          <div class="swiper-slide">
+            <div class="sermon-card">
+              <img src="tunein-icon.svg" alt="TuneIn Logo" class="tunein-logo">
+              <h3>The Power of Thanksgiving</h3>
+              <p>May 5, 2024</p>
+              <iframe src="https://tunein.com/embed/player/p1187330/?topicId=158194610" width="100%" height="100" frameborder="0" allowfullscreen style="border-radius: 12px;"></iframe>
+            </div>
+          </div>
+          <!-- Sermon 4 -->
+          <div class="swiper-slide">
+            <div class="sermon-card">
+              <img src="tunein-icon.svg" alt="TuneIn Logo" class="tunein-logo">
+              <h3>The Power of the Blood</h3>
+              <p>April 28, 2024</p>
+              <iframe src="https://tunein.com/embed/player/p1187330/?topicId=158194609" width="100%" height="100" frameborder="0" allowfullscreen style="border-radius: 12px;"></iframe>
+            </div>
+          </div>
+          <!-- Sermon 5 -->
+          <div class="swiper-slide">
+            <div class="sermon-card">
+              <img src="tunein-icon.svg" alt="TuneIn Logo" class="tunein-logo">
+              <h3>The Power of the Resurrection</h3>
+              <p>April 21, 2024</p>
+              <iframe src="https://tunein.com/embed/player/p1187330/?topicId=158194608" width="100%" height="100" frameborder="0" allowfullscreen style="border-radius: 12px;"></iframe>
+            </div>
+          </div>
+          <!-- Sermon 6 -->
+          <div class="swiper-slide">
+            <div class="sermon-card">
+              <img src="tunein-icon.svg" alt="TuneIn Logo" class="tunein-logo">
+              <h3>The Power of the Cross</h3>
+              <p>April 14, 2024</p>
+              <iframe src="https://tunein.com/embed/player/p1187330/?topicId=158194607" width="100%" height="100" frameborder="0" allowfullscreen style="border-radius: 12px;"></iframe>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+      <div class="mt-8 text-center">
+        <a href="https://tunein.com/podcasts/Religion--Spirituality-Podcas/REV-HENRY-AMPOMAH-BOATENG(GEN--OVERSEER-GPCC)-p1187330/" target="_blank" class="px-5 py-2 bg-blue-700 text-white rounded-full font-semibold shadow hover:bg-blue-900 transition">View All Sermons on TuneIn</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER (copied from media-center.html) -->
+  <footer class="w-full bg-[#181c17] relative mt-12">
+    <div class="absolute inset-0 w-full h-full">
+      <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-40">
+        <source src="logo-animated.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="absolute inset-0 bg-black/40"></div>
+    </div>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 py-8 flex flex-col md:flex-row md:justify-between md:items-start text-white">
+      <div class="mb-6 md:mb-0">
+        <div class="mb-3">
+          <span class="font-semibold">Address:</span><br>
+          P. O. Box AN 11587, Accra-North<br>
+          ABLOR ADJEI OFF THE AGBOGBA-ABOKOBI ROAD
+        </div>
+        <div class="mb-3">
+          <span class="font-semibold">Contact:</span><br>
+          <span class="block">+233 (208) 180 188 &nbsp; +233 (246) 224 766</span>
+          <a href="mailto:info@gpcconline.org" class="text-blue-200 underline hover:text-blue-400">info@gpcconline.org</a>
+        </div>
+        <div class="text-xs mt-2">&copy; 2025 GPCC. All rights reserved.</div>
+      </div>
+      <div class="flex flex-col items-end">
+        <div class="mb-3 text-gray-200 font-medium">Social Links</div>
+        <div class="flex gap-4 mb-4">
+          <a href="#" aria-label="Facebook" class="hover:text-blue-400"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="whatsapp-btn" class="hover:text-pink-400"><i class="fab fa-whatsapp"></i></a>
+          <a href="#" aria-label="YouTube" class="hover:text-red-400"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <!-- SCRIPTS (copied from media-center.html for header/footer functionality) -->
+  <script>
+    // Desktop ABOUT US toggle
+    const aboutBtn = document.getElementById('about-us-desktop-btn');
+    const aboutDropdown = document.getElementById('about-us-desktop-dropdown');
+    let aboutOpen = false;
+    aboutBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      aboutDropdown.classList.toggle('hidden');
+      aboutOpen = !aboutOpen;
+      document.addEventListener('click', function handler(ev) {
+        if (aboutOpen && !aboutDropdown.contains(ev.target) && ev.target !== aboutBtn) {
+          aboutDropdown.classList.add('hidden');
+          aboutOpen = false;
+          document.removeEventListener('click', handler);
+        }
+      });
+    });
+
+    /* === Added: Unified scroll lock manager === */
+    let __scrollY = 0;
+    let __lockCount = 0;
+    function lockBody() {
+      if (__lockCount === 0) {
+        __scrollY = window.scrollY || document.documentElement.scrollTop;
+        document.body.classList.add('modal-open');
+        document.body.style.top = `-${__scrollY}px`;
+      }
+      __lockCount++;
+    }
+    function unlockBody() {
+      if (__lockCount === 0) return;
+      __lockCount--;
+      if (__lockCount === 0) {
+        document.body.classList.remove('modal-open');
+        document.body.style.top = '';
+        window.scrollTo(0, __scrollY);
+      }
+    }
+
+    /* === Mobile Menu toggle === */
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobilePanel = document.getElementById('mobile-panel');
+    const iconHamburger = document.querySelector('#menu-toggle .icon-hamburger');
+    const iconClose = document.querySelector('#menu-toggle .icon-close');
+
+    function openMobileNav() {
+      if (!mobileMenu.classList.contains('hidden')) return;
+      mobileMenu.classList.remove('hidden');
+      mobilePanel.classList.add('mobile-menu-anim');
+      menuToggle.setAttribute('aria-expanded', 'true');
+      menuToggle.setAttribute('aria-label', 'Close Menu');
+      menuToggle.classList.add('open');
+      iconHamburger?.classList.add('hidden');
+      iconClose?.classList.remove('hidden');
+      lockBody();
+    }
+    function closeMobileNav() {
+      if (mobileMenu.classList.contains('hidden')) return;
+      mobileMenu.classList.add('hidden');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.setAttribute('aria-label', 'Open Menu');
+      menuToggle.classList.remove('open');
+      iconClose?.classList.add('hidden');
+      iconHamburger?.classList.remove('hidden');
+      unlockBody();
+    }
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (mobileMenu.classList.contains('hidden')) openMobileNav();
+      else closeMobileNav();
+    });
+    mobileMenu.addEventListener('click', (e) => {
+      if (!mobilePanel.contains(e.target)) closeMobileNav();
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMobileNav(); });
+    window.matchMedia('(min-width:1024px)').addEventListener('change', e => { if (e.matches) closeMobileNav(); });
+
+    // Mobile ABOUT toggle
+    const mobileAboutToggle = document.getElementById('mobile-about-toggle');
+    const mobileAboutDropdown = document.getElementById('mobile-about-dropdown');
+    mobileAboutToggle.addEventListener('click', e => {
+      e.stopPropagation();
+      mobileAboutDropdown.classList.toggle('hidden');
+    });
+
+    // Particles.js Configuration
+    particlesJS('particles-js', {
+      "particles": {
+        "number": {
+          "value": 80,
+          "density": {
+            "enable": true,
+            "value_area": 800
+          }
+        },
+        "color": {
+          "value": "#ffffff"
+        },
+        "shape": {
+          "type": "circle",
+          "stroke": {
+            "width": 0,
+            "color": "#000000"
+          },
+          "polygon": {
+            "nb_sides": 5
+          },
+          "image": {
+            "src": "img/github.svg",
+            "width": 100,
+            "height": 100
+          }
+        },
+        "opacity": {
+          "value": 0.5,
+          "random": false,
+          "anim": {
+            "enable": false,
+            "speed": 1,
+            "opacity_min": 0.1,
+            "sync": false
+          }
+        },
+        "size": {
+          "value": 3,
+          "random": true,
+          "anim": {
+            "enable": false,
+            "speed": 40,
+            "size_min": 0.1,
+            "sync": false
+          }
+        },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#ffffff",
+          "opacity": 0.4,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 6,
+          "direction": "none",
+          "random": false,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false,
+          "attract": {
+            "enable": false,
+            "rotateX": 600,
+            "rotateY": 1200
+          }
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": true,
+            "mode": "repulse"
+          },
+          "onclick": {
+            "enable": true,
+            "mode": "push"
+          },
+          "resize": true
+        },
+        "modes": {
+          "grab": {
+            "distance": 400,
+            "line_linked": {
+              "opacity": 1
+            }
+          },
+          "bubble": {
+            "distance": 400,
+            "size": 40,
+            "duration": 2,
+            "opacity": 8,
+            "speed": 3
+          },
+          "repulse": {
+            "distance": 200,
+            "duration": 0.4
+          },
+          "push": {
+            "particles_nb": 4
+          },
+          "remove": {
+            "particles_nb": 2
+          }
+        }
+      },
+      "retina_detect": true
+    });
+
+    // YouTube Sermons Swiper with Coverflow Effect
+    new Swiper('.youtube-sermons-swiper', {
+      effect: 'coverflow',
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: 'auto',
+      coverflowEffect: {
+        rotate: 50,
+        stretch: 0,
+        depth: 100,
+        modifier: 1,
+        slideShadows: true,
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      loop: true,
+      autoHeight: true,
+    });
+
+    // Sermons Swiper with Coverflow Effect
+    new Swiper('.sermons-swiper', {
+      effect: 'coverflow',
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: 'auto',
+      coverflowEffect: {
+        rotate: 50,
+        stretch: 0,
+        depth: 100,
+        modifier: 1,
+        slideShadows: true,
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+      },
+      loop: true,
+    });
+  </script>
+</body>
+</html>
