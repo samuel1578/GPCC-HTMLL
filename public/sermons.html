@@ -228,7 +228,7 @@
           <ul id="about-us-desktop-dropdown"
     class="absolute top-full left-0 mt-2 hidden bg-white border border-blue-200 rounded-lg shadow-lg w-72 py-2"
     role="menu">
-  <li><a href="who-we-are.html" class="block px-4 py-2 hover:bg-blue-50">Who We Are</a></li>
+  <li><a href="who.html" class="block px-4 py-2 hover:bg-blue-50">Who We Are</a></li>
   <li><a href="pastoral-board.html" class="block px-4 py-2 hover:bg-blue-50">The Leadership</a></li>
   <li><a href="community-journey.html" class="block px-4 py-2 hover:bg-blue-50">Our Journey Through the Community</a></li>
   <li><a href="testimonies.html" class="block px-4 py-2 hover:bg-blue-50">Testimonies</a></li>
@@ -274,7 +274,7 @@
               </svg>
             </button>
             <ul id="mobile-about-dropdown" class="hidden mt-2 space-y-2">
-  <li><a href="who-we-are.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Who We Are</a></li>
+  <li><a href="who.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Who We Are</a></li>
   <li><a href="pastoral-board.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">The Leadership</a></li>
   <li><a href="community-journey.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Our Journey Through the Community</a></li>
   <li><a href="testimonies.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Testimonies</a></li>
@@ -291,19 +291,19 @@
   </header>
 
   <!-- Spacer for fixed header -->
-  <div class="h-[20px] sm:h-[25px] md:h-[40px]"></div>
+  <div class="h-[72px] sm:h-[80px] md:h-[88px]"></div>
 
   <!-- HERO SECTION with Particles -->
-  <section class="w-full max-w-5xl mx-auto mt-0 px-4 text-center">
+  <section class="w-full max-w-5xl mx-auto mt-4 px-4 text-center">
     <div class="hero-particles">
       <div id="particles-js"></div>
-      <div class="hero-content">
+      <div class="hero-content mx-auto flex flex-col items-center justify-center">
         <h2 class="text-xl sm:text-2xl font-serif italic text-white drop-shadow-md tracking-wide mb-4"
             style="font-family:'Playfair Display', serif;">
            Welcome to the 
         </h2>
-        <h1 class="hero-title">Sermons</h1>
-        <p class="hero-subtitle">Listen to powerful messages and teachings from our pastors and guest speakers. Be inspired and uplifted by God's word.</p>
+        <h1 class="hero-title text-center">Sermons</h1>
+        <p class="hero-subtitle text-center max-w-2xl">Listen to powerful messages and teachings from our pastors and guest speakers. Be inspired and uplifted by God's word.</p>
       </div>
     </div>
   </section>
@@ -799,12 +799,13 @@
       "retina_detect": true
     });
 
-    // YouTube Sermons Swiper with Coverflow Effect
+    // Latest Sermons Swiper with Coverflow Effect - starts at second slide
     new Swiper('.youtube-sermons-swiper', {
       effect: 'coverflow',
       grabCursor: true,
       centeredSlides: true,
       slidesPerView: 'auto',
+      initialSlide: 1, // Start at the second slide (index 1)
       coverflowEffect: {
         rotate: 50,
         stretch: 0,
@@ -820,7 +821,7 @@
       autoHeight: true,
     });
 
-    // Sermons Swiper with Coverflow Effect
+    // TuneIn Sermons Swiper with Coverflow Effect - leave as is (starts at first slide)
     new Swiper('.sermons-swiper', {
       effect: 'coverflow',
       grabCursor: true,

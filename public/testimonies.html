@@ -1578,7 +1578,7 @@
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6"/></path></svg>
           </button>
           <ul id="about-us-desktop-dropdown" class="absolute top-full left-0 mt-2 hidden bg-white border border-blue-200 rounded-lg shadow-lg w-auto min-w-[30rem] py-2" role="menu">
-            <li><a href="who-we-are.html" class="block w-full px-4 pr-6 py-2 hover:bg-blue-50 whitespace-nowrap">Who We Are</a></li>
+            <li><a href="who.html" class="block w-full px-4 pr-6 py-2 hover:bg-blue-50 whitespace-nowrap">Who We Are</a></li>
             <li><a href="pastoral-board.html" class="block w-full px-4 pr-6 py-2 hover:bg-blue-50 whitespace-nowrap">The Leadership</a></li>
             <li><a href="community-journey.html" class="block w-full px-4 pr-6 py-2 hover:bg-blue-50 whitespace-normal break-words">Our Journey Through the Community</a></li>
             <li><a href="testimonies.html" class="block w-full px-4 pr-6 py-2 hover:bg-blue-50 whitespace-nowrap">Testimonies</a></li>
@@ -1590,10 +1590,17 @@
         <a href="gallery.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">GALLERY</a>
         <a href="contact-us.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">CONTACT US</a>
       </nav>
-      <button id="menu-toggle" type="button" class="lg:hidden fixed top-2 right-4 focus:outline-none z-50" aria-label="Open Menu" aria-expanded="false">
+      <button id="menu-toggle"
+            type="button"
+            class="lg:hidden fixed top-2 right-4 focus:outline-none z-50"
+            aria-label="Open Menu" aria-expanded="false">
         <span class="hamburger-circle flex items-center justify-center w-12 h-12 rounded-full bg-blue-900 hover:bg-blue-700 shadow-xl ring-2 ring-blue-200 transition duration-200">
-          <svg class="icon-hamburger w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16"/></svg>
-          <svg class="icon-close w-7 h-7 text-white hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6l12 12M18 6l-12 12"/></svg>
+          <svg class="icon-hamburger w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+          <svg class="icon-close w-7 h-7 text-white hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6l12 12M18 6l-12 12" />
+          </svg>
         </span>
       </button>
     </div>
@@ -1613,7 +1620,7 @@
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6"/></svg>
             </button>
             <ul id="mobile-about-dropdown" class="hidden mt-2 space-y-2">
-              <li><a href="who-we-are.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Who We Are</a></li>
+              <li><a href="who.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Who We Are</a></li>
               <li><a href="pastoral-board.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">The Leadership</a></li>
               <li><a href="community-journey.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Our Journey Through the Community</a></li>
               <li><a href="testimonies.html" class="block px-4 py-2 bg-white rounded-lg border border-blue-200">Testimonies</a></li>
@@ -2261,21 +2268,57 @@
       });
     }
 
-    // Mobile menu + morph icons (sync open class)
+    // Mobile menu open/close with icon morphing
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
     const mobilePanel = document.getElementById('mobile-panel');
     const iconHamburger = document.querySelector('#menu-toggle .icon-hamburger');
     const iconClose = document.querySelector('#menu-toggle .icon-close');
-    let __scrollY=0, __lockCount=0;
-    function lockBody(){ if(__lockCount===0){ __scrollY=window.scrollY||document.documentElement.scrollTop; document.body.classList.add('modal-open'); document.body.style.top=`-${__scrollY}px`; } __lockCount++; }
-    function unlockBody(){ if(__lockCount===0) return; __lockCount--; if(__lockCount===0){ document.body.classList.remove('modal-open'); document.body.style.top=''; window.scrollTo(0,__scrollY); }}
-    function openMobileNav(){ if(!mobileMenu || !menuToggle) return; if(!mobileMenu.classList.contains('hidden')) return; mobileMenu.classList.remove('hidden'); menuToggle.setAttribute('aria-expanded','true'); menuToggle.setAttribute('aria-label','Close Menu'); menuToggle.classList.add('open'); iconHamburger?.classList.add('hidden'); iconClose?.classList.remove('hidden'); lockBody(); }
-    function closeMobileNav(){ if(!mobileMenu || !menuToggle) return; if(mobileMenu.classList.contains('hidden')) return; mobileMenu.classList.add('hidden'); menuToggle.setAttribute('aria-expanded','false'); menuToggle.setAttribute('aria-label','Open Menu'); menuToggle.classList.remove('open'); iconClose?.classList.add('hidden'); iconHamburger?.classList.remove('hidden'); unlockBody(); }
-    menuToggle?.addEventListener('click', e=>{ e.stopPropagation(); if (mobileMenu.classList.contains('hidden')) openMobileNav(); else closeMobileNav(); });
-    mobileMenu?.addEventListener('click', e=>{ if (!mobilePanel.contains(e.target)) closeMobileNav(); });
-    document.addEventListener('keydown', e=>{ if (e.key==='Escape') closeMobileNav(); });
-    window.matchMedia('(min-width:1024px)').addEventListener('change', e=>{ if (e.matches) closeMobileNav(); });
+    
+    function openMobileNav() {
+      if (!mobileMenu || !menuToggle) return;
+      mobileMenu.classList.remove('hidden');
+      menuToggle.setAttribute('aria-expanded', 'true');
+      menuToggle.setAttribute('aria-label', 'Close Menu');
+      menuToggle.classList.add('open');
+      iconHamburger?.classList.add('hidden');
+      iconClose?.classList.remove('hidden');
+    }
+    
+    function closeMobileNav() {
+      if (!mobileMenu || !menuToggle) return;
+      mobileMenu.classList.add('hidden');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.setAttribute('aria-label', 'Open Menu');
+      menuToggle.classList.remove('open');
+      iconClose?.classList.add('hidden');
+      iconHamburger?.classList.remove('hidden');
+    }
+    
+    menuToggle?.addEventListener('click', function(e){
+      e.stopPropagation();
+      if (mobileMenu.classList.contains('hidden')) {
+        openMobileNav();
+      } else {
+        closeMobileNav();
+      }
+    });
+    
+    mobileMenu?.addEventListener('click', function(e){
+      if (!mobilePanel.contains(e.target)) {
+        closeMobileNav();
+      }
+    });
+    document.addEventListener('click', function(e){
+      if (!mobileMenu || mobileMenu.classList.contains('hidden')) return;
+      const t = e.target;
+      if (!mobilePanel.contains(t) && t !== menuToggle && !menuToggle.contains(t)) closeMobileNav();
+    });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape') closeMobileNav();
+    });
+    const mq = window.matchMedia('(min-width: 1024px)');
+    mq.addEventListener('change', (e) => { if (e.matches) closeMobileNav(); });
 
     // Mobile ABOUT toggle
     const mobileAboutToggle = document.getElementById('mobile-about-toggle');
