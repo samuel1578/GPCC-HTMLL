@@ -45,6 +45,7 @@
       box-shadow: 0 12px 28px -10px rgba(37,99,235,.55); 
       border: 1px solid rgba(255,255,255,.28); 
       transition: background .2s, box-shadow .2s, transform .15s; 
+      line-height: 0;
     }
     #menu-toggle .hamburger-circle:hover { 
       transform: translateY(-1px); 
@@ -58,27 +59,31 @@
       color:#1d4ed8 !important; 
     }
 
-    /* Added: unified header styles to match index */
+    /* Added: unified header styles to match index - INCREASED SIZES FOR py-2 HEADER */
     .font-fjalla { font-family:'Fjalla One',sans-serif; letter-spacing:.5px; }
-    .header-brand-img { height:48px; width:48px; object-fit:contain; border: 0 !important; box-shadow: none !important; background: transparent !important; }
-    @media (min-width:1024px){ .header-brand-img { height:50px; width:50px; } }
-    .header-brand-text { font-size:calc(1.125rem + 2px); line-height:1.1; }
-    @media (min-width:640px){ .header-brand-text { font-size:calc(1.25rem + 2px); } }
-    @media (min-width:1024px){ .header-brand-text { font-size:calc(1.25rem + 2px); } }
-    #menu-toggle .hamburger-circle { line-height:0; }
+    .header-brand-img { height:54px; width:54px; object-fit:contain; border: 0 !important; box-shadow: none !important; background: transparent !important; }
+    @media (min-width:1024px){ .header-brand-img { height:58px; width:58px; } }
+    .header-brand-text { font-size:calc(1.25rem + 3px); line-height:1.1; }
+    @media (min-width:640px){ .header-brand-text { font-size:calc(1.375rem + 3px); } }
+    @media (min-width:1024px){ .header-brand-text { font-size:calc(1.375rem + 3px); } }
+    @media (min-width:1024px){
+      /* Tighter desktop nav to avoid overlap */
+      #desktop-nav { padding: 0.35rem 0.75rem !important; gap: 0.5rem !important; flex-wrap: wrap; }
+      #desktop-nav a, #desktop-nav button { padding: 0.35rem 0.75rem !important; font-size: 0.95rem !important; }
+    }
   </style>
 </head>
 <body class="bg-[#badcf7] font-sans events-page"><!-- added events-page -->
   <!-- REPLACED HEADER -->
   <header class="fixed top-0 left-0 w-full z-[80] bg-white/80 backdrop-blur border-b border-blue-200">
-    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-1 flex items-center justify-between">
-      <a href="index.html" class="flex items-center gap-2">
-        <img src="logo.png" alt="GPCC Logo" class="header-brand-img rounded-sm"><!-- Removed border and bg-transparent -->
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-2 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2 flex-shrink-0">
+        <img src="logo.png" alt="GPCC Logo" class="header-brand-img rounded-sm">
         <span class="font-fjalla header-brand-text text-blue-900 inline lg:hidden">Global Peace Christian Centre</span>
-        <span class="hidden lg:inline font-fjalla header-brand-text text-blue-900">Global Peace Christian Centre</span>
+        <span class="hidden lg:inline font-fjalla header-brand-text text-blue-900 whitespace-nowrap">Global Peace Christian Centre</span>
       </a>
       <nav id="desktop-nav"
-           class="hidden lg:flex relative items-center gap-4 bg-white/70 rounded-full border-2 border-blue-900 px-6 py-2 shadow-lg">
+           class="hidden lg:flex relative items-center gap-4 flex-wrap bg-white/70 rounded-full border-2 border-blue-900 px-6 py-2 shadow-lg">
         <a href="index.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">HOME</a>
         <div class="relative">
           <button id="about-us-desktop-btn"
@@ -120,7 +125,7 @@
       </button>
     </div>
     <div id="mobile-menu"
-         class="fixed inset-x-0 top-[60px] bottom-0 hidden justify-start items-start bg-[#badcf7]/95 z-[60] lg:hidden">
+         class="fixed inset-x-0 top-[68px] bottom-0 hidden justify-start items-start bg-[#badcf7]/95 z-[60] lg:hidden">
       <div id="mobile-panel"
            class="absolute right-4 top-4 w-80 px-2 py-4 rounded-2xl bg-white shadow-2xl border border-blue-200 text-center glass modal-animate">
         <!-- panel header with logo + brand -->
@@ -158,7 +163,7 @@
     </div>
   </header>
 
-  <div class="h-[72px]"></div>
+  <div class="h-[68px]"></div>
 
   <!-- Men's Week Featured Event - Now First -->
   <section class="w-full max-w-6xl mx-auto px-4 mt-2">

@@ -7,26 +7,25 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400;700&display=swap" rel="stylesheet">
+  <!-- REMOVED: Abri    /* INIT: mobile section swipers */es -->
   <!-- SwiperJS CDN -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <style>
     /* Header/Hamburger overrides */
     .font-fjalla { font-family: 'Fjalla One', sans-serif; letter-spacing:.5px; }
-    .header-brand-img { height:48px; width:48px; object-fit:contain; border:0 !important; background:transparent !important; box-shadow:none !important; }
+    .header-brand-img { height:48px; width:48px; object-fit:contain; border: 0 !important; box-shadow: none !important; background: transparent !important; }
     @media (min-width:1024px){ .header-brand-img { height:50px; width:50px; } }
     .header-brand-text { font-size:calc(1.125rem + 2px); line-height:1.1; }
     @media (min-width:640px){ .header-brand-text { font-size:calc(1.25rem + 2px); } }
     @media (min-width:1024px){ .header-brand-text { font-size:calc(1.25rem + 2px); } }
-    @media (min-width:1024px){ #desktop-nav { padding:.35rem .75rem !important; gap:.5rem !important; flex-wrap:wrap; } #desktop-nav a, #desktop-nav button { padding:.35rem .75rem !important; font-size:.95rem !important; } }
-    /* Hamburger refinements */
-    #menu-toggle .hamburger-circle { background: linear-gradient(135deg,#1e40af,#2563eb); box-shadow: 0 12px 28px -10px rgba(37,99,235,.55); border: 1px solid rgba(255,255,255,.28); transition: background .2s, box-shadow .2s, transform .15s; line-height:0; }
-    #menu-toggle .hamburger-circle:hover { transform: translateY(-1px); }
-    #menu-toggle.open .hamburger-circle { background: transparent !important; box-shadow: none !important; border-color: transparent; }
-    #menu-toggle.open .icon-close { color:#1d4ed8 !important; }
-    body.modal-open { position:fixed; inset:0; overflow:hidden; width:100%; }
+    @media (min-width:1024px){
+      /* Tighter desktop nav to avoid overlap */
+      #desktop-nav { padding: 0.35rem 0.75rem !important; gap: 0.5rem !important; flex-wrap: wrap; }
+      #desktop-nav a, #desktop-nav button { padding: 0.35rem 0.75rem !important; font-size: 0.95rem !important; }
+    }
+    #menu-toggle .hamburger-circle { line-height:0; }
 
     body{background:#badcf7;font-family:'Fjalla One',sans-serif;-webkit-font-smoothing:antialiased;}
     .pattern:before{
@@ -148,347 +147,48 @@
     .lb-swiper .swiper-pagination-bullet-active{background:#ef4444;opacity:1;box-shadow:0 0 0 2px #1d4ed8}
     .lb-caption{margin-top:.85rem;text-align:center;font-family:'Playfair Display',serif;font-weight:600;color:#fff;font-size:.95rem;letter-spacing:.35px}
 
-    /* UPDATED: remove white gaps, enforce fill and consistent backgrounds */
-    .g-card,
-    .mobile-swiper .swiper-slide {
-      background:#badcf7; /* was #fff */
-    }
-    .g-card img,
-    .mobile-swiper .swiper-slide img {
-      width:100%;
-      height:100%;
-      object-fit:cover;          /* fill box */
-      object-position:center;    /* center focus */
-      display:block;
-      background:#badcf7;        /* for transparent PNG regions */
-    }
-    /* If any very short image still leaves gap, stretch subtly */
-    .mobile-swiper .swiper-slide img {
-      image-rendering:auto;
-    }
-
-    /* Pagination bullets below container (no overlay) */
-    .mobile-swiper {
-      padding-bottom:0;              /* remove default space */
-      margin-bottom:1.05rem;         /* space for bullets after container */
-      position:relative;
-    }
-    .mobile-swiper .swiper-pagination {
-      position:static !important;    /* take out of absolute layering */
-      margin-top:.65rem;
-      display:flex;
-      justify-content:center;
-      gap:.45rem;
-    }
-    .mobile-swiper .swiper-pagination-bullet {
-      background:#1d4ed8;
-      opacity:.45;
-      width:10px;
-      height:10px;
-      transition:transform .25s, opacity .25s;
-    }
-    .mobile-swiper .swiper-pagination-bullet-active {
-      background:#ef4444;
-      opacity:1;
-      transform:scale(1.18);
-      box-shadow:0 0 0 3px #badcf7;
-    }
-
-    /* Desktop cards: also remove internal white if PNG has alpha */
-    .g-card {
-      background:#badcf7;
-    }
-
-    /* Lightbox slides keep pure black for contrast (unchanged) */
-
-    /* NEW: ash hero background (not white) */
-    .hero-ash{
-      /* Lighter blue blend (previous ash-blue replaced) */
-      background:linear-gradient(135deg,#ecf6fc 0%,#d9eef9 45%,#cbe6f4 100%);
-      border:2px solid #d5e9f3;
-    }
-
-    /* Added: lock page scroll when popup open */
-    body.modal-open {
-      position: fixed;
-      inset: 0;
-      overflow: hidden;
-      width: 100%;
-    }
-    
-    /* Glass effect for mobile panel */
-    .glass {
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(12px) saturate(180%);
-      box-shadow: 0 6px 36px 0 rgba(55,100,150,0.25);
-      border: 2px solid #dbeafe;
-    }
-    
-    /* Modal animation */
-    .modal-animate {
-      animation: modalPop .4s cubic-bezier(.35,.85,.39,1.1);
-    }
-    @keyframes modalPop {
-      0% { opacity: 0; transform: scale(0.9);}
-      100% { opacity: 1; transform: scale(1);}
-    }
-
-    /* Hamburger button refinements */
-    #menu-toggle .hamburger-circle { 
-      background: linear-gradient(135deg,#1e40af,#2563eb); 
-      box-shadow: 0 12px 28px -10px rgba(37,99,235,.55); 
-      border: 1px solid rgba(255,255,255,.28); 
-      transition: background .2s, box-shadow .2s, transform .15s; 
-    }
-    #menu-toggle .hamburger-circle:hover { 
-      transform: translateY(-1px); 
-    }
-    #menu-toggle.open .hamburger-circle { 
-      background: transparent !important; 
-      box-shadow: none !important; 
-      border-color: transparent; 
-    }
-    #menu-toggle.open .icon-close { 
-      color:#1d4ed8 !important; 
-    }
-
-    /* Added: unified header styles to match index */
+    /* UPDATED: unified header styles to match index exactly */
     .font-fjalla { font-family:'Fjalla One',sans-serif; letter-spacing:.5px; }
-    .header-brand-img { height:48px; width:48px; object-fit:contain; }
+    .header-brand-img { height:48px; width:48px; object-fit:contain; border: 0 !important; box-shadow: none !important; background: transparent !important; }
     @media (min-width:1024px){ .header-brand-img { height:50px; width:50px; } }
     .header-brand-text { font-size:calc(1.125rem + 2px); line-height:1.1; }
     @media (min-width:640px){ .header-brand-text { font-size:calc(1.25rem + 2px); } }
     @media (min-width:1024px){ .header-brand-text { font-size:calc(1.25rem + 2px); } }
+    @media (min-width:1024px){
+      /* Tighter desktop nav to avoid overlap */
+      #desktop-nav { padding: 0.35rem 0.75rem !important; gap: 0.5rem !important; flex-wrap: wrap; }
+      #desktop-nav a, #desktop-nav button { padding: 0.35rem 0.75rem !important; font-size: 0.95rem !important; }
+    }
     #menu-toggle .hamburger-circle { line-height:0; }
 
-    /* Mobile menu styles (for completeness) */
-    #mobile-menu {
-      @apply fixed inset-x-0 top-[60px] bottom-0 hidden justify-start items-start bg-[#badcf7]/95 z-[60] lg:hidden;
-    }
-    #mobile-panel {
-      @apply absolute right-4 top-4 w-80 px-2 py-4 rounded-2xl bg-white shadow-2xl border border-blue-200 text-center glass modal-animate;
-    }
-    #mobile-panel .close-btn {
-      @apply absolute top-2 right-2 w-10 h-10 flex items-center justify-center rounded-full bg-blue-900 text-white;
-    }
-    #mobile-panel .close-btn:hover {
-      @apply bg-blue-700;
-    }
-    #mobile-panel nav a {
-      @apply block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold;
-    }
-    #mobile-panel nav a:hover {
-      @apply bg-blue-50;
-    }
+    /* Sync: Hamburger button refinements (match index.html) */
+    #menu-toggle .hamburger-circle { background: linear-gradient(135deg,#1e40af,#2563eb); box-shadow: 0 12px 28px -10px rgba(37,99,235,.55); border: 1px solid rgba(255,255,255,.28); transition: background .2s, box-shadow .2s, transform .15s; }
+    #menu-toggle .hamburger-circle:hover { transform: translateY(-1px); }
+    #menu-toggle.open .hamburger-circle { background: transparent !important; box-shadow: none !important; border-color: transparent; }
+    #menu-toggle.open .icon-close { color:#1d4ed8 !important; }
 
-    /* Directory List Styles */
-    .directory-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      max-width: 800px;
-      margin: 0 auto;
+    /* REMOVED: all bold font overrides on headings */
+    .gallery-section h3,
+    .section-banner-box h2,
+    h1, h2, h3, h4 {
+      font-weight: 600; /* match index.html weight */
     }
-    
-    .directory-item {
-      background: white;
-      border-radius: 12px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      border: 1px solid #e5e7eb;
-      transition: all 0.3s ease;
-      text-align: center;
-    }
-    
-    .directory-item:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-      border-color: #2563eb;
-    }
-    
-    .directory-content {
-      width: 100%;
-    }
-    
-    .directory-content h4 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #2563eb;
-      margin: 0 0 1rem 0;
-    }
-    
-    .directory-content p {
-      font-size: 1rem;
-      color: #4b5563;
-      margin: 0 0 1.5rem 0;
-      line-height: 1.6;
-    }
-    
-    .view-photos-btn {
-      background: #ef4444;
-      color: white;
-      font-weight: 600;
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      font-size: 0.95rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
-      display: inline-block;
-      text-decoration: none;
-    }
-    
-    .view-photos-btn:hover {
-      background: #dc2626;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
-    }
-    
-    /* Responsive adjustments */
-    @media (max-width: 640px) {
-      .directory-item {
-        padding: 1.25rem;
-      }
-      
-      .directory-content h4 {
-        font-size: 1.25rem;
-      }
-      
-      .directory-content p {
-        font-size: 0.95rem;
-      }
-    }
-
-    /* Gallery Swiper Styles */
-    .gallery-swiper {
-      width: 100%;
-      height: auto;
-      margin: 2rem 0;
-    }
-    
-    .gallery-swiper .swiper-slide {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 300px;
-    }
-    
-    .gallery-swiper .swiper-pagination {
-      position: static !important;
-      margin-top: 1rem;
-      text-align: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    
-    .gallery-swiper .swiper-pagination-bullet {
-      background: #2563eb;
-      opacity: 0.5;
-      width: 12px;
-      height: 12px;
-      margin: 0 6px;
-    }
-    
-    .gallery-swiper .swiper-pagination-bullet-active {
-      background: #ef4444;
-      opacity: 1;
-      transform: scale(1.2);
-    }
-    
-    .gallery-section {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 1rem;
-    }
-    
-    .gallery-section h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      font-weight: bold;
-      color: #2563eb;
-      text-align: center;
-      margin-bottom: 1.5rem;
-      position: relative;
-    }
-    
-    .gallery-section h3:after {
-      content: "";
-      position: absolute;
-      bottom: -8px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60px;
-      height: 3px;
-      background: linear-gradient(90deg, #2563eb, #ef4444);
-      border-radius: 2px;
-    }
-    
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1rem;
-      max-width: 100%;
-    }
-    
-    .gallery-item {
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    
-    .gallery-item:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-    }
-    
-    .gallery-item img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      transition: transform 0.3s ease;
-    }
-    
-    .gallery-item:hover img {
-      transform: scale(1.05);
-    }
-    
-    .gallery-item-caption {
-      padding: 1rem;
-      text-align: center;
-    }
-    
-    .gallery-item-title {
-      font-weight: 600;
-      color: #1e40af;
-      margin-bottom: 0.5rem;
-    }
-    
-    .gallery-item-date {
-      font-size: 0.875rem;
-      color: #6b7280;
-    }
-
   </style>
 </head>
 <body class="pattern">
 
-  <!-- HEADER / NAVBAR (updated) -->
+  <!-- HEADER / NAVBAR (no hamburger on desktop) -->
   <header class="fixed top-0 left-0 w-full z-[80] bg-white/80 backdrop-blur border-b border-blue-200">
     <div class="max-w-7xl mx-auto px-4 lg:px-8 py-1 flex items-center justify-between">
-      <a href="index.html" class="flex items-center gap-2">
-        <img src="logo.png" alt="GPCC Logo" class="header-brand-img rounded-sm border border-blue-900/40 bg-transparent">
+      <a href="index.html" class="flex items-center gap-2 flex-shrink-0">
+        <img src="logo.png" alt="GPCC Logo" class="header-brand-img rounded-sm">
         <span class="font-fjalla header-brand-text text-blue-900 inline lg:hidden">Global Peace Christian Centre</span>
-        <span class="hidden lg:inline font-fjalla header-brand-text text-blue-900">Global Peace Christian Centre</span>
+        <span class="hidden lg:inline font-fjalla header-brand-text text-blue-900 whitespace-nowrap">Global Peace Christian Centre</span>
       </a>
+      
+      <!-- Updated navbar to match the image and index.html exactly -->
       <nav id="desktop-nav"
-           class="hidden lg:flex relative items-center gap-4 bg-white/70 rounded-full border-2 border-blue-900 px-6 py-2 shadow-lg">
+           class="hidden lg:flex relative items-center gap-4 flex-wrap bg-white/70 rounded-full border-2 border-blue-900 px-6 py-2 shadow-lg">
         <a href="index.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">HOME</a>
         <div class="relative">
           <button id="about-us-desktop-btn"
@@ -511,12 +211,14 @@
         <a href="ministries.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MINISTRIES</a>
         <a href="events.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">EVENTS</a>
         <a href="media-center.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">MEDIA CENTER</a>
-        <a href="gallery.html" class="px-4 py-2 rounded-full bg-blue-900 text-white font-semibold shadow">GALLERY</a>
+        <a href="gallery.html" class="active px-4 py-2 rounded-full bg-blue-900 text-white font-semibold shadow">GALLERY</a>
         <a href="contact-us.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">CONTACT US</a>
       </nav>
+      
       <button id="menu-toggle"
-              class="lg:hidden fixed top-2 right-4 focus:outline-none z-50"
-              aria-label="Open Menu" aria-expanded="false">
+            type="button"
+            class="lg:hidden fixed top-2 right-4 focus:outline-none z-50"
+            aria-label="Open Menu" aria-expanded="false">
         <span class="hamburger-circle flex items-center justify-center w-12 h-12 rounded-full bg-blue-900 hover:bg-blue-700 shadow-xl ring-2 ring-blue-200 transition duration-200">
           <!-- Hamburger icon -->
           <svg class="icon-hamburger w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -540,11 +242,13 @@
             <span class="font-fjalla text-blue-900 text-lg">Global Peace Christian Centre</span>
           </div>
         </div>
+        <!-- internal close removed; hamburger morphs to close icon -->
         <nav class="space-y-4 mt-3">
           <a href="index.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">HOME</a>
           <div>
             <button id="mobile-about-toggle"
-                    class="w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold flex items-center justify-center gap-2 focus:outline-none">
+                    class="w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold flex items-center justify-center gap-2 focus:outline-none"
+                    aria-haspopup="true" aria-expanded="false">
               ABOUT US
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6"/>
@@ -560,7 +264,7 @@
           <a href="ministries.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MINISTRIES</a>
           <a href="events.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">EVENTS</a>
           <a href="media-center.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MEDIA CENTER</a>
-          <a href="gallery.html" class="block w-full px-5 py-3 rounded-full bg-blue-900 text-white font-semibold">GALLERY</a>
+          <a href="gallery.html" class="active block w-full px-5 py-3 rounded-full bg-blue-900 text-white font-semibold">GALLERY</a>
           <a href="contact-us.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">CONTACT US</a>
         </nav>
       </div>
@@ -709,8 +413,6 @@
           <div class="swiper-slide"><img data-group="sunday" data-index="5" src="./assets/pastoral-board/sunday-6.jpg" alt="Sunday Moment 6"></div>
           <div class="swiper-slide"><img data-group="sunday" data-index="6" src="./assets/pastoral-board/sunday-7.jpg" alt="Sunday Moment 7"></div>
           <div class="swiper-slide"><img data-group="sunday" data-index="7" src="./assets/pastoral-board/sunday-8.jpg" alt="Sunday Moment 8"></div>
-          <div class="swiper-slide"><img data-group="sunday" data-index="8" src="./assets/pastoral-board/sunday-9.jpg" alt="Sunday Moment 9"></div>
-          <div class="swiper-slide"><img data-group="sunday" data-index="9" src="./assets/pastoral-board/sunday-10.jpg" alt="Sunday Moment 10"></div>
         </div>
         <div class="swiper-pagination"></div>
       </div>
@@ -739,7 +441,7 @@
       <div class="g-card" data-group="anniv2023" data-index="8"><img src="./assets/pastoral-board/anniv2023-10.jpg" alt="10th Anniversary 8"></div>
       <div class="g-card" data-group="anniv2023" data-index="9"><img src="./assets/pastoral-board/anniv2023-11.jpg" alt="10th Anniversary 8"></div>
       <div class="g-card" data-group="anniv2023" data-index="10"><img src="./assets/pastoral-board/anniv2023-12.jpg" alt="10th Anniversary 8"></div>
-      <div class="g-card" data-group="anniv2023" data-index="1"><img src="./assets/pastoral-board/anniv2023-13.jpg" alt="10th Anniversary 8"></div>
+      <div class="g-card" data-group="anniv2023" data-index="11"><img src="./assets/pastoral-board/anniv2023-13.jpg" alt="10th Anniversary 8"></div>
     </div>
     <!-- Mobile Swiper -->
     <div class="mobile-only">
@@ -947,83 +649,9 @@
       initOnce('.anniv2023-swiper','__anniv2023Swiper');
     })();
 
-    // Initialize Gallery Swiper
-    const gallerySwiper = new Swiper('.gallery-swiper', {
-      // Enable pagination
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-        dynamicBullets: true,
-      },
-      
-      // Swiper settings
-      slidesPerView: 1,
-      spaceBetween: 30,
-      centeredSlides: true,
-      loop: false,
-      
-      // Enable touch/mouse interactions
-      allowTouchMove: true,
-      grabCursor: true,
-      
-      // Autoplay (optional - can be removed if not desired)
-      autoplay: {
-        delay: 8000,
-        disableOnInteraction: true,
-        pauseOnMouseEnter: true,
-      },
-      
-      // Smooth transitions
-      speed: 600,
-      effect: 'slide',
-      
-      // Navigation arrows (optional)
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-      
-      // Keyboard control
-      keyboard: {
-        enabled: true,
-        onlyInViewport: true,
-      },
-      
-      // Auto height adjustment
-      autoHeight: false,
-      
-      // Responsive breakpoints
-      breakpoints: {
-        640: {
-          slidesPerView: 1,
-          spaceBetween: 20,
-        },
-        768: {
-          slidesPerView: 1,
-          spaceBetween: 30,
-        },
-        1024: {
 
-          slidesPerView: 1,
-          spaceBetween: 40,
-        },
-      },
-    });
 
-    // Add loading state management
-    document.addEventListener('DOMContentLoaded', function() {
-      // Lazy load images when slide becomes active
-      gallerySwiper.on('slideChange', function () {
-        const activeSlide = document.querySelector('.swiper-slide-active');
-        const images = activeSlide.querySelectorAll('img[loading="lazy"]');
-        images.forEach(img => {
-          if (img.dataset.src) {
-            img.src = img.dataset.src;
-            img.removeAttribute('data-src');
-          }
-        });
-      });
-    });
+
 
     /* Lightbox (unchanged logic) */
     (function(){

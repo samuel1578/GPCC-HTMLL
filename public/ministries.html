@@ -40,6 +40,7 @@
       box-shadow: 0 12px 28px -10px rgba(37,99,235,.55); 
       border: 1px solid rgba(255,255,255,.28); 
       transition: background .2s, box-shadow .2s, transform .15s; 
+      line-height: 0;
     }
     #menu-toggle .hamburger-circle:hover { 
       transform: translateY(-1px); 
@@ -55,14 +56,17 @@
 
     /* Added: unified header styles to match index */
     .font-fjalla { font-family:'Fjalla One',sans-serif; letter-spacing:.5px; }
-    .header-brand-img { height:48px; width:48px; object-fit:contain; }
+    .header-brand-img { height:50px; width:50px; object-fit:contain; border: 0 !important; box-shadow: none !important; background: transparent !important; }
     @media (min-width:1024px){ .header-brand-img { height:50px; width:50px; } }
     .header-brand-text { font-size:calc(1.125rem + 2px); line-height:1.1; }
     @media (min-width:640px){ .header-brand-text { font-size:calc(1.25rem + 2px); } }
     @media (min-width:1024px){ .header-brand-text { font-size:calc(1.25rem + 2px); } }
-    #menu-toggle .hamburger-circle { line-height:0; }
+    @media (min-width:1024px){
+      /* Tighter desktop nav to avoid overlap */
+      #desktop-nav { padding: 0.35rem 0.75rem !important; gap: 0.5rem !important; flex-wrap: wrap; }
+      #desktop-nav a, #desktop-nav button { padding: 0.35rem 0.75rem !important; font-size: 0.95rem !important; }
+    }
 
-    .glass { background: rgba(255,255,255,0.92); backdrop-filter: blur(12px) saturate(180%); box-shadow: 0 6px 36px 0 rgba(55,100,150,0.25); border: 2px solid #dbeafe; }
     .card { border-radius: 1rem; background: white; border: 1px solid #e0e7ef; box-shadow: 0 6px 28px rgba(0,0,0,0.06); overflow: hidden; display: flex; flex-direction: column; }
     .card img { width: 100%; height: 180px; object-fit: cover; }
     @media (min-width: 640px) { .card img { height: 210px; } }
@@ -71,27 +75,20 @@
     .card-title { font-weight: 800; color: #0f2a67; }
     .card-desc { color: #4b5563; font-size: 0.95rem; line-height: 1.4; min-height: 3.5rem; }
     .badge { background: #eaf6fb; color: #2563eb; border: 1px solid #cfe7fb; font-size: .75rem; padding: .2rem .55rem; border-radius: .5rem; }
-    .font-fjalla { font-family:'Fjalla One',sans-serif; letter-spacing:.5px; }
-    .header-brand-img { height:48px; width:48px; object-fit:contain; }
-    @media (min-width:1024px){ .header-brand-img { height:50px; width:50px; } }
-    .header-brand-text { font-size:calc(1.125rem + 2px); line-height:1.1; }
-    @media (min-width:640px){ .header-brand-text { font-size:calc(1.25rem + 2px); } }
-    @media (min-width:1024px){ .header-brand-text { font-size:calc(1.25rem + 2px); } }
-    #menu-toggle .hamburger-circle { line-height:0; }
   </style>
 </head>
 <body class="bg-[#badcf7] font-sans">
 
-  <!-- REPLACED HEADER -->
+  <!-- HEADER / NAVBAR -->
   <header class="fixed top-0 left-0 w-full z-[80] bg-white/80 backdrop-blur border-b border-blue-200">
     <div class="max-w-7xl mx-auto px-4 lg:px-8 py-1 flex items-center justify-between">
-      <a href="index.html" class="flex items-center gap-2">
-        <img src="logo.png" alt="GPCC Logo" class="header-brand-img rounded-sm border border-blue-900/40 bg-transparent">
-        <span class="font-fjalla header-brand-text text-blue-900 inline lg:hidden">Global Peace Christian Centre</span>
-        <span class="hidden lg:inline font-fjalla header-brand-text text-blue-900">Global Peace Christian Centre</span>
+      <a href="index.html" class="flex items-center gap-2 flex-shrink-0">
+        <img src="logo.png" alt="GPCC Logo" class="header-brand-img rounded-sm">
+        <span class="font-fjalla text-blue-900 header-brand-text inline lg:hidden">Global Peace Christian Centre</span>
+        <span class="hidden lg:inline font-fjalla text-blue-900 header-brand-text whitespace-nowrap">Global Peace Christian Centre</span>
       </a>
       <nav id="desktop-nav"
-           class="hidden lg:flex relative items-center gap-4 bg-white/70 rounded-full border-2 border-blue-900 px-6 py-2 shadow-lg">
+           class="hidden lg:flex relative items-center gap-4 flex-wrap bg-white/70 rounded-full border-2 border-blue-900 px-6 py-2 shadow-lg">
         <a href="index.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">HOME</a>
         <div class="relative">
           <button id="about-us-desktop-btn"
@@ -117,15 +114,15 @@
         <a href="gallery.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">GALLERY</a>
         <a href="contact-us.html" class="px-4 py-2 rounded-full border-2 border-blue-900 text-blue-900 font-semibold hover:bg-blue-50">CONTACT US</a>
       </nav>
+      <!-- Hamburger (mobile only) -->
       <button id="menu-toggle"
-              class="lg:hidden fixed top-2 right-4 focus:outline-none z-50"
-              aria-label="Open Menu" aria-expanded="false">
+            type="button"
+            class="lg:hidden fixed top-2 right-4 focus:outline-none z-50"
+            aria-label="Open Menu" aria-expanded="false">
         <span class="hamburger-circle flex items-center justify-center w-12 h-12 rounded-full bg-blue-900 hover:bg-blue-700 shadow-xl ring-2 ring-blue-200 transition duration-200">
-          <!-- Hamburger icon -->
           <svg class="icon-hamburger w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16"/>
           </svg>
-          <!-- Close icon (hidden by default) -->
           <svg class="icon-close w-7 h-7 text-white hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6l12 12M18 6l-12 12" />
           </svg>
@@ -133,10 +130,8 @@
       </button>
     </div>
     <div id="mobile-menu"
-         class="fixed inset-x-0 top-[60px] bottom-0 hidden justify-start items-start bg-[#badcf7]/95 z-[60] lg:hidden">
-      <div id="mobile-panel"
-           class="absolute right-4 top-4 w-80 px-2 py-4 rounded-2xl bg-white shadow-2xl border border-blue-200 text-center glass modal-animate">
-        <!-- panel header with logo + brand -->
+       class="fixed inset-x-0 top-[60px] bottom-0 hidden justify-start items-start bg-[#badcf7]/95 z-[60] lg:hidden">
+      <div id="mobile-panel" class="absolute right-4 top-4 w-80 px-2 py-4 rounded-2xl bg-white shadow-2xl border border-blue-200 text-center glass modal-animate">
         <div class="flex items-center justify-between px-3 pb-2 border-b border-blue-100">
           <div class="flex items-center gap-2">
             <img src="logo.png" alt="GPCC Logo" class="w-10 h-10 rounded-sm"/>
@@ -162,13 +157,14 @@
           </div>
           <a href="ministries.html" class="block w-full px-5 py-3 rounded-full bg-blue-900 text-white font-semibold">MINISTRIES</a>
           <a href="events.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">EVENTS</a>
-          <a href="media-center.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MEDIA CENTER</a>
+          <a href="mediacenter.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">MEDIA CENTER</a>
           <a href="gallery.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">GALLERY</a>
           <a href="contact-us.html" class="block w-full px-5 py-3 rounded-full border-2 border-blue-900 text-blue-900 font-semibold">CONTACT US</a>
         </nav>
       </div>
     </div>
   </header>
+
   <div class="h-[60px]"></div>
 
   <!-- PAGE HEADER -->
@@ -397,6 +393,10 @@
           document.removeEventListener('click', handler);
         }
       });
+    });
+  </script>
+</body>
+</html>
     });
   </script>
 </body>
