@@ -537,12 +537,24 @@
       }
     }
     
-    /* Pastor Modal Styling */
-    #pastorWiafeModal .modal-content {
-      animation: modalFadeIn 0.3s ease-out;
-      box-shadow: 0 20px 60px -10px rgba(0, 0, 0, 0.3);
+    /* Pastor Modal Styling with Slide-In Animations */
+    #pastorWiafeModal {
+      transition: background-color 0.4s ease-out;
     }
     
+    #pastorWiafeModal .modal-content {
+      box-shadow: 0 20px 60px -10px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      animation: modalPulse 0.5s ease-out;
+    }
+    
+    @keyframes modalPulse {
+      0% { transform: scale(0.95); opacity: 0; }
+      70% { transform: scale(1.02); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    
+    /* Basic fade-in animation (default) */
     @keyframes modalFadeIn {
       from {
         opacity: 0;
@@ -552,6 +564,96 @@
         opacity: 1;
         transform: translateY(0);
       }
+    }
+    
+    /* Slide from Left Animation */
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-100px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    /* Slide from Right Animation */
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(100px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    /* Slide from Top Animation */
+    @keyframes slideInTop {
+      from {
+        opacity: 0;
+        transform: translateY(-100px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Slide from Bottom Animation */
+    @keyframes slideInBottom {
+      from {
+        opacity: 0;
+        transform: translateY(100px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Animation classes that can be applied */
+    .slide-in-left {
+      animation: slideInLeft 0.5s ease-out forwards;
+    }
+    
+    .slide-in-right {
+      animation: slideInRight 0.5s ease-out forwards;
+    }
+    
+    .slide-in-top {
+      animation: slideInTop 0.5s ease-out forwards;
+    }
+    
+    .slide-in-bottom {
+      animation: slideInBottom 0.5s ease-out forwards;
+    }
+    
+    /* Bio paragraph animation */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Subtle pulse animation for modal */
+    @keyframes subtle-pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+    
+    /* Apply animation to bio paragraphs */
+    .bio-paragraph {
+      opacity: 0;
+      animation: fadeInUp 0.6s ease-out forwards;
     }
     
     #pastorWiafeModal .prose p {
@@ -1088,19 +1190,85 @@
   <script>
     document.getElementById('copyright-year').textContent = new Date().getFullYear();
     
-    // Pastor Wiafe Modal Functionality
+    // Pastor Wiafe Modal Functionality with Animations
     function openPastorWiafeModal() {
       const modal = document.getElementById('pastorWiafeModal');
       modal.classList.remove('hidden');
       modal.classList.add('flex');
       lockBody();
+      
+      // Apply slide-in animations with staggered timing
+      const animationDirections = ['slide-in-left', 'slide-in-right', 'slide-in-top', 'slide-in-bottom'];
+      const elements = modal.querySelectorAll('.slide-element');
+      const bioParagraphs = modal.querySelectorAll('.bio-paragraph');
+      
+      // First reset any existing animations
+      elements.forEach(el => {
+        animationDirections.forEach(cls => {
+          el.classList.remove(cls);
+        });
+        el.style.opacity = '0';
+      });
+      
+      // Reset bio paragraph animations
+      bioParagraphs.forEach(para => {
+        para.style.opacity = '0';
+        para.style.animation = 'none';
+      });
+      
+      // Apply random direction animations with staggered delays
+      elements.forEach((el, index) => {
+        // Choose a random animation direction
+        const randomDirection = animationDirections[Math.floor(Math.random() * animationDirections.length)];
+        
+        // Apply staggered animation with delay
+        setTimeout(() => {
+          el.classList.add(randomDirection);
+        }, 100 * index); // 100ms stagger between elements
+      });
+      
+      // Apply staggered animations to bio paragraphs with delay after main elements
+      bioParagraphs.forEach((para, index) => {
+        setTimeout(() => {
+          para.style.animation = `fadeInUp 0.6s ease-out ${index * 0.15}s forwards`;
+        }, 500); // Start bio animations after the main elements
+      });
     }
     
     function closePastorWiafeModal() {
       const modal = document.getElementById('pastorWiafeModal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-      unlockBody();
+      const modalContent = modal.querySelector('.modal-content');
+      const elements = modal.querySelectorAll('.slide-element');
+      const bioParagraphs = modal.querySelectorAll('.bio-paragraph');
+      
+      // Stop pulse animation on modal content
+      if (modalContent) {
+        modalContent.style.animation = 'none';
+      }
+      
+      // Fade out the elements in reverse order
+      bioParagraphs.forEach((para, index) => {
+        const delay = (bioParagraphs.length - index - 1) * 50;
+        setTimeout(() => {
+          para.style.opacity = '0';
+          para.style.transition = 'opacity 0.2s ease-out';
+        }, delay);
+      });
+      
+      // Fade out the modal with a slight delay
+      setTimeout(() => {
+        modal.style.transition = 'opacity 0.3s ease-out';
+        modal.style.opacity = '0';
+      }, 150);
+      
+      // After fade out, hide the modal
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        modal.style.opacity = '';
+        modal.style.transition = '';
+        unlockBody();
+      }, 450); // Increased from 300ms to account for paragraph animations
     }
     
     // Make buttons and updater available before Swiper init (prevents ReferenceError)
@@ -1258,10 +1426,10 @@
     });
   </script>
   
-  <!-- Pastor Wiafe Modal -->
+  <!-- Pastor Wiafe Modal with Animations -->
   <div id="pastorWiafeModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/70 p-4">
-    <div class="modal-content bg-white rounded-xl max-w-4xl w-full relative">
-      <button class="pastor-modal-close absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-red-50 text-red-500 hover:bg-red-100 z-10">
+    <div class="modal-content bg-white rounded-xl max-w-4xl w-full relative" style="animation: subtle-pulse 2s ease-in-out infinite;">
+      <button class="pastor-modal-close absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-red-50 text-red-500 hover:bg-red-100 z-10 slide-element">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
         </svg>
@@ -1270,43 +1438,43 @@
       <!-- Modal Content -->
       <div class="modal-flex flex flex-col md:flex-row">
         <!-- Pastor's Photo (Left Side) - Sticky on desktop -->
-        <div class="pastor-image-container md:w-1/3">
+        <div class="pastor-image-container md:w-1/3 slide-element">
           <img src="pastor-wiafe.png" alt="Pastor Samuel Konadu Wiafe" class="w-full">
         </div>
         
         <!-- Bio Content (Right Side) - Scrollable -->
-        <div class="bio-container md:w-2/3 p-6 md:p-8">
+        <div class="bio-container md:w-2/3 p-6 md:p-8 slide-element">
           <div class="prose max-w-none">
-            <h2 class="text-3xl font-fjalla text-blue-900 mb-4">Pastor Samuel Konadu Wiafe</h2>
-            <h3 class="text-xl text-blue-700 mb-6">Associate Pastor</h3>
+            <h2 class="text-3xl font-fjalla text-blue-900 mb-4 slide-element">Pastor Samuel Konadu Wiafe</h2>
+            <h3 class="text-xl text-blue-700 mb-6 slide-element">Associate Pastor</h3>
             
             <div class="space-y-4 text-gray-800">
-              <p>Samuel Konadu –Wiafe, is a servant of Christ, a preacher and teacher of the Gospel and an educationist.</p>
+              <p class="bio-paragraph">Samuel Konadu –Wiafe, is a servant of Christ, a preacher and teacher of the Gospel and an educationist.</p>
               
-              <p>He sensed a call for the work of the ministry at a very tender age. Growing up as a child his focus had been to work for God in Christ's vineyard. He accepted Jesus Christ as his personal LORD and Saviour as a teenager and he was subsequently baptized while fellowshipping with the Assemblies of God Church.</p>
+              <p class="bio-paragraph">He sensed a call for the work of the ministry at a very tender age. Growing up as a child his focus had been to work for God in Christ's vineyard. He accepted Jesus Christ as his personal LORD and Saviour as a teenager and he was subsequently baptized while fellowshipping with the Assemblies of God Church.</p>
               
-              <p>He later became an adult Sunday school teacher and a youth leader in the Love Assemblies of God at Mpraeso, Kwahu during his secondary school days. He was a founding member of the Acts Temple Assemblies of God Church in Accra where he later became an associate pastor after his ministerial training. He later joined the Freedom in Christ Prayer Ministry.</p>
+              <p class="bio-paragraph">He later became an adult Sunday school teacher and a youth leader in the Love Assemblies of God at Mpraeso, Kwahu during his secondary school days. He was a founding member of the Acts Temple Assemblies of God Church in Accra where he later became an associate pastor after his ministerial training. He later joined the Freedom in Christ Prayer Ministry.</p>
               
-              <p>He had his seminary education at the Ghana Christian College and Seminary from 1997 – 2001, now Ghana Christian University (Amrahia) and graduated with B.A Religious Studies.</p>
+              <p class="bio-paragraph">He had his seminary education at the Ghana Christian College and Seminary from 1997 – 2001, now Ghana Christian University (Amrahia) and graduated with B.A Religious Studies.</p>
               
-              <p>In 2008 he graduated from the University of Ghana with a BSc (Hons) Administration and 2013 graduated with an MA Study of Religions from the same university.</p>
+              <p class="bio-paragraph">In 2008 he graduated from the University of Ghana with a BSc (Hons) Administration and 2013 graduated with an MA Study of Religions from the same university.</p>
               
-              <p>Additionally, he holds a Post Graduate Diploma in Education from the University of Education, Winneba and has taught Religious and Moral Education at the Basic and Tertiary levels in schools such as Crown Prince Academy and the Institute for Distance and e- Learning (IDeL), of the University of Education, Winneba;  Accra Academy Campus.</p>
+              <p class="bio-paragraph">Additionally, he holds a Post Graduate Diploma in Education from the University of Education, Winneba and has taught Religious and Moral Education at the Basic and Tertiary levels in schools such as Crown Prince Academy and the Institute for Distance and e- Learning (IDeL), of the University of Education, Winneba;  Accra Academy Campus.</p>
               
-              <p>Additionally, he has taught Christian Religious Studies at the secondary level at the Ngleshie Amanfro Senior High Technical School and the Forces Senior High Technical School, Burma Camp.</p>
+              <p class="bio-paragraph">Additionally, he has taught Christian Religious Studies at the secondary level at the Ngleshie Amanfro Senior High Technical School and the Forces Senior High Technical School, Burma Camp.</p>
               
-              <p>Currently he teaches Religious Studies at the Amasaman Senior High Technical School and works with the Guidance and Counselling Department as a Safe Space Focal Person (SSPF) of the school.</p>
+              <p class="bio-paragraph">Currently he teaches Religious Studies at the Amasaman Senior High Technical School and works with the Guidance and Counselling Department as a Safe Space Focal Person (SSPF) of the school.</p>
               
-              <p>He carries a global view of ministry and it is his desire to reach out to unreached people, communities and nations across the globe for Christ. His favourite scripture is;</p>
+              <p class="bio-paragraph">He carries a global view of ministry and it is his desire to reach out to unreached people, communities and nations across the globe for Christ. His favourite scripture is;</p>
               
-              <blockquote class="italic bg-blue-50 p-4 border-l-4 border-blue-500 my-6">
+              <blockquote class="italic bg-blue-50 p-4 border-l-4 border-blue-500 my-6 bio-paragraph">
                 <p class="mb-1"><strong>Ephesians 2: 11 – 13</strong></p>
                 <p>"Therefore remember that you, once Gentiles in the flesh – who are called Uncircumcision by what is called the Circumcision made in the flesh by hands – that at that time you were without Christ, being aliens from the commonwealth of Israel and strangers from the covenants of promise, having no hope and without God in the world. But now in Christ Jesus you who once were far off have been brought near by the blood of Christ." (NKV)</p>
               </blockquote>
               
-              <p>He is married to Yvonne Konadu- Wiafe, a tax official and are blessed with Kezia, Charis and Samuel (Jnr). He loves to read or watch African movies at his leisure.</p>
+              <p class="bio-paragraph">He is married to Yvonne Konadu- Wiafe, a tax official and are blessed with Kezia, Charis and Samuel (Jnr). He loves to read or watch African movies at his leisure.</p>
               
-              <p>His admonition to believers worldwide is from the 1st epistle of the Apostle Peter 1: 17 – 19.</p>
+              <p class="bio-paragraph">His admonition to believers worldwide is from the 1st epistle of the Apostle Peter 1: 17 – 19.</p>
             </div>
           </div>
         </div>
