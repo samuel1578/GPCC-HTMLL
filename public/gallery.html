@@ -200,7 +200,7 @@
             </svg>
           </button>
           <ul id="about-us-desktop-dropdown"
-              class="absolute top-full left-0 mt-2 hidden bg-white border border-blue-200 rounded-lg shadow-lg w-72 py-2"
+              class="absolute top-full left-0 mt-2 hidden bg-white border border-blue-200 rounded-lg shadow-lg w-72 py-2 z-50"
               role="menu">
             <li><a href="who.html" class="block px-4 py-2 hover:bg-blue-50">Who We Are</a></li>
             <li><a href="pastoral-board.html" class="block px-4 py-2 hover:bg-blue-50">The Leadership</a></li>
@@ -598,36 +598,30 @@
     const aboutBtn = document.getElementById('about-us-desktop-btn');
     const aboutDropdown = document.getElementById('about-us-desktop-dropdown');
     let aboutOpen = false;
+    
     aboutBtn.addEventListener('click', function(e) {
       e.stopPropagation();
       aboutDropdown.classList.toggle('hidden');
       aboutOpen = !aboutOpen;
-      document.addEventListener('click', function handler(ev) {
-        if (aboutOpen && !aboutDropdown.contains(ev.target) && ev.target !== aboutBtn) {
-          aboutDropdown.classList.add('hidden');
-          aboutOpen = false;
-          document.removeEventListener('click', handler);
-        }
-      });
-    });
-
-    /* Desktop ABOUT dropdown */
-    (function(){
-      const btn=document.getElementById('about-us-desktop-btn');
-      const dd=document.getElementById('about-us-desktop-dropdown');
-      if(!btn||!dd) return;
-      let open=false;
-      btn.addEventListener('click',e=>{
-        e.stopPropagation();
-        dd.classList.toggle('hidden'); open=!open;
-        document.addEventListener('click',function handler(ev){
-          if(open && !dd.contains(ev.target) && ev.target!==btn){
-            dd.classList.add('hidden'); open=false;
-            document.removeEventListener('click',handler);
+      
+      // Update the aria-expanded attribute for accessibility
+      aboutBtn.setAttribute('aria-expanded', aboutOpen.toString());
+      
+      // Add one-time document click handler to close dropdown when clicking outside
+      if (aboutOpen) {
+        document.addEventListener('click', function closeDropdown(ev) {
+          if (!aboutDropdown.contains(ev.target) && ev.target !== aboutBtn) {
+            aboutDropdown.classList.add('hidden');
+            aboutOpen = false;
+            aboutBtn.setAttribute('aria-expanded', 'false');
+            document.removeEventListener('click', closeDropdown);
           }
         });
-      });
-    })();
+      }
+    });
+
+    /* Desktop ABOUT dropdown - removed duplicate initialization */
+    // Note: The aboutBtn and aboutDropdown are already initialized above
 
     /* INIT: mobile section swipers (added sunday & anniv2023) */
     (function(){
